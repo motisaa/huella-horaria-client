@@ -1,0 +1,8 @@
+.recuadro {
+    border: 1px solid;
+    border-radius: 20px;
+    background-color: white;
+    padding: 20px;
+    margin-top: 5px;
+    max-width: 350px;
+}
