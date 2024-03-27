@@ -26,7 +26,7 @@ export const LoginForm = (props) => {
 
     const handleSubmit = async (values) => {
         const usuario = await loginBasico({
-            login: values.login,
+            usuario: values.usuario,
             password: values.password,
         });
 
@@ -72,7 +72,7 @@ export const LoginForm = (props) => {
                             id="usuario"
                             name="usuario"
                             label="Nombre de Usuario"
-                            value={formik.values.login}
+                            value={formik.values.usuario}
                             onChange={formik.handleChange}
                             error={formik.touched.usuario && Boolean(formik.errors.usuario)}
                             helperText={formik.touched.usuario && formik.errors.usuario}

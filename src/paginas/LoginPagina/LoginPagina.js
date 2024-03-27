@@ -24,7 +24,7 @@ export const LoginPagina = () => {
                 justifyContent="center"
                 sx={{ minHeight: "100vh" }}
             >
-                <Grid item xs={8} className="fondoImagenLogin">
+                <Grid item xs={8}>
                     <Typography variant='h3'>
                         Huella Horaria
                     </Typography>
