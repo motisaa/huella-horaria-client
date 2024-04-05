@@ -81,7 +81,7 @@ export const MenuLateral = (props) => {
                             >
                                 <PersonIcon />
                                 <Typography ml={1}>
-                                    {sesion ? sesion.administradores.nombre : ""}
+                                    {sesion ? sesion.usuario.nombre : ""}
                                 </Typography>
                             </IconButton>
                             <IconButton
