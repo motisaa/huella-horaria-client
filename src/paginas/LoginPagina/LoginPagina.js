@@ -15,16 +15,8 @@ export const LoginPagina = () => {
 
     return (
         <>
-            {/* center de login box */}
-            <Grid
-                container
-                spacing={0}
-                direction="column"
-                alignItems="center"
-                justifyContent="center"
-                sx={{ minHeight: "100vh" }}
-            >
-                <Grid item xs={8}>
+           <Grid container>
+                <Grid item xs={8} className="fondoImagenLogin">
                     <Typography variant='h3'>
                         Huella Horaria
                     </Typography>
@@ -32,12 +24,12 @@ export const LoginPagina = () => {
                         Gestión de fichajes
                     </Typography>
                     <Typography>
-                        Versión {version}
+                        versión: {version}
                     </Typography>
                 </Grid>
-                <Grid item xs={4}>
-                    <div className="recuadro">
-                        <LoginForm />
+                <Grid item xs={4} className="loginForm">
+                    <div className='recuadro'>
+                        <LoginForm/>
                     </div>
                 </Grid>
             </Grid>

@@ -1,8 +1,25 @@
+
+.fondoImagenLogin {
+    padding: 1.875rem;
+    height: 100vh;
+    margin: 0;
+    color: white;
+    background-image: url("../../images/kevin-ku-aiyBwbrWWlo-unsplash.jpg");
+    /* Center and scale the image nicely */
+    background-position: top;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.loginForm {
+    background-color: #283141;
+    padding: 5em;
+    align-content: center;
+}
 .recuadro {
-    border: 1px solid;
-    border-radius: 20px;
+    border: 1px solid; 
+    border-radius: 1.25em; 
     background-color: white;
-    padding: 20px;
-    margin-top: 5px;
-    max-width: 350px;
+    padding: 1.25em; 
+    margin-top: 0.31em;
+    max-width: 21.87em; 
 }
