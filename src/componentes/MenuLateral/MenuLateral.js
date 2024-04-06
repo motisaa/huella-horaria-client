@@ -16,6 +16,9 @@ import { Grid, ListItemText } from "@mui/material";
 import ListItem from "@mui/material/ListItem";
 import PersonIcon from "@mui/icons-material/Person";
 import Drawer from "@mui/material/Drawer";
+import { leerVersion } from '../../servicios/ApiLib';
+import logo from '../../images/Huella.jpg';
+import Avatar from '@mui/material/Avatar';
 
 const drawerWidth = 230;
 export const MenuLateral = (props) => {
@@ -25,6 +28,14 @@ export const MenuLateral = (props) => {
     const [drVariant, setDrVariant] = useState("temporary");
     const [drOpen, setDrOpen] = useState(false);
     const [sesion, setSesion] = useState()
+    const [version, setVersion] = useState('0.0.0');
+    const consultarVersion = async () => {
+        const { data: versionData } = await leerVersion()
+        setVersion(versionData.version)
+    };
+    useEffect(() => {
+        consultarVersion();
+    }, [])
 
     const handleDrOpen = () => {
         if (drOpen) {
@@ -57,7 +68,10 @@ export const MenuLateral = (props) => {
                 <Grid item xs={12}>
                     <AppBar
                         position="fixed"
-                        sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                        sx={{
+                            zIndex: (theme) => theme.zIndex.drawer + 1,
+                            height: 90,
+                        }}
                     >
                         <Toolbar>
                             <IconButton
@@ -70,8 +84,10 @@ export const MenuLateral = (props) => {
                             >
                                 <MenuIcon />
                             </IconButton>
-                            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                                Huella Horaria
+                            <Avatar alt="Logo" src={logo} sx={{ width: 80, height: 80, m: 1 }} />
+                            <Typography variant="h6" component="div"
+                                sx={{ flexGrow: 1 }}>
+                               vers.: {version}
                             </Typography>
                             <IconButton
                                 size="large"
@@ -108,7 +124,7 @@ export const MenuLateral = (props) => {
                         open={drOpen}
                     >
                         <Toolbar />
-                        <Box sx={{ overflow: "auto" }}>
+                        <Box sx={{ overflow: "auto" }} mt={3}>
                             <List>
                                 <ListItem
                                     key="Inicio"

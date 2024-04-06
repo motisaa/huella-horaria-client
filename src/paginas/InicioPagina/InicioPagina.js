@@ -8,7 +8,7 @@ export const InicioPagina = () => {
         <>
             <MenuLateral>
                 <Grid container spacing={2}>
-                    <Grid item xs={12}>
+                    <Grid item xs={12} mt={5}>
                         <Paper variant='outlined' sx={{ padding: 12 }}>
                             <Typography variant='h3'> Huella Horaria </Typography>
                             <Typography>
