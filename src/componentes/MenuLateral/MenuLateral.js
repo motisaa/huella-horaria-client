@@ -19,6 +19,7 @@ import Drawer from "@mui/material/Drawer";
 import { leerVersion } from '../../servicios/ApiLib';
 import logo from '../../images/Huella.jpg';
 import Avatar from '@mui/material/Avatar';
+import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
 
 const drawerWidth = 230;
 export const MenuLateral = (props) => {
@@ -87,7 +88,7 @@ export const MenuLateral = (props) => {
                             <Avatar alt="Logo" src={logo} sx={{ width: 80, height: 80, m: 1 }} />
                             <Typography variant="h6" component="div"
                                 sx={{ flexGrow: 1 }}>
-                               vers.: {version}
+                                vers.: {version}
                             </Typography>
                             <IconButton
                                 size="large"
@@ -138,6 +139,20 @@ export const MenuLateral = (props) => {
                                             <Home />
                                         </ListItemIcon>
                                         <ListItemText> Inicio </ListItemText>
+                                    </ListItemButton>
+                                </ListItem>
+                                <ListItem
+                                    key="Administradores"
+                                    disablePadding
+                                    onClick={() => {
+                                        navigate("/administradores");
+                                    }}
+                                >
+                                    <ListItemButton>
+                                        <ListItemIcon>
+                                            <SupervisorAccountIcon />
+                                        </ListItemIcon>
+                                        <ListItemText> Administradores </ListItemText>
                                     </ListItemButton>
                                 </ListItem>
                             </List>
