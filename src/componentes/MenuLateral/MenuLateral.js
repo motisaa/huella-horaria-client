@@ -20,6 +20,7 @@ import { leerVersion } from '../../servicios/ApiLib';
 import logo from '../../images/Huella.jpg';
 import Avatar from '@mui/material/Avatar';
 import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
+import EngineeringIcon from '@mui/icons-material/Engineering';
 
 const drawerWidth = 230;
 export const MenuLateral = (props) => {
@@ -153,6 +154,20 @@ export const MenuLateral = (props) => {
                                             <SupervisorAccountIcon />
                                         </ListItemIcon>
                                         <ListItemText> Administradores </ListItemText>
+                                    </ListItemButton>
+                                </ListItem>
+                                <ListItem
+                                    key="trabajadores"
+                                    disablePadding
+                                    onClick={() => {
+                                        navigate("/trabajadores");
+                                    }}
+                                >
+                                    <ListItemButton>
+                                        <ListItemIcon>
+                                            <EngineeringIcon></EngineeringIcon>
+                                        </ListItemIcon>
+                                        <ListItemText> Trabajadores </ListItemText>
                                     </ListItemButton>
                                 </ListItem>
                             </List>
