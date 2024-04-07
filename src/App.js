@@ -4,7 +4,7 @@ import { GeneralContext } from "./contextos/GeneralContext";
 import "./App.css";
 import { LoginPagina } from "./paginas/LoginPagina/LoginPagina";
 import { InicioPagina } from "./paginas/InicioPagina/InicioPagina";
-import { AdministradoresPagina } from "./paginas/AdministradoresPaginas/AdministradoresPaginas";
+import { AdministradoresPagina } from "./paginas/AdministradoresPaginas/AdministradoresPagina";
 import { AdministradorPagina } from "./paginas/AdministradoresPaginas/AdministradorPagina";
 
 const queryClient = new QueryClient();
