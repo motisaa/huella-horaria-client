@@ -16,7 +16,8 @@ import {
     //esES, 
     GridToolbar
 } from "@mui/x-data-grid";
-  //import { GeneralCtx } from "../../contextos/GeneralContext";
+//import { GeneralCtx } from "../../contextos/GeneralContext";
+import EditIcon from "@mui/icons-material/Edit";
   
   export const TrabajadoresPagina = () => {
       const navigate = useNavigate();
@@ -32,7 +33,13 @@ import {
       const nuevoUsuarioTrabajador = () => {
         navigate(`/trabajador/0`);
       };
-     
+      
+      const editUsuarioTrabjador = (trabajadorId) => {
+        return () => {
+          navigate(`/trabajador/${trabajadorId}`);
+        };
+      };
+
       //const session = getSession();
  
       // eslint-disable-next-line no-unused-vars
@@ -58,7 +65,20 @@ import {
         { field: "apellido1", headerName: "Primer Apellido", flex: 0.4 },
         { field: "apellido2", headerName: "Segundo Apellido", flex: 0.4 },
         { field: "usuario", headerName: "username", flex: 0.4 },
-        { field: "email", headerName: "email", flex: 1},
+        { field: "email", headerName: "email", flex: 1 },
+        {
+            field: "actions",
+            type: "actions",
+            headerName: "Acciones",
+            width: 80,
+            getActions: ({ row }) => {
+              return [
+                <IconButton onClick={editUsuarioTrabjador(row.trabajadorId)}>
+                  <EditIcon />
+                </IconButton>,
+              ];
+            },
+          },
       ];
     
       return (
