@@ -11,7 +11,11 @@ import React, {
   import AddIcon from "@mui/icons-material/Add";
   import {AppBar, Grid, IconButton, Toolbar, Tooltip, Typography,} from "@mui/material";
   import { MensajeInformativo } from "../../componentes/MensajeInformativo/MensajeInformativo";
-  import { DataGrid, GridToolbar} from "@mui/x-data-grid";
+import {
+    DataGrid,
+    //esES, 
+    GridToolbar
+} from "@mui/x-data-grid";
   //import { GeneralCtx } from "../../contextos/GeneralContext";
   
   export const TrabajadoresPagina = () => {
@@ -31,8 +35,9 @@ import React, {
      
       //const session = getSession();
  
-      const queryUsuariosAdmin = useQuery(
-        "administradores",
+      // eslint-disable-next-line no-unused-vars
+      const queryUsuariosTrabajadores = useQuery(
+        "trabajadores",
         () => {
           return LeerUsuariosTrabajadores();
         },
@@ -86,10 +91,12 @@ import React, {
               </Grid>
               <Grid item xs={12} style={{ height: "80vh", width: "100%" }}>
                 <DataGrid
-                  rows={usuariosTrabajador}
-                  columns={columns}
-                  getRowId={(row) => row.trabajadorId}
-                  components={{ Toolbar: GridToolbar }}
+                        rows={usuariosTrabajador}
+                        columns={columns}
+                        getRowId={(row) => row.trabajadorId}
+                        // localeText={esES.components.MuiDataGrid.defaultProps.localeText}
+                        // components={{ Toolbar: GridToolbar }} 
+                        slots={{ toolbar: GridToolbar }}         
                 />
               </Grid>
             </Grid>
