@@ -3,7 +3,7 @@ import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import React, { useContext, useState } from "react";
 import { Button, Grid, TextField } from "@mui/material";
-import { LoginBasicoUsuario } from "../../servicios/RQadministradores";
+import { LoginBasicoUsuario } from "../../servicios/RQAdministradores";
 import { GeneralCtx } from "../../contextos/GeneralContext";
 import { ErrorGeneral } from "../../componentes/ErrorGeneral/ErrorGeneral";
 import { MensajeInformativo } from "../../componentes/MensajeInformativo/MensajeInformativo";
