@@ -60,9 +60,9 @@ export const AdministradoresPagina = () => {
         },
       }
     );
-    /* La función useMutation toma dos argumentos:
+    /* La función useMutation toma un argumentos:
       Una función que realiza la mutación. En este caso, la función recibe adminId y
-      luego llama a otra función llamada eliminarUsuarioAdmin con esos parámetros.
+      luego llama a otra función llamada eliminarUsuarioAdmin con este parámetro.
 
       Un objeto de opciones que puede tener diferentes propiedades, como onError,
       que se ejecuta cuando ocurre un error durante la mutación. En este caso,
