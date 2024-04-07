@@ -6,6 +6,8 @@ import { LoginPagina } from "./paginas/LoginPagina/LoginPagina";
 import { InicioPagina } from "./paginas/InicioPagina/InicioPagina";
 import { AdministradoresPagina } from "./paginas/AdministradoresPaginas/AdministradoresPagina";
 import { AdministradorPagina } from "./paginas/AdministradoresPaginas/AdministradorPagina";
+import { TrabajadorPagina } from "./paginas/TrabajadoresPaginas/TrabajadorPagina";
+import { TrabajadoresPagina } from "./paginas/TrabajadoresPaginas/TrabajadoresPagina";
 
 const queryClient = new QueryClient();
 
@@ -20,6 +22,9 @@ function App() {
         <Route path="/administradores" element={<AdministradoresPagina />} />
         <Route path="/administrador" element={<AdministradorPagina />} />
         <Route path="/administrador/:adminId" element={<AdministradorPagina />} />
+        <Route path="/trabajadores" element={<TrabajadoresPagina />} />
+        <Route path="/trabajador/" element={<TrabajadorPagina />} />
+        <Route path="/trabajador/:trabajadorId" element={<TrabajadorPagina />} />
       </Routes>
     </QueryClientProvider>
    </GeneralContext>
