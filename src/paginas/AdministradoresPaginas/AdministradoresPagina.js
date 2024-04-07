@@ -167,7 +167,8 @@ export const AdministradoresPagina = () => {
                 rows={usuariosAdmin}
                 columns={columns}
                 getRowId={(row) => row.adminId}
-                components={{ Toolbar: GridToolbar }}
+                //components={{ Toolbar: GridToolbar }}
+                slots={{ toolbar: GridToolbar }} 
               />
             </Grid>
           </Grid>
