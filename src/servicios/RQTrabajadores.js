@@ -26,3 +26,9 @@ export const ActualizarUsuarioTrabajador = (trabajadorId) => {
     const url = `${url_base}/v1/trabajadores`;
     return axios.put(url, trabajadorId);
 };
+export const eliminarUsuarioTrabajador = (trabajadorId) => {
+    const ent = Entorno.getEnv();
+    const url_base = ent.API_URL;
+    const url = `${url_base}/v1/trabajadores/${trabajadorId}`;
+    return axios.delete(url);
+};
