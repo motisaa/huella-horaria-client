@@ -1,5 +1,5 @@
 import React, {
-  //useContext,
+  useContext,
    useState
 } from "react";
 import { useMutation, useQuery } from "react-query";
@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { MenuLateral } from "../../componentes/MenuLateral/MenuLateral";
 import { MensajeError } from "../../servicios/TratamientoErrores";
 import { ErrorGeneral } from "../../componentes/ErrorGeneral/ErrorGeneral";
-//import { GeneralCtx } from "../../contextos/GeneralContext";
+import { GeneralCtx } from "../../contextos/GeneralContext";
 import { LeerUsuariosAdmin, eliminarUsuarioAdmin } from "../../servicios/RQAdministradores";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -28,7 +28,7 @@ export const AdministradoresPagina = () => {
     const [mensajeConfirmacion, setMensajeConfirmacion] = useState("");
     const [usuariosAdmin, setUsuariosAdmin] = useState([]);
     const [usuarioAdmin, setUsuarioAdmin] = useState();
-    //const { getSession } = useContext(GeneralCtx);
+    const { getSession } = useContext(GeneralCtx);
 
     /* useQuery: Esta función toma tres argumentos:
 
@@ -43,7 +43,7 @@ export const AdministradoresPagina = () => {
           Si ocurre un error durante la consulta, se maneja mostrando
           un mensaje de error y estableciendo un indicador de error.
           */
-    //const session = getSession();
+    const session = getSession();
     const queryUsuariosAdmin = useQuery(
       "administradores",
       () => {

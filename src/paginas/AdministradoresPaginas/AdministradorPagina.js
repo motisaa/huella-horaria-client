@@ -1,5 +1,5 @@
 import React, {
-  //useContext,
+  useContext,
   useState
 } from "react";
 import { useParams } from "react-router-dom";
@@ -7,7 +7,7 @@ import { useFormik } from "formik";
 import { useMutation, useQuery } from "react-query";
 import { initialValues, validationSchema } from "./AdministradorFunciones";
 import { useNavigate } from "react-router-dom";
-//import { GeneralCtx } from "../../contextos/GeneralContext";
+import { GeneralCtx } from "../../contextos/GeneralContext";
 import { MensajeError } from "../../servicios/TratamientoErrores";
 import { ErrorGeneral } from "../../componentes/ErrorGeneral/ErrorGeneral";
 import { MensajeInformativo } from "../../componentes/MensajeInformativo/MensajeInformativo";
@@ -19,7 +19,7 @@ import { MenuLateral } from "../../componentes/MenuLateral/MenuLateral";
 export const AdministradorPagina = () => {
   const params = useParams();
   const navigate = useNavigate();
- // const { getSession } = useContext(GeneralCtx);
+ const { getSession } = useContext(GeneralCtx);
   const [hayError, setHayError] = useState(false);
   const [mensajeError, setMensajeError] = useState("");
   const [hayMensaje, setHayMensaje] = useState(false);
@@ -52,7 +52,7 @@ export const AdministradorPagina = () => {
       },
     }
   );
-
+  const session = getSession();
   const handleSubmit = async (values) => {
     if (!values.adminId) {
       await crearUsuarioAdmin.mutateAsync(values);
@@ -99,7 +99,7 @@ export const AdministradorPagina = () => {
     }
   );
 
-  //const session = getSession();
+ 
   useQuery(
     ["administrador", params.adminId],
     () => {
