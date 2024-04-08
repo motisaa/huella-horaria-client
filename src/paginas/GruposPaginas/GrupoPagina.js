@@ -126,10 +126,10 @@ export const GrupoPagina = () => {
       <MenuLateral>
         <form onSubmit={formik.handleSubmit}>
           <Grid container spacing={2}>
-            <Grid item xs={6}>
+            <Grid item xs={6}  mt={4}>
               <Typography variant="h6">Datos de Grupo:</Typography>
             </Grid>
-            <Grid item xs={6} sx={{ textAlign: "right" }}>
+            <Grid item xs={6} sx={{ textAlign: "right" }}  mt={4}>
               <Button color="success" variant="contained" onClick={salirForm}>
                 Salir
               </Button>
