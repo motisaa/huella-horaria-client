@@ -52,8 +52,8 @@ export const LoginForm = (props) => {
 
     const formik = useFormik({
         initialValues: {
-            usuario: null,
-            password: null,
+            usuario: "",
+            password: "",
         },
         validationSchema: validationSchema,
         onSubmit: handleSubmit,
