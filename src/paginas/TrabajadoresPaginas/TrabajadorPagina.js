@@ -1,30 +1,58 @@
-import React, {
-    //useContext,
-    useState
-} from "react";
+import React, {useContext, useState} from "react";
 import { useParams } from "react-router-dom";
 import { useFormik } from "formik";
 import { useMutation, useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
-//import { GeneralCtx } from "../../contextos/GeneralContext";
+import { GeneralCtx } from "../../contextos/GeneralContext";
 import { MensajeError } from "../../servicios/TratamientoErrores";
 import { ErrorGeneral } from "../../componentes/ErrorGeneral/ErrorGeneral";
 import { MensajeInformativo } from "../../componentes/MensajeInformativo/MensajeInformativo";
-import { Button, TextField, Typography, Grid } from "@mui/material";
+import { Button, TextField, Typography, Grid,  Autocomplete } from "@mui/material";
 import { ActualizarUsuarioTrabajador, CrearUsuarioTrabajador, LeerUsuarioTrabajador } from "../../servicios/RQTrabajadores";
 import { MenuLateral } from "../../componentes/MenuLateral/MenuLateral";
 import { initialValues, validationSchema } from "./TrabajadoresFunciones";
+import { LeerGrupos } from "../../servicios/RQGrupos";
+
 
 export const TrabajadorPagina = () => {
     const params = useParams();
     const navigate = useNavigate();
-    // const { getSession } = useContext(GeneralCtx);
+    const { getSession } = useContext(GeneralCtx);
     const [hayError, setHayError] = useState(false);
     const [mensajeError, setMensajeError] = useState("");
     const [hayMensaje, setHayMensaje] = useState(false);
     const [mensaje,
         //setMensaje
     ] = useState("");
+    
+    const [grupos, setGrupos] = useState([]);
+    let grupoSeleccionado = null;
+    const getGrupoIdValue = () => {
+      grupoSeleccionado = grupos.find(
+        (i) => i.grupoId === formik.values.grupoId
+      );
+      return grupoSeleccionado || null;
+    };
+    useQuery(
+      "grupos",
+      () => {
+        return LeerGrupos();
+      },
+      {
+        onSuccess: (data) => {
+          let opcionesGrupos = data.data;
+          setGrupos(opcionesGrupos);
+        },
+        onError: (error) => {
+          console.error(error);
+          setMensajeError(MensajeError(error));
+          setHayError(true);
+        },
+      }
+    );
+
+    // eslint-disable-next-line 
+    const session = getSession();
 
     const handleSubmit = async (values) => {
         if (!values.trabajadorId) {
@@ -33,7 +61,7 @@ export const TrabajadorPagina = () => {
           await actualizarUsuarioTrabajador.mutateAsync(values);
         }
         navigate("/trabajadores");
-      };
+    };
 
     const formik = useFormik({
         // Configuración del formulario usando Formik
@@ -50,9 +78,9 @@ export const TrabajadorPagina = () => {
         // Verifica si hay un evento
         // Si hay un evento, previene su comportamiento(Cancela el evento si este es cancelable)
         if (e) e.preventDefault();
+         // Navega a la pagina de trabajadores
+         navigate("/trabajadores");
     };
-    // Navega a la pagina de trabajadores
-    navigate("/trabajadores");
 
     const crearUsuarioTrabajador = useMutation(
         // Función de mutación que define la lógica para crear un usuario trabajador
@@ -71,7 +99,6 @@ export const TrabajadorPagina = () => {
     );
 
 
-    //const session = getSession();
     useQuery(
         ["trabajador", params.trabajadorId],
         () => {
@@ -134,9 +161,9 @@ export const TrabajadorPagina = () => {
                                 name="trabajadorId"
                                 label="ID"
                                 disabled
-                                value={formik.values.trabajadorId}
+                                value={formik.values.trabajadorId} 
                                 onChange={formik.handleChange}
-                                error={
+                                 error={
                                     formik.touched.trabajadorId
                                     && Boolean(formik.errors.trabajadorId)
                                 }
@@ -186,6 +213,34 @@ export const TrabajadorPagina = () => {
                                     && formik.errors.apellido2}
                             />
                         </Grid>
+                        <Grid item xs={4}>
+              <Autocomplete
+                label="Grupo"
+                options={grupos}
+                value={getGrupoIdValue()}
+                getOptionLabel={(option) => option.nombre}
+                onChange={(e, value) => {
+                  formik.setFieldValue("grupoId", value.grupoId);
+                }}
+                fullWidth
+                id="grupoId"
+                name="grupoId"
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label="Elija un grupo"
+                    error={
+                      formik.touched.grupoId &&
+                      Boolean(formik.errors.grupoId)
+                    }
+                    helperText={
+                      formik.touched.grupoId &&
+                      formik.errors.grupoId
+                    }
+                  ></TextField>
+                )}
+              />
+            </Grid>
                         <Grid item xs={12} md={4}>
                             <TextField
                                 fullWidth
