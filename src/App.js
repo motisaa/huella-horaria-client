@@ -8,6 +8,8 @@ import { AdministradoresPagina } from "./paginas/AdministradoresPaginas/Administ
 import { AdministradorPagina } from "./paginas/AdministradoresPaginas/AdministradorPagina";
 import { TrabajadorPagina } from "./paginas/TrabajadoresPaginas/TrabajadorPagina";
 import { TrabajadoresPagina } from "./paginas/TrabajadoresPaginas/TrabajadoresPagina";
+import { GruposPagina } from "./paginas/GruposPaginas/GruposPagina";
+import { GrupoPagina } from "./paginas/GruposPaginas/GrupoPagina";
 
 const queryClient = new QueryClient();
 
@@ -25,6 +27,9 @@ function App() {
         <Route path="/trabajadores" element={<TrabajadoresPagina />} />
         <Route path="/trabajador/" element={<TrabajadorPagina />} />
         <Route path="/trabajador/:trabajadorId" element={<TrabajadorPagina />} />
+        <Route path="/grupos" element={<GruposPagina />} />
+        <Route path="/grupo/*" element={<GrupoPagina />} />
+        <Route path="/grupo/:grupoId" element={<GrupoPagina />} />
       </Routes>
     </QueryClientProvider>
    </GeneralContext>

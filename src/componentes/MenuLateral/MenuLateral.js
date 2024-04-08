@@ -21,6 +21,7 @@ import logo from '../../images/Huella.jpg';
 import Avatar from '@mui/material/Avatar';
 import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
 import EngineeringIcon from '@mui/icons-material/Engineering';
+import GroupsIcon from '@mui/icons-material/Groups';
 
 const drawerWidth = 230;
 export const MenuLateral = (props) => {
@@ -86,7 +87,10 @@ export const MenuLateral = (props) => {
                             >
                                 <MenuIcon />
                             </IconButton>
-                            <Avatar alt="Logo" src={logo} sx={{ width: 80, height: 80, m: 1 }} />
+                            <Avatar alt="Logo" src={logo} sx={{
+                                width: 80,
+                                height: 80, m: 1
+                            }} />
                             <Typography variant="h6" component="div"
                                 sx={{ flexGrow: 1 }}>
                                 vers.: {version}
@@ -170,6 +174,22 @@ export const MenuLateral = (props) => {
                                         <ListItemText> Trabajadores </ListItemText>
                                     </ListItemButton>
                                 </ListItem>
+
+                                <ListItem
+                                    key="grupos"
+                                    disablePadding
+                                    onClick={() => {
+                                        navigate("/grupos");
+                                    }}
+                                >
+                                    <ListItemButton>
+                                        <ListItemIcon>
+                                            <GroupsIcon></GroupsIcon>
+                                        </ListItemIcon>
+                                        <ListItemText> Grupos </ListItemText>
+                                    </ListItemButton>
+                                </ListItem>
+
                             </List>
                         </Box>
                     </Drawer>
