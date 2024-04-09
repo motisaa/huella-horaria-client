@@ -23,9 +23,7 @@ export const AdministradorPagina = () => {
   const [hayError, setHayError] = useState(false);
   const [mensajeError, setMensajeError] = useState("");
   const [hayMensaje, setHayMensaje] = useState(false);
-  const [mensaje,
-    //setMensaje
-  ] = useState("");
+  const [mensaje, setMensaje ] = useState("");
 
   const [empresas, setEmpresas] = useState([]);
   let empresaSeleccionado = null;

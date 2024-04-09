@@ -21,9 +21,7 @@ export const TrabajadorPagina = () => {
     const [hayError, setHayError] = useState(false);
     const [mensajeError, setMensajeError] = useState("");
     const [hayMensaje, setHayMensaje] = useState(false);
-    const [mensaje,
-        //setMensaje
-    ] = useState("");
+    const [mensaje, setMensaje] = useState("");
     
     const [grupos, setGrupos] = useState([]);
     let grupoSeleccionado = null;
