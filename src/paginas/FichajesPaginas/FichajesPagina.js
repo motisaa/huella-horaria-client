@@ -91,7 +91,6 @@ export const FichajesPagina = () => {
         { field: "trabajadorId", headerName: "Trabajador ID", flex: 0.2 },
         { field: "fechaHora", headerName: "Fecha y Hora", flex: 0.5 },
         { field: "direccion", headerName: "Direccion", flex: 1 },
-        { field: "fechaHora", headerName: "Fecha y hora", flex: 0.5 },
         { field: "longitud", headerName: "Longitud", flex: 0.5 },
         { field: "latitud", headerName: "Latitud", flex: 0.5 },
         { field: "tipo", headerName: "Tipo", flex: 0.5 },
