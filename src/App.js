@@ -10,30 +10,32 @@ import { TrabajadorPagina } from "./paginas/TrabajadoresPaginas/TrabajadorPagina
 import { TrabajadoresPagina } from "./paginas/TrabajadoresPaginas/TrabajadoresPagina";
 import { GruposPagina } from "./paginas/GruposPaginas/GruposPagina";
 import { GrupoPagina } from "./paginas/GruposPaginas/GrupoPagina";
+import { FichajesPagina } from "./paginas/FichajesPaginas/FichajesPagina";
 
 const queryClient = new QueryClient();
 
 function App() {
   return (
-   <>
-   <GeneralContext>
-    <QueryClientProvider client={queryClient}>
-      <Routes>
-        <Route path="/" element={<LoginPagina />} />
-        <Route path="/inicio" element={<InicioPagina />} />
-        <Route path="/administradores" element={<AdministradoresPagina />} />
-        <Route path="/administrador" element={<AdministradorPagina />} />
-        <Route path="/administrador/:adminId" element={<AdministradorPagina />} />
-        <Route path="/trabajadores" element={<TrabajadoresPagina />} />
-        <Route path="/trabajador/" element={<TrabajadorPagina />} />
-        <Route path="/trabajador/:trabajadorId" element={<TrabajadorPagina />} />
-        <Route path="/grupos" element={<GruposPagina />} />
-        <Route path="/grupo/*" element={<GrupoPagina />} />
-        <Route path="/grupo/:grupoId" element={<GrupoPagina />} />
-      </Routes>
-    </QueryClientProvider>
-   </GeneralContext>
-   </>
+    <>
+      <GeneralContext>
+        <QueryClientProvider client={queryClient}>
+          <Routes>
+            <Route path="/" element={<LoginPagina />} />
+            <Route path="/inicio" element={<InicioPagina />} />
+            <Route path="/administradores" element={<AdministradoresPagina />} />
+            <Route path="/administrador" element={<AdministradorPagina />} />
+            <Route path="/administrador/:adminId" element={<AdministradorPagina />} />
+            <Route path="/trabajadores" element={<TrabajadoresPagina />} />
+            <Route path="/trabajador/" element={<TrabajadorPagina />} />
+            <Route path="/trabajador/:trabajadorId" element={<TrabajadorPagina />} />
+            <Route path="/grupos" element={<GruposPagina />} />
+            <Route path="/grupo/" element={<GrupoPagina />} />
+            <Route path="/grupo/:grupoId" element={<GrupoPagina />} />
+            <Route path="/fichajes/" element={<FichajesPagina />} />
+          </Routes>
+        </QueryClientProvider>
+      </GeneralContext>
+    </>
   );
 }
 
