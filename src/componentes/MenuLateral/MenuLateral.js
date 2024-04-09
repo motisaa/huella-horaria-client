@@ -22,6 +22,7 @@ import Avatar from '@mui/material/Avatar';
 import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
 import EngineeringIcon from '@mui/icons-material/Engineering';
 import GroupsIcon from '@mui/icons-material/Groups';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
 
 const drawerWidth = 230;
 export const MenuLateral = (props) => {
@@ -187,6 +188,21 @@ export const MenuLateral = (props) => {
                                             <GroupsIcon></GroupsIcon>
                                         </ListItemIcon>
                                         <ListItemText> Grupos </ListItemText>
+                                    </ListItemButton>
+                                </ListItem>
+
+                                <ListItem
+                                    key="fichajes"
+                                    disablePadding
+                                    onClick={() => {
+                                        navigate("/fichajes");
+                                    }}
+                                >
+                                    <ListItemButton>
+                                        <ListItemIcon>
+                                            <AccessTimeIcon />
+                                        </ListItemIcon>
+                                        <ListItemText> Fichajes </ListItemText>
                                     </ListItemButton>
                                 </ListItem>
 
