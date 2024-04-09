@@ -112,6 +112,7 @@ export const MenuLateral = (props) => {
                                 edge="start"
                                 color="inherit"
                                 aria-label="menu"
+                                title="cerrar sesión"
                                 onClick={handleLoginClick}
                             >
                                 <ExitToAppIcon />
