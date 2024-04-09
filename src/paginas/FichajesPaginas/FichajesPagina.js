@@ -88,7 +88,7 @@ export const FichajesPagina = () => {
     };
     const columns = [
         { field: "fichajeId", headerName: "ID", width: 50 },
-        { field: "trabajadorId", headerName: "Trabajador ID", flex: 0.2 },
+        { field: "trabajadorId", headerName: "Trabajador ID", flex: 0.4 },
         { field: "fechaHora", headerName: "Fecha y Hora", flex: 0.5 },
         { field: "direccion", headerName: "Direccion", flex: 1 },
         { field: "longitud", headerName: "Longitud", flex: 0.5 },
