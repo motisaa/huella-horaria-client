@@ -20,6 +20,12 @@ export const LeerUsuarioTrabajador = (trabajadorId) => {
     const url = `${url_base}/v1/trabajadores/${trabajadorId}`;
     return axios.get(url);
 };
+export const LeerGrupoTrabajador = (trabajadorId) => {
+    const ent = Entorno.getEnv();
+    const url_base = ent.API_URL;
+    const url = `${url_base}/v1/trabajadores/${trabajadorId}/grupo`;
+    return axios.get(url);
+};
 export const ActualizarUsuarioTrabajador = (trabajadorId) => {
     const ent = Entorno.getEnv();
     const url_base = ent.API_URL;

@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { MenuLateral } from "../../componentes/MenuLateral/MenuLateral";
 import { MensajeError } from "../../servicios/TratamientoErrores";
 import { ErrorGeneral } from "../../componentes/ErrorGeneral/ErrorGeneral";
-import { LeerUsuariosTrabajadores, eliminarUsuarioTrabajador } from "../../servicios/RQTrabajadores";
+import { LeerUsuariosTrabajadores, eliminarUsuarioTrabajador, LeerGrupoTrabajador } from "../../servicios/RQTrabajadores";
 import AddIcon from "@mui/icons-material/Add";
 import { AppBar, Grid, IconButton, Toolbar, Tooltip, Typography, } from "@mui/material";
 import { MensajeInformativo } from "../../componentes/MensajeInformativo/MensajeInformativo";
@@ -96,6 +96,8 @@ export const TrabajadoresPagina = () => {
       },
     }
   );
+
+
   const columns = [
     { field: "trabajadorId", headerName: "ID", width: 50 },
     { field: "nombre", headerName: "Nombre", flex: 0.5 },
@@ -103,6 +105,8 @@ export const TrabajadoresPagina = () => {
     { field: "apellido2", headerName: "Segundo Apellido", flex: 0.4 },
     { field: "usuario", headerName: "username", flex: 0.4 },
     { field: "email", headerName: "email", flex: 1 },
+    // toFix (It should be seen groupName not groupID)
+    { field: 'grupoId', headerName: "Grupo", flex: 0.4 },
     {
       field: "actions",
       type: "actions",
