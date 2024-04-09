@@ -26,7 +26,22 @@ export const FichajesPagina = () => {
     const [fichajes, setFichajes] = useState([]);
     const [fichaje, setFichaje] = useState();
 
-    
+    const queryFichajes = useQuery(
+        "fichajes",
+        () => {
+            return LeerFichajes();
+        },
+        {
+            onSuccess: (data) => {
+                setFichajes(data.data);
+            },
+            onError: (error) => {
+                console.error(error);
+                setMensajeError(MensajeError(error));
+                setHayError(true);
+            },
+        }
+    );
 
     const eliminaFichaje = useMutation(
         ({ fichajeId }) => {
@@ -64,7 +79,7 @@ export const FichajesPagina = () => {
     };
     const deleteConfirmado = async () => {
         await eliminaFichaje.mutateAsync({ fichajeId: fichaje.fichajeId });
-        // queryFichajes.refetch();
+        queryFichajes.refetch();
         setHayConfirmacion(false);
         setMensaje(
             `El fichaje ${fichaje.fichajeId} ha sido eliminado de la base de datos`
