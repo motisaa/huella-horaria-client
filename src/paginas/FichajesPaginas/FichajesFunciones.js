@@ -6,7 +6,6 @@ export const initialValues = () => {
         fichajeId: "",
         trabajadorId: "",
         fechaHora: "",
-        direccion: "",
         longitud: "",
         latitud: "",
         tipo: "",
@@ -17,9 +16,9 @@ export const initialValues = () => {
 export const validationSchema = () => {
     // Define validation rules for form fields
     return yup.object({
-        fechaHora: yup.string().required("Requerido"),
-        longitud: yup.string().required("Requerido"),
-        latitud: yup.string().required("Requerido"),
-        tipo: yup.string().required("Requerido"),
+        // fechaHora: yup.string().required("Requerido"),
+        // // longitud: yup.string().required("Requerido"),
+        // latitud: yup.string().required("Requerido"),
+        // // tipo: yup.string().required("Requerido"),
     });
 };
