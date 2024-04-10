@@ -129,12 +129,6 @@ export const FichajePagina = () => {
             userDecisionTimeout: 5000,
         });
 
-
-    const tipoFichaje = [
-        { label: "ENTRADA" },
-        { label: "SALIDA" },
-    ]
-
     return (
         <>
             <MenuLateral>
@@ -220,34 +214,19 @@ export const FichajePagina = () => {
                                 />
                             </LocalizationProvider>
                         </Grid>
-
-                        <Grid item xs={12}>
-                            <Autocomplete
-                                disablePortal
-                                id="tipo"
-                                options={tipoFichaje}
-                                sx={{ width: 300 }}
-                                isOptionEqualToValue={(option, value) => option.label === value.label}
-                                renderInput={(params) => <TextField {...params} label="tipo de Fichaje" />}
-                            />
-                        </Grid>
-                        {/* 
-                        <Grid item xs={12} md={6} mt={1}>
+                             
+                        <Grid item xs={3}>
                             <TextField
                                 fullWidth
-                                id="direccion"
-                                name="direccion"
-                                label="Dirección"
-                                value={formik.values.direccion}
+                                id="tipo"
+                                name="tipo"
+                                label="Tipo de fichaje"
+                                value={formik.values.tipo}
                                 onChange={formik.handleChange}
-                                error={formik.touched.direccion
-                                    && Boolean(formik.errors.direccion)}
-                                helperText={formik.touched.direccion
-                                    && formik.errors.direccion}
-                                    
-                            />
-                        </Grid> 
-                        */}
+                                error={formik.touched.tipo && Boolean(formik.errors.tipo)}
+                                helperText={formik.touched.tipo && formik.errors.tipo}
+                            />     
+                        </Grid>
                         <Grid item xs={4}>
                             <TextField
                                 fullWidth
