@@ -14,6 +14,7 @@ import {
 import { MensajeConfirmacion } from "../../componentes/MensajeConfirmacion/MensajeConfirmacion";
 import { MensajeInformativo } from "../../componentes/MensajeInformativo/MensajeInformativo";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import { FormatoFechaEs } from "../../servicios/TratamientoFechas";
 
 export const FichajesPagina = () => {
     const navigate = useNavigate();
@@ -89,8 +90,8 @@ export const FichajesPagina = () => {
     const columns = [
         { field: "fichajeId", headerName: "ID", width: 50 },
         { field: "trabajadorId", headerName: "Trabajador ID", flex: 0.4 },
-        { field: "fechaHora", headerName: "Fecha y Hora", flex: 0.5 },
-        { field: "direccion", headerName: "Direccion", flex: 1 },
+        { field: "fechaHora", headerName: "Fecha y Hora", flex: 1,
+            valueFormatter: params => FormatoFechaEs(params)},
         { field: "longitud", headerName: "Longitud", flex: 0.5 },
         { field: "latitud", headerName: "Latitud", flex: 0.5 },
         { field: "tipo", headerName: "Tipo", flex: 0.5 },
