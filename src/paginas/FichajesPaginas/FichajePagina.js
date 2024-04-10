@@ -128,6 +128,14 @@ export const FichajePagina = () => {
             },
             userDecisionTimeout: 5000,
         });
+    const lat = Number(coords?.latitude?.toFixed(8));
+    const lon = Number(coords?.longitude?.toFixed(8));
+
+   /*
+   No se guarda en la base de datos
+   const fichajeOptions = ["Entrada", "Salida"];
+    const [value, setValue] = React.useState(fichajeOptions[0]);
+    const [inputValue, setInputValue] = React.useState(''); */
 
     return (
         <>
@@ -175,7 +183,7 @@ export const FichajePagina = () => {
                                 label="Trabajador"
                                 options={trabajadores}
                                 value={getTrabajadorIdValue()} 
-                                getOptionLabel={(option) => option.nombre}
+                                getOptionLabel={(option) => option.nombre + ' con ID: ' + option.trabajadorId}
                                 onChange={(e, value) => {
                                     formik.setFieldValue("trabajadorId", value.trabajadorId);
                                 }}
@@ -214,7 +222,6 @@ export const FichajePagina = () => {
                                 />
                             </LocalizationProvider>
                         </Grid>
-                             
                         <Grid item xs={3}>
                             <TextField
                                 fullWidth
@@ -223,20 +230,25 @@ export const FichajePagina = () => {
                                 label="Tipo de fichaje"
                                 value={formik.values.tipo}
                                 onChange={formik.handleChange}
-                                error={formik.touched.tipo && Boolean(formik.errors.tipo)}
-                                helperText={formik.touched.tipo && formik.errors.tipo}
+                                error={formik.touched.tipo
+                                    && Boolean(formik.errors.tipo)}
+                                helperText={formik.touched.tipo
+                                    && formik.errors.tipo}
                             />     
                         </Grid>
                         <Grid item xs={4}>
+                            
                             <TextField
                                 fullWidth
                                 id="latitud"
                                 name="latitud"
                                 label="Latitud"
-                                value={formik.values.latitud}
+                                value={ lat }
                                 onChange={formik.handleChange}
-                                error={formik.touched.latitud && Boolean(formik.errors.latitud)}
-                                helperText={formik.touched.latitud && formik.errors.latitud}
+                                error={formik.touched.latitud
+                                    && Boolean(formik.errors.latitud)}
+                                helperText={formik.touched.latitud 
+                                    && formik.errors.latitud}
                             />
                         </Grid>
                         <Grid item xs={4} md={4}>
@@ -245,10 +257,12 @@ export const FichajePagina = () => {
                                 id="longitud"
                                 name="longitud"
                                 label="Longitud"
-                                value={formik.values.longitud}
+                                value={lon}
                                 onChange={formik.handleChange}
-                                error={formik.touched.longitud && Boolean(formik.errors.longitud)}
-                                helperText={formik.touched.longitud && formik.errors.longitud}
+                                error={formik.touched.longitud
+                                    && Boolean(formik.errors.longitud)}
+                                helperText={formik.touched.longitud
+                                    && formik.errors.longitud}
                             />
                         </Grid>
                         <Grid item xs={12} md={6}></Grid>
