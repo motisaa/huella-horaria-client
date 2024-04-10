@@ -84,7 +84,7 @@ export const FichajePagina = () => {
             return LeerFichaje(params.fichajeId);
         },
         {
-            onSuccess: (data, variables, context) => {
+            onSuccess: (data) => {
                 formik.setValues({ ...formik.values, ...data.data });
                 setSelectedDate(ConvertirAFechaEs(data.data.fechaHora));
             },
@@ -102,7 +102,7 @@ export const FichajePagina = () => {
         trabajadorSeleccionado = trabajadores.find(
             (i) => i.trabajadorId === formik.values.trabajadorId
         );
-        return trabajadorSeleccionado;
+        return trabajadorSeleccionado || null;
     };
     useQuery(
         "trabajadores",
@@ -129,6 +129,12 @@ export const FichajePagina = () => {
             userDecisionTimeout: 5000,
         });
 
+
+    const tipoFichaje = [
+        { label: "ENTRADA" },
+        { label: "SALIDA" },
+    ]
+
     return (
         <>
             <MenuLateral>
@@ -151,7 +157,7 @@ export const FichajePagina = () => {
                                 Aceptar
                             </Button>
                         </Grid>
-                        <Grid item xs={2}>
+                        <Grid item xs={1}>
                             <TextField
                                 fullWidth
                                 id="fichajeId"
@@ -170,15 +176,14 @@ export const FichajePagina = () => {
                                 }
                             />
                         </Grid>
-                        <Grid item xs={2}>
+                        <Grid item xs={4}>
                             <Autocomplete
                                 label="Trabajador"
                                 options={trabajadores}
-                                value={getTrabajadorIdValue()}
+                                value={getTrabajadorIdValue()} 
                                 getOptionLabel={(option) => option.nombre}
                                 onChange={(e, value) => {
-                                    formik.setFieldValue("trabajadorId",
-                                        value.trabajadorId);
+                                    formik.setFieldValue("trabajadorId", value.trabajadorId);
                                 }}
                                 fullWidth
                                 id="trabajadorId"
@@ -195,11 +200,11 @@ export const FichajePagina = () => {
                                             formik.touched.trabajadorId &&
                                             formik.errors.trabajadorId
                                         }
-                                    />
+                                    ></TextField>
                                 )}
                             />
                         </Grid>
-                        <Grid item xs={2}>
+                        <Grid item xs={6}>
                             <LocalizationProvider
                                 dateAdapter={AdapterMoment}
                                 adapterLocale="es-ES"
@@ -214,6 +219,17 @@ export const FichajePagina = () => {
                                     }}
                                 />
                             </LocalizationProvider>
+                        </Grid>
+
+                        <Grid item xs={12}>
+                            <Autocomplete
+                                disablePortal
+                                id="tipo"
+                                options={tipoFichaje}
+                                sx={{ width: 300 }}
+                                isOptionEqualToValue={(option, value) => option.label === value.label}
+                                renderInput={(params) => <TextField {...params} label="tipo de Fichaje" />}
+                            />
                         </Grid>
                         {/* 
                         <Grid item xs={12} md={6} mt={1}>
@@ -232,7 +248,7 @@ export const FichajePagina = () => {
                             />
                         </Grid> 
                         */}
-                        <Grid item xs={6} md={4}>
+                        <Grid item xs={4}>
                             <TextField
                                 fullWidth
                                 id="latitud"
@@ -244,7 +260,7 @@ export const FichajePagina = () => {
                                 helperText={formik.touched.latitud && formik.errors.latitud}
                             />
                         </Grid>
-                        <Grid item xs={6} md={4}>
+                        <Grid item xs={4} md={4}>
                             <TextField
                                 fullWidth
                                 id="longitud"
