@@ -20,6 +20,7 @@ import { DateTimePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { ConvertirAFechaEs, FormatoFechaEs } from "../../servicios/TratamientoFechas";
 import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
 
+
 export const FichajePagina = () => {
     const params = useParams();
     const navigate = useNavigate();
@@ -101,7 +102,7 @@ export const FichajePagina = () => {
         trabajadorSeleccionado = trabajadores.find(
             (i) => i.trabajadorId === formik.values.trabajadorId
         );
-        return trabajadorSeleccionado || null;
+        return trabajadorSeleccionado;
     };
     useQuery(
         "trabajadores",
@@ -120,6 +121,13 @@ export const FichajePagina = () => {
             },
         }
     );
+    const { coords, isGeolocationAvailable, isGeolocationEnabled } =
+        useGeolocated({
+            positionOptions: {
+                enableHighAccuracy: true,
+            },
+            userDecisionTimeout: 5000,
+        });
 
     return (
         <>
@@ -143,7 +151,7 @@ export const FichajePagina = () => {
                                 Aceptar
                             </Button>
                         </Grid>
-                        <Grid item xs={2} mt={2}>
+                        <Grid item xs={2}>
                             <TextField
                                 fullWidth
                                 id="fichajeId"
@@ -162,7 +170,7 @@ export const FichajePagina = () => {
                                 }
                             />
                         </Grid>
-                        <Grid item xs={2} mt={2}>
+                        <Grid item xs={2}>
                             <Autocomplete
                                 label="Trabajador"
                                 options={trabajadores}
@@ -191,7 +199,7 @@ export const FichajePagina = () => {
                                 )}
                             />
                         </Grid>
-                        <Grid item xs={4} mt={2}>
+                        <Grid item xs={2}>
                             <LocalizationProvider
                                 dateAdapter={AdapterMoment}
                                 adapterLocale="es-ES"
@@ -207,6 +215,7 @@ export const FichajePagina = () => {
                                 />
                             </LocalizationProvider>
                         </Grid>
+                        {/* 
                         <Grid item xs={12} md={6} mt={1}>
                             <TextField
                                 fullWidth
@@ -219,6 +228,32 @@ export const FichajePagina = () => {
                                     && Boolean(formik.errors.direccion)}
                                 helperText={formik.touched.direccion
                                     && formik.errors.direccion}
+                                    
+                            />
+                        </Grid> 
+                        */}
+                        <Grid item xs={6} md={4}>
+                            <TextField
+                                fullWidth
+                                id="latitud"
+                                name="latitud"
+                                label="Latitud"
+                                value={formik.values.latitud}
+                                onChange={formik.handleChange}
+                                error={formik.touched.latitud && Boolean(formik.errors.latitud)}
+                                helperText={formik.touched.latitud && formik.errors.latitud}
+                            />
+                        </Grid>
+                        <Grid item xs={6} md={4}>
+                            <TextField
+                                fullWidth
+                                id="longitud"
+                                name="longitud"
+                                label="Longitud"
+                                value={formik.values.longitud}
+                                onChange={formik.handleChange}
+                                error={formik.touched.longitud && Boolean(formik.errors.longitud)}
+                                helperText={formik.touched.longitud && formik.errors.longitud}
                             />
                         </Grid>
                         <Grid item xs={12} md={6}></Grid>
