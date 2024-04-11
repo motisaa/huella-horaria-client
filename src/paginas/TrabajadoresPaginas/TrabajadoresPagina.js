@@ -103,8 +103,8 @@ export const TrabajadoresPagina = () => {
     { field: "nombre", headerName: "Nombre", flex: 0.5 },
     { field: "apellido1", headerName: "Primer Apellido", flex: 0.4 },
     { field: "apellido2", headerName: "Segundo Apellido", flex: 0.4 },
-    { field: "usuario", headerName: "username", flex: 0.4 },
-    { field: "email", headerName: "email", flex: 1 },
+    { field: "usuario", headerName: "Nombre de usuario", flex: 0.4 },
+    { field: "email", headerName: "Email", flex: 1 },
     // Fixed (now shows group name not groupId)
     { field: 'nombreGrupo', headerName: "Grupo", flex: 0.4 },
     {
