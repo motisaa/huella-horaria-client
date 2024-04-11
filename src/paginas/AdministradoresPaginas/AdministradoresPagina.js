@@ -117,8 +117,8 @@ export const AdministradoresPagina = () => {
       { field: "nombre", headerName: "Nombre", flex: 0.5 },
       { field: "apellido1", headerName: "Primer Apellido", flex: 0.4 },
       { field: "apellido2", headerName: "Segundo Apellido", flex: 0.4 },
-      { field: "usuario", headerName: "username", flex: 0.4 },
-      { field: "email", headerName: "email", flex: 1},
+      { field: "usuario", headerName: "Nombre de Usuario", flex: 0.4 },
+      { field: "email", headerName: "Email", flex: 1},
       {
         field: "actions",
         type: "actions",
