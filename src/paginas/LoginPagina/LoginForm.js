@@ -12,8 +12,8 @@ import { MensajeError } from "../../servicios/TratamientoErrores";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 const validationSchema = yup.object({
-    usuario: yup.string("Introduzca su nombre de usuario").required("Requerido"),
-    password: yup.string("Introduzca su contraseña").required("Requerido"),
+    usuario: yup.string("usuario").required("Requerido"),
+    password: yup.string("password").required("Requerido"),
 });
 
 export const LoginForm = (props) => {
