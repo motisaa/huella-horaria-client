@@ -134,16 +134,24 @@ export const FichajePagina = () => {
 
     useEffect(() => {
         if (params.fichajeId === "0") {
-            const lat = Number(coords?.latitude?.toFixed(8));
-            const lon = Number(coords?.longitude?.toFixed(8));
-            formik.setFieldValue('latitud', lat)
-            formik.setFieldValue('longitud', lon)
+            if ("geolocation" in navigator) {
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    formik.setFieldValue('latitud', position.coords.latitude)
+                    formik.setFieldValue('longitud', position.coords.longitude)
+                });
+            } else {
+                console.log("Geolocation is not available in your browser.");
+            }
+            // const lat = Number(coords?.latitude?.toFixed(8));
+            // const lon = Number(coords?.longitude?.toFixed(8));
+            // formik.setFieldValue('latitud', lat)
+            // formik.setFieldValue('longitud', lon)
         }
 
     }, [])
 
     // Para los tipos
-    const [tipos, setTipo] = useState(['ENTRADA', 'SALIDA']);
+    const [tipos, setTipos] = useState(['ENTRADA', 'SALIDA']);
     let tipoSeleccionado = null;
     const getTipoValue = () => {
         tipoSeleccionado = tipos.find(
@@ -199,7 +207,7 @@ export const FichajePagina = () => {
                                 options={trabajadores}
                                 value={getTrabajadorIdValue()}
                                 getOptionLabel={(option) => option.nombre + ' ' + option.apellido1 + ' ' +
-                                // si apellido2 es null o undefined, se muestra cadena vacia
+                                    // si apellido2 es null o undefined, se muestra cadena vacia
                                     (option.apellido2 ?? "")}
                                 onChange={(e, value) => {
                                     formik.setFieldValue("trabajadorId", value.trabajadorId);
