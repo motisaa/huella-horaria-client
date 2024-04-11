@@ -3,11 +3,11 @@ import * as yup from "yup";
 // Define initial form field values
 export const initialValues = () => {
     return {
-        fichajeId: "",
-        trabajadorId: "",
+        fichajeId: 0,
+        trabajadorId: 0,
         fechaHora: "",
-        longitud: "",
-        latitud: "",
+        longitud: 0,
+        latitud: 0,
         tipo: "",
     };
 };
