@@ -76,7 +76,7 @@ export const TrabajadoresPagina = () => {
     );
     setHayMensaje(true);
   };
-// eslint-disable-next-line 
+  // eslint-disable-next-line 
   const session = getSession();
 
   // eslint-disable-next-line no-unused-vars
@@ -105,8 +105,8 @@ export const TrabajadoresPagina = () => {
     { field: "apellido2", headerName: "Segundo Apellido", flex: 0.4 },
     { field: "usuario", headerName: "username", flex: 0.4 },
     { field: "email", headerName: "email", flex: 1 },
-    // toFix (It should be seen groupName not groupID)
-    { field: 'grupoId', headerName: "Grupo", flex: 0.4 },
+    // Fixed (now shows group name not groupId)
+    { field: 'nombreGrupo', headerName: "Grupo", flex: 0.4 },
     {
       field: "actions",
       type: "actions",
@@ -174,12 +174,12 @@ export const TrabajadoresPagina = () => {
           mensaje={mensaje}
           cerrarMensaje={() => setHayMensaje(false)}
         />
-      <MensajeConfirmacion
-            hayConfirmacion={hayConfirmacion}
-            mensaje={mensajeConfirmacion}
-            confirmar={deleteConfirmado}
-            cerrarConfirmacion={() => setHayConfirmacion(false)}
-          />
+        <MensajeConfirmacion
+          hayConfirmacion={hayConfirmacion}
+          mensaje={mensajeConfirmacion}
+          confirmar={deleteConfirmado}
+          cerrarConfirmacion={() => setHayConfirmacion(false)}
+        />
       </MenuLateral>
     </>
   );
