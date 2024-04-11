@@ -73,7 +73,7 @@ export const FichajesPagina = () => {
         return () => {
             setFichaje(row);
             setMensajeConfirmacion(
-                `¿Realmente desea eliminar el fichaje ${row.fichajeId}?`
+                `¿Realmente desea eliminar el registro de ${row.tipo} de ${row.nombreTrabajador}?`
             );
             setHayConfirmacion(true);
         };
@@ -83,15 +83,17 @@ export const FichajesPagina = () => {
         queryFichajes.refetch();
         setHayConfirmacion(false);
         setMensaje(
-            `El fichaje ${fichaje.fichajeId} ha sido eliminado de la base de datos`
+            `El fichaje de ${fichaje.nombreTrabajador} ha sido eliminado de la base de datos`
         );
         setHayMensaje(true);
     };
     const columns = [
         { field: "fichajeId", headerName: "ID", width: 50 },
         { field: "nombreTrabajador", headerName: "Trabajador", flex: 0.4 },
-        { field: "fechaHora", headerName: "Fecha y Hora", flex: 1,
-            valueFormatter: params => FormatoFechaEs(params)},
+        {
+            field: "fechaHora", headerName: "Fecha y Hora", flex: 1,
+            valueFormatter: params => FormatoFechaEs(params)
+        },
         { field: "longitud", headerName: "Longitud", flex: 0.5 },
         { field: "latitud", headerName: "Latitud", flex: 0.5 },
         { field: "tipo", headerName: "Tipo", flex: 0.5 },
@@ -123,7 +125,7 @@ export const FichajesPagina = () => {
                         }}>
                             <Toolbar>
                                 <Typography variant="h6" component="h6">
-                                   Fichajes
+                                    Fichajes
                                 </Typography>
                                 <span className="toolbarButtons">
                                     <IconButton
