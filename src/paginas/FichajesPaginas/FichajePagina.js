@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useFormik } from "formik";
 import { useMutation, useQuery } from "react-query";
@@ -104,6 +104,7 @@ export const FichajePagina = () => {
         );
         return trabajadorSeleccionado || null;
     };
+
     useQuery(
         "trabajadores",
         () => {
@@ -128,14 +129,28 @@ export const FichajePagina = () => {
             },
             userDecisionTimeout: 5000,
         });
-    const lat = Number(coords?.latitude?.toFixed(8));
-    const lon = Number(coords?.longitude?.toFixed(8));
 
-   /*
-   No se guarda en la base de datos
-   const fichajeOptions = ["Entrada", "Salida"];
-    const [value, setValue] = React.useState(fichajeOptions[0]);
-    const [inputValue, setInputValue] = React.useState(''); */
+
+
+    useEffect(() => {
+        if (params.fichajeId === "0") {
+            const lat = Number(coords?.latitude?.toFixed(8));
+            const lon = Number(coords?.longitude?.toFixed(8));
+            formik.setFieldValue('latitud', lat)
+            formik.setFieldValue('longitud', lon)
+        }
+
+    }, [])
+
+    // Para los tipos
+    const [tipos, setTipo] = useState(['ENTRADA', 'SALIDA']);
+    let tipoSeleccionado = null;
+    const getTipoValue = () => {
+        tipoSeleccionado = tipos.find(
+            (tipo) => tipo === formik.values.tipo
+        );
+        return tipoSeleccionado || null;
+    };
 
     return (
         <>
@@ -159,7 +174,7 @@ export const FichajePagina = () => {
                                 Aceptar
                             </Button>
                         </Grid>
-                        <Grid item xs={1}>
+                        <Grid item xs={2}>
                             <TextField
                                 fullWidth
                                 id="fichajeId"
@@ -178,12 +193,14 @@ export const FichajePagina = () => {
                                 }
                             />
                         </Grid>
-                        <Grid item xs={4}>
+                        <Grid item xs={6}>
                             <Autocomplete
                                 label="Trabajador"
                                 options={trabajadores}
-                                value={getTrabajadorIdValue()} 
-                                getOptionLabel={(option) => option.nombre + ' con ID: ' + option.trabajadorId}
+                                value={getTrabajadorIdValue()}
+                                getOptionLabel={(option) => option.nombre + ' ' + option.apellido1 + ' ' +
+                                // si apellido2 es null o undefined, se muestra cadena vacia
+                                    (option.apellido2 ?? "")}
                                 onChange={(e, value) => {
                                     formik.setFieldValue("trabajadorId", value.trabajadorId);
                                 }}
@@ -206,7 +223,7 @@ export const FichajePagina = () => {
                                 )}
                             />
                         </Grid>
-                        <Grid item xs={6}>
+                        <Grid item xs={4}>
                             <LocalizationProvider
                                 dateAdapter={AdapterMoment}
                                 adapterLocale="es-ES"
@@ -222,42 +239,56 @@ export const FichajePagina = () => {
                                 />
                             </LocalizationProvider>
                         </Grid>
-                        <Grid item xs={3}>
-                            <TextField
+                        <Grid item xs={4}>
+                            <Autocomplete
+                                label="Tipo"
+                                options={tipos}
+                                value={getTipoValue()}
+                                getOptionLabel={(option) => option}
+                                onChange={(e, value) => {
+                                    formik.setFieldValue("tipo", value);
+                                }}
                                 fullWidth
                                 id="tipo"
                                 name="tipo"
-                                label="Tipo de fichaje"
-                                value={formik.values.tipo}
-                                onChange={formik.handleChange}
-                                error={formik.touched.tipo
-                                    && Boolean(formik.errors.tipo)}
-                                helperText={formik.touched.tipo
-                                    && formik.errors.tipo}
-                            />     
+                                renderInput={(params) => (
+                                    <TextField
+                                        {...params}
+                                        label="Elija un tipo"
+                                        error={
+                                            formik.touched.tipo &&
+                                            Boolean(formik.errors.tipo)
+                                        }
+                                        helperText={
+                                            formik.touched.tipo &&
+                                            formik.errors.tipo
+                                        }
+                                    ></TextField>
+                                )}
+                            />
                         </Grid>
                         <Grid item xs={4}>
-                            
+
                             <TextField
                                 fullWidth
                                 id="latitud"
                                 name="latitud"
                                 label="Latitud"
-                                value={ lat }
+                                value={formik.values.latitud}
                                 onChange={formik.handleChange}
                                 error={formik.touched.latitud
                                     && Boolean(formik.errors.latitud)}
-                                helperText={formik.touched.latitud 
+                                helperText={formik.touched.latitud
                                     && formik.errors.latitud}
                             />
                         </Grid>
-                        <Grid item xs={4} md={4}>
+                        <Grid item xs={4}>
                             <TextField
                                 fullWidth
                                 id="longitud"
                                 name="longitud"
                                 label="Longitud"
-                                value={lon}
+                                value={formik.values.longitud}
                                 onChange={formik.handleChange}
                                 error={formik.touched.longitud
                                     && Boolean(formik.errors.longitud)}
@@ -265,7 +296,7 @@ export const FichajePagina = () => {
                                     && formik.errors.longitud}
                             />
                         </Grid>
-                        <Grid item xs={12} md={6}></Grid>
+                        <Grid item xs={12}></Grid>
                         <Grid item xs={12} sx={{ textAlign: "right" }}>
                             <Button color="success" variant="contained"
                                 onClick={salirForm}>
@@ -282,7 +313,7 @@ export const FichajePagina = () => {
                         </Grid>
                     </Grid>
                 </form>
-                <Grid item xs={12} mt={2}>
+                <Grid item xs={12}>
                     <ErrorGeneral
                         hayError={hayError}
                         mensajeError={mensajeError}
