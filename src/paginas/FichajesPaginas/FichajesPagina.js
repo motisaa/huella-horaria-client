@@ -89,7 +89,7 @@ export const FichajesPagina = () => {
     };
     const columns = [
         { field: "fichajeId", headerName: "ID", width: 50 },
-        { field: "trabajadorId", headerName: "Trabajador ID", flex: 0.4 },
+        { field: "nombreTrabajador", headerName: "Trabajador", flex: 0.4 },
         { field: "fechaHora", headerName: "Fecha y Hora", flex: 1,
             valueFormatter: params => FormatoFechaEs(params)},
         { field: "longitud", headerName: "Longitud", flex: 0.5 },
