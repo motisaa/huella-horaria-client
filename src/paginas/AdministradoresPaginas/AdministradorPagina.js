@@ -206,7 +206,7 @@ export const AdministradorPagina = () => {
                 fullWidth
                 id="usuario"
                 name="usuario"
-                label="username"
+                label="Nombre de usuaruo"
                 value={formik.values.usuario}
                 onChange={formik.handleChange}
                 error={formik.touched.usuario && Boolean(formik.errors.usuario)}
