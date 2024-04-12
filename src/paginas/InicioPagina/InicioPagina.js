@@ -15,8 +15,7 @@ export const InicioPagina = () => {
                                 ¡Bienvenido a nuestra aplicación! Para explorar todas las funciones
                                 disponibles, simplemente utiliza el menú lateral.
                                 Para maximizar tu espacio de trabajo, el menú está oculto por defecto, pero puedes mostrarlo u ocultarlo
-                                con un simple clic en el icono <IconButton><MenuIcon /></IconButton>
-                                de la parte superior izquierda de la barra de tareas.
+                                con un simple clic en el icono <MenuIcon /> de la parte superior izquierda de la barra de navegación.
                             </Typography>
                         </Paper>
                     </Grid>
