@@ -258,7 +258,7 @@ export const TrabajadorPagina = () => {
                                 fullWidth
                                 id="usuario"
                                 name="usuario"
-                                label="Nombre de usuaruo"
+                                label="Nombre de usuario"
                                 value={formik.values.usuario}
                                 onChange={formik.handleChange}
                                 error={formik.touched.usuario
