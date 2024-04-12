@@ -14,7 +14,6 @@ import { MenuLateral } from "../../componentes/MenuLateral/MenuLateral";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { LeerUsuariosTrabajadores } from "../../servicios/RQTrabajadores";
 import "moment/locale/es";
-import { useGeolocated } from "react-geolocated";
 import moment from "moment";
 import { DateTimePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { ConvertirAFechaEs, FormatoFechaEs } from "../../servicios/TratamientoFechas";
@@ -122,14 +121,6 @@ export const FichajePagina = () => {
             },
         }
     );
-    const { coords, isGeolocationAvailable, isGeolocationEnabled } =
-        useGeolocated({
-            positionOptions: {
-                enableHighAccuracy: true,
-            },
-            userDecisionTimeout: 5000,
-        });
-
 
 
     useEffect(() => {
@@ -142,10 +133,6 @@ export const FichajePagina = () => {
             } else {
                 console.log("Geolocation is not available in your browser.");
             }
-            // const lat = Number(coords?.latitude?.toFixed(8));
-            // const lon = Number(coords?.longitude?.toFixed(8));
-            // formik.setFieldValue('latitud', lat)
-            // formik.setFieldValue('longitud', lon)
         }
 
     }, [])
