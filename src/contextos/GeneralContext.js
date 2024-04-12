@@ -40,15 +40,19 @@ const GeneralContext = props => {
         }
     }
 
-    const setSession = (usuario) => {
-        setCookie('huellaHorariaUsuario', JSON.stringify(usuario), 1);
+    const setSession = (usuario, administrador) => {
+        setCookie('huellaHorariaUser', JSON.stringify(usuario), 1);
+        setCookie('huellaHorariaAdmin', JSON.stringify(administrador), 1);
     };
 
     const getSession = () => {
-        let usuario = getCookie('huellaHorariaUsuario')
+        let usuario = getCookie('huellaHorariaUser')
         if (usuario) { usuario = JSON.parse(usuario) } else { return null }
+        let administrador = getCookie('huellaHorariaAdmin')
+        if (administrador) { administrador = JSON.parse(administrador) } else { return null }
         let session = {
-            usuario
+            usuario,
+            administrador
         }
         return session;
     };
