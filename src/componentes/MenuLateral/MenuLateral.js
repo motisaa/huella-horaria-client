@@ -108,7 +108,6 @@ export const MenuLateral = (props) => {
                                 <PersonIcon />
                                 <Typography ml={1}>
                                     {sesion ? sesion.usuario.nombre : ""}
-                                    {sesion ? sesion.administrador.nombre : ''}
                                 </Typography>
                             </IconButton>
                             <IconButton
@@ -154,84 +153,84 @@ export const MenuLateral = (props) => {
                                 </ListItem>
 
                             </List>
-                            (verMenuAdmin) ?
-                            <List>
-                                <ListItem
-                                    key="Administradores"
-                                    disablePadding
-                                    onClick={() => {
-                                        navigate("/administradores");
-                                    }}
-                                >
-                                    <ListItemButton>
-                                        <ListItemIcon>
-                                            <SupervisorAccountIcon />
-                                        </ListItemIcon>
-                                        <ListItemText> Administradores </ListItemText>
-                                    </ListItemButton>
-                                </ListItem>
-                                <ListItem
-                                    key="trabajadores"
-                                    disablePadding
-                                    onClick={() => {
-                                        navigate("/trabajadores");
-                                    }}
-                                >
-                                    <ListItemButton>
-                                        <ListItemIcon>
-                                            <EngineeringIcon></EngineeringIcon>
-                                        </ListItemIcon>
-                                        <ListItemText> Trabajadores </ListItemText>
-                                    </ListItemButton>
-                                </ListItem>
+                            {verMenuAdmin ? (
+                                <List>
+                                    <ListItem
+                                        key="Administradores"
+                                        disablePadding
+                                        onClick={() => {
+                                            navigate("/administradores");
+                                        }}
+                                    >
+                                        <ListItemButton>
+                                            <ListItemIcon>
+                                                <SupervisorAccountIcon />
+                                            </ListItemIcon>
+                                            <ListItemText> Administradores </ListItemText>
+                                        </ListItemButton>
+                                    </ListItem>
+                                    <ListItem
+                                        key="trabajadores"
+                                        disablePadding
+                                        onClick={() => {
+                                            navigate("/trabajadores");
+                                        }}
+                                    >
+                                        <ListItemButton>
+                                            <ListItemIcon>
+                                                <EngineeringIcon />
+                                            </ListItemIcon>
+                                            <ListItemText> Trabajadores </ListItemText>
+                                        </ListItemButton>
+                                    </ListItem>
+                                    <ListItem
+                                        key="grupos"
+                                        disablePadding
+                                        onClick={() => {
+                                            navigate("/grupos");
+                                        }}
+                                    >
+                                        <ListItemButton>
+                                            <ListItemIcon>
+                                                <GroupsIcon />
+                                            </ListItemIcon>
+                                            <ListItemText> Grupos </ListItemText>
+                                        </ListItemButton>
+                                    </ListItem>
+                                    <ListItem
+                                        key="fichajes"
+                                        disablePadding
+                                        onClick={() => {
+                                            navigate("/fichajes");
+                                        }}
+                                    >
+                                        <ListItemButton>
+                                            <ListItemIcon>
+                                                <AccessTimeIcon />
+                                            </ListItemIcon>
+                                            <ListItemText> Fichajes </ListItemText>
+                                        </ListItemButton>
+                                    </ListItem>
+                                </List>
+                            ) : (
+                                <List>
+                                    <ListItem
+                                        key="fichajes"
+                                        disablePadding
+                                        onClick={() => {
+                                            navigate("/fichajes");
+                                        }}
+                                    >
+                                        <ListItemButton>
+                                            <ListItemIcon>
+                                                <AccessTimeIcon />
+                                            </ListItemIcon>
+                                            <ListItemText> Fichajes </ListItemText>
+                                        </ListItemButton>
+                                    </ListItem>
+                                </List>
+                            )}
 
-                                <ListItem
-                                    key="grupos"
-                                    disablePadding
-                                    onClick={() => {
-                                        navigate("/grupos");
-                                    }}
-                                >
-                                    <ListItemButton>
-                                        <ListItemIcon>
-                                            <GroupsIcon></GroupsIcon>
-                                        </ListItemIcon>
-                                        <ListItemText> Grupos </ListItemText>
-                                    </ListItemButton>
-                                </ListItem>
-
-                                <ListItem
-                                    key="fichajes"
-                                    disablePadding
-                                    onClick={() => {
-                                        navigate("/fichajes");
-                                    }}
-                                >
-                                    <ListItemButton>
-                                        <ListItemIcon>
-                                            <AccessTimeIcon />
-                                        </ListItemIcon>
-                                        <ListItemText> Fichajes </ListItemText>
-                                    </ListItemButton>
-                                </ListItem>
-
-                                :
-
-                                <ListItem
-                                    key="fichajes"
-                                    disablePadding
-                                    onClick={() => {
-                                        navigate("/fichajes");
-                                    }}
-                                >
-                                    <ListItemButton>
-                                        <ListItemIcon>
-                                            <AccessTimeIcon />
-                                        </ListItemIcon>
-                                        <ListItemText> Fichajes </ListItemText>
-                                    </ListItemButton>
-                                </ListItem>
-                            </List>
                         </Box>
                     </Drawer>
                 </Grid>
