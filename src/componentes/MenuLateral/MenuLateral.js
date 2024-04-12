@@ -28,6 +28,8 @@ const drawerWidth = 230;
 export const MenuLateral = (props) => {
     const navigate = useNavigate();
 
+    const verMenuAdmin = false
+
     const { getSession } = useContext(GeneralCtx);
     const [drVariant, setDrVariant] = useState("temporary");
     const [drOpen, setDrOpen] = useState(false);
@@ -63,6 +65,7 @@ export const MenuLateral = (props) => {
         let session = getSession();
         if (!session) navigate("/");
         setSesion(session)
+        if (session.administrador) verMenuAdmin(true)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -105,6 +108,7 @@ export const MenuLateral = (props) => {
                                 <PersonIcon />
                                 <Typography ml={1}>
                                     {sesion ? sesion.usuario.nombre : ""}
+                                    {sesion ? sesion.administrador.nombre : ''}
                                 </Typography>
                             </IconButton>
                             <IconButton
@@ -148,6 +152,10 @@ export const MenuLateral = (props) => {
                                         <ListItemText> Inicio </ListItemText>
                                     </ListItemButton>
                                 </ListItem>
+
+                            </List>
+                            (verMenuAdmin) ?
+                            <List>
                                 <ListItem
                                     key="Administradores"
                                     disablePadding
@@ -207,6 +215,22 @@ export const MenuLateral = (props) => {
                                     </ListItemButton>
                                 </ListItem>
 
+                                :
+
+                                <ListItem
+                                    key="fichajes"
+                                    disablePadding
+                                    onClick={() => {
+                                        navigate("/fichajes");
+                                    }}
+                                >
+                                    <ListItemButton>
+                                        <ListItemIcon>
+                                            <AccessTimeIcon />
+                                        </ListItemIcon>
+                                        <ListItemText> Fichajes </ListItemText>
+                                    </ListItemButton>
+                                </ListItem>
                             </List>
                         </Box>
                     </Drawer>
