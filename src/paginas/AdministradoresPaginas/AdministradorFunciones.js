@@ -9,7 +9,12 @@ export const initialValues = () => {
     apellido2: "",
     usuario: "",
     password: "",
-    empresaId: "",
+    // we set de initial value with the id of only one existing company
+    /* Pongo el valor 2 porque es la única empresa existente ahora
+      En caso de de tener más empresas se pone el valor 0 
+      y en la página de administrador página se usa empresas useState
+    */
+    empresaId: 2,
   };
 };
 /* This function defines the validation rules for the form fields using Yup.
