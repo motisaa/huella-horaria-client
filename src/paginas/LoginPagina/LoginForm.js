@@ -41,8 +41,8 @@ export const LoginForm = (props) => {
 
     const loginBasico = async ({ usuario, password }) => {
         try {
-            const { data: admin } = await LoginBasicoUsuario(usuario, password);
-            return admin;
+            const { data: user } = await LoginBasicoUsuario(usuario, password);
+            return user;
         } catch (error) {
             console.log("error", error);
             setMensajeError(MensajeError(error));
