@@ -25,31 +25,31 @@ export const AdministradorPagina = () => {
   const [hayMensaje, setHayMensaje] = useState(false);
   const [mensaje, setMensaje ] = useState("");
 
-  const [empresas, setEmpresas] = useState([]);
-  let empresaSeleccionado = null;
-  const getEmpresaIdValue = () => {
-    empresaSeleccionado = empresas.find(
-      (i) => i.empresaId === formik.values.empresaId
-    );
-    return empresaSeleccionado || null;
-  };
-  useQuery(
-    "empresas",
-    () => {
-      return LeerEmpresas();
-    },
-    {
-      onSuccess: (data) => {
-        let opcionesEmpresas = data.data;
-        setEmpresas(opcionesEmpresas);
-      },
-      onError: (error) => {
-        console.error(error);
-        setMensajeError(MensajeError(error));
-        setHayError(true);
-      },
-    }
-  );
+  // const [empresas, setEmpresas] = useState([]);
+  // let empresaSeleccionado = null;
+  // const getEmpresaIdValue = () => {
+  //   empresaSeleccionado = empresas.find(
+  //     (i) => i.empresaId === formik.values.empresaId
+  //   );
+  //   return empresaSeleccionado || null;
+  // };
+  // useQuery(
+  //   "empresas",
+  //   () => {
+  //     return LeerEmpresas();
+  //   },
+  //   {
+  //     onSuccess: (data) => {
+  //       let opcionesEmpresas = data.data;
+  //       setEmpresas(opcionesEmpresas);
+  //     },
+  //     onError: (error) => {
+  //       console.error(error);
+  //       setMensajeError(MensajeError(error));
+  //       setHayError(true);
+  //     },
+  //   }
+  // );
   const session = getSession();
   const handleSubmit = async (values) => {
     if (!values.adminId) {
@@ -206,7 +206,7 @@ export const AdministradorPagina = () => {
                 fullWidth
                 id="usuario"
                 name="usuario"
-                label="Nombre de usuaruo"
+                label="Nombre de usuario"
                 value={formik.values.usuario}
                 onChange={formik.handleChange}
                 error={formik.touched.usuario && Boolean(formik.errors.usuario)}
@@ -229,7 +229,19 @@ export const AdministradorPagina = () => {
               />
             </Grid>
             <Grid item xs={4}>
-              <Autocomplete
+              <TextField
+                fullWidth
+                id="empresaId"
+                name="empresaId"
+                label="Empresa"
+                value={"InnovaFutura"}
+                defaultValue={formik.values.empresaId}
+                disabled
+                onChange={formik.handleChange}
+                error={formik.touched.empresaId && Boolean(formik.errors.empresaId)}
+                helperText={formik.touched.empresaId && formik.errors.empresaId}
+              />
+              {/* <Autocomplete
                 label="Empresa"
                 options={empresas}
                 value={getEmpresaIdValue()}
@@ -243,7 +255,7 @@ export const AdministradorPagina = () => {
                 renderInput={(params) => (
                   <TextField
                     {...params}
-                    label="Elija una empresa"
+
                     error={
                       formik.touched.empresaId &&
                       Boolean(formik.errors.empresaId)
@@ -254,7 +266,7 @@ export const AdministradorPagina = () => {
                     }
                   ></TextField>
                 )}
-              />
+              /> */}
             </Grid>
             <Grid item xs={12} md={6}></Grid>
             <Grid item xs={12} sx={{ textAlign: "right" }}>
