@@ -19,6 +19,11 @@ import { DateTimePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { ConvertirAFechaEs, FormatoFechaEs } from "../../servicios/TratamientoFechas";
 import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
 
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
 
 export const FichajePagina = () => {
     const params = useParams();
@@ -235,7 +240,7 @@ export const FichajePagina = () => {
                             </LocalizationProvider>
                         </Grid>
                         <Grid item xs={4}>
-                            <Autocomplete
+                            {/* <Autocomplete
                                 label="Tipo"
                                 options={tipos}
                                 value={getTipoValue()}
@@ -260,7 +265,24 @@ export const FichajePagina = () => {
                                         }
                                     ></TextField>
                                 )}
-                            />
+                            /> */}
+                            <FormControl>
+                                <FormLabel id="tipo">Elija el tipo</FormLabel>
+                                <RadioGroup
+                                    row
+                                    aria-labelledby="tipo"
+                                    name="tipo"
+                                    onChange={(e, value) => {
+                                        formik.setFieldValue("tipo", value);
+                                    }}
+                                >
+                                    <FormControlLabel value="ENTRADA"
+                                        control={<Radio />} label="ENTRADA" />
+                                    <FormControlLabel value="SALIDA"
+                                        control={<Radio />} label="SALIDA" />
+                                </RadioGroup>
+                            </FormControl>
+
                         </Grid>
                         <Grid item xs={4}>
 
