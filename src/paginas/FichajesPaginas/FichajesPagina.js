@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useMutation, useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { MenuLateral } from "../../componentes/MenuLateral/MenuLateral";
 import { MensajeError } from "../../servicios/TratamientoErrores";
 import { ErrorGeneral } from "../../componentes/ErrorGeneral/ErrorGeneral";
-import { LeerFichajes, EliminarFichaje } from "../../servicios/RQFichajes";
+import { LeerFichajes, EliminarFichaje, LeerFichajesTrabajador } from "../../servicios/RQFichajes";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
@@ -15,6 +15,7 @@ import { MensajeConfirmacion } from "../../componentes/MensajeConfirmacion/Mensa
 import { MensajeInformativo } from "../../componentes/MensajeInformativo/MensajeInformativo";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { FormatoFechaEs } from "../../servicios/TratamientoFechas";
+import { GeneralCtx } from "../../contextos/GeneralContext";
 
 export const FichajesPagina = () => {
     const navigate = useNavigate();
@@ -26,15 +27,38 @@ export const FichajesPagina = () => {
     const [mensajeConfirmacion, setMensajeConfirmacion] = useState("");
     const [fichajes, setFichajes] = useState([]);
     const [fichaje, setFichaje] = useState();
+    const [sesion, setSesion] = useState()
+    const { getSession } = useContext(GeneralCtx);
+
+
+    useEffect(() => {
+        // Comprobación de que hay una sesión activa
+        let session = getSession();
+        if (!session) navigate("/");
+        setSesion(session)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
 
     const queryFichajes = useQuery(
         "fichajes",
-        () => {
-            return LeerFichajes();
+        async () => {
+            try {
+                let data;
+                let session = getSession();
+                if (session.usuario.tipo === 'ADMINISTRADOR') {
+                    data = await LeerFichajes();
+                } else {
+                    data = await LeerFichajesTrabajador(session.usuario.trabajadorId);
+                }
+                return data;
+            } catch (error) {
+                throw error
+            }
         },
         {
             onSuccess: (data) => {
-                setFichajes(data.data);
+                setFichajes(data);
             },
             onError: (error) => {
                 console.error(error);
@@ -43,6 +67,11 @@ export const FichajesPagina = () => {
             },
         }
     );
+
+
+
+
+
 
     const eliminaFichaje = useMutation(
         ({ fichajeId }) => {
@@ -103,17 +132,29 @@ export const FichajesPagina = () => {
             headerName: "Acciones",
             width: 80,
             getActions: ({ row }) => {
-                return [
-                    <IconButton onClick={deleteFichaje(row)}>
-                        <DeleteIcon />
-                    </IconButton>,
-                    <IconButton onClick={editFichaje(row.fichajeId)}>
-                        <EditIcon />
-                    </IconButton>,
-                ];
+                if (sesion.usuario.tipo === 'ADMINISTRADOR') {
+                    return [
+                        <IconButton onClick={deleteFichaje(row)}>
+                            <DeleteIcon />
+                        </IconButton>,
+                        <IconButton onClick={editFichaje(row.fichajeId)}>
+                            <EditIcon />
+                        </IconButton>,
+                    ];
+                } else {
+                    return [
+                        <IconButton onClick={deleteFichaje(row)} disabled>
+                            <DeleteIcon />
+                        </IconButton>,
+                        <IconButton onClick={editFichaje(row.fichajeId)} disabled>
+                            <EditIcon />
+                        </IconButton>,
+                    ];
+                }
             },
         },
     ];
+
     return (
         <>
             <MenuLateral>
