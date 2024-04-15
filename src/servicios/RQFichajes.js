@@ -8,6 +8,13 @@ export const LeerFichajes = () => {
 
   return axios.get(url);
 };
+export const LeerFichajesTrabajador = (trabajadorId) => {
+  const ent = Entorno.getEnv();
+  const url_base = ent.API_URL;
+  const url = `${url_base}/v1/fichajes/fichajes_trabajador/${trabajadorId}`;
+
+  return axios.get(url);
+};
 export const EliminarFichaje = (fichajeId) => {
   const ent = Entorno.getEnv();
   const url_base = ent.API_URL;
