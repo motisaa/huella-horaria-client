@@ -10,6 +10,11 @@ export const initialValues = () => {
     usuario: "",
     password: "",
     grupoId: "",
+    /* Pongo el valor 2 porque es la única empresa existente ahora
+      En caso de de tener más empresas se pone el valor 0 
+      y en la página de trabajador página debe usar empresas useState
+    */
+    empresaId: 2,
   };
 };
 /* This function defines the validation rules for the form fields using Yup.

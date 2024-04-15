@@ -284,6 +284,20 @@ export const TrabajadorPagina = () => {
                                     && formik.errors.password}
                             />
                         </Grid>
+                        <Grid item xs={4}>
+                            <TextField
+                                fullWidth
+                                id="empresaId"
+                                name="empresaId"
+                                label="Empresa"
+                                value={"InnovaFutura"}
+                                defaultValue={formik.values.empresaId}
+                                disabled
+                                onChange={formik.handleChange}
+                                error={formik.touched.empresaId && Boolean(formik.errors.empresaId)}
+                                helperText={formik.touched.empresaId && formik.errors.empresaId}
+                            />
+                        </Grid>
                     </Grid>
                     <Grid item xs={12} md={6}></Grid>
                     <Grid item xs={12} sx={{ textAlign: "right", marginTop: 3 }}>
