@@ -58,7 +58,7 @@ export const FichajesPagina = () => {
         },
         {
             onSuccess: (data) => {
-                setFichajes(data);
+                    setFichajes(data.data);
             },
             onError: (error) => {
                 console.error(error);
