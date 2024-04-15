@@ -28,7 +28,7 @@ const drawerWidth = 230;
 export const MenuLateral = (props) => {
     const navigate = useNavigate();
 
-    const verMenuAdmin = false
+    const [verMenuAdmin, setverMenuAdmin] = useState(false);
 
     const { getSession } = useContext(GeneralCtx);
     const [drVariant, setDrVariant] = useState("temporary");
@@ -39,10 +39,6 @@ export const MenuLateral = (props) => {
         const { data: versionData } = await leerVersion()
         setVersion(versionData.version)
     };
-    useEffect(() => {
-        consultarVersion();
-    }, [])
-
     const handleDrOpen = () => {
         if (drOpen) {
             // ya está abierto y lo cerramos
@@ -65,8 +61,11 @@ export const MenuLateral = (props) => {
         let session = getSession();
         if (!session) navigate("/");
         setSesion(session)
-        if (session.administrador) verMenuAdmin(true)
+        if (session.usuario.tipo === 'ADMINISTRADOR') setverMenuAdmin(true)
+        if (session.usuario.tipo === 'TRABAJADOR') setverMenuAdmin(false)
+        consultarVersion();
         // eslint-disable-next-line react-hooks/exhaustive-deps
+
     }, []);
 
     return (
@@ -136,25 +135,22 @@ export const MenuLateral = (props) => {
                     >
                         <Toolbar />
                         <Box sx={{ overflow: "auto" }} mt={3}>
-                            <List>
-                                <ListItem
-                                    key="Inicio"
-                                    disablePadding
-                                    onClick={() => {
-                                        navigate("/inicio");
-                                    }}
-                                >
-                                    <ListItemButton>
-                                        <ListItemIcon>
-                                            <Home />
-                                        </ListItemIcon>
-                                        <ListItemText> Inicio </ListItemText>
-                                    </ListItemButton>
-                                </ListItem>
-
-                            </List>
                             {verMenuAdmin ? (
                                 <List>
+                                    <ListItem
+                                        key="Inicio"
+                                        disablePadding
+                                        onClick={() => {
+                                            navigate("/inicio");
+                                        }}
+                                    >
+                                        <ListItemButton>
+                                            <ListItemIcon>
+                                                <Home />
+                                            </ListItemIcon>
+                                            <ListItemText> Inicio </ListItemText>
+                                        </ListItemButton>
+                                    </ListItem>
                                     <ListItem
                                         key="Administradores"
                                         disablePadding
