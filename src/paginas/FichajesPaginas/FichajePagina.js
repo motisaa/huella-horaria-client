@@ -131,16 +131,29 @@ export const FichajePagina = () => {
     useEffect(() => {
         if (params.fichajeId === "0") {
             if ("geolocation" in navigator) {
-                navigator.geolocation.getCurrentPosition(function (position) {
-                    formik.setFieldValue('latitud', position.coords.latitude)
-                    formik.setFieldValue('longitud', position.coords.longitude)
-                });
+                navigator.geolocation.getCurrentPosition(
+                    function (position) {
+                        formik.setFieldValue('latitud', position.coords.latitude);
+                        formik.setFieldValue('longitud', position.coords.longitude);
+                    },
+                    function (error) {
+                        console.error("Error getting geolocation: ", error.message);
+                    },
+                    {
+                        enableHighAccuracy: true,
+                        timeout: 5000,
+                        /* If set to 0, it means that the device
+                         cannot use a cached position and must attempt
+                         to retrieve the real current position. */
+                        maximumAge: 0
+                    }
+                );
             } else {
                 console.log("Geolocation is not available in your browser.");
             }
         }
-
-    }, [])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     // Para los tipos
     const [tipos, setTipos] = useState(['ENTRADA', 'SALIDA']);
