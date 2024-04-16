@@ -23,6 +23,7 @@ import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
 import EngineeringIcon from '@mui/icons-material/Engineering';
 import GroupsIcon from '@mui/icons-material/Groups';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 const drawerWidth = 230;
 export const MenuLateral = (props) => {
@@ -209,7 +210,21 @@ export const MenuLateral = (props) => {
                                     </ListItem>
                                 </List>
                             ) : (
-                                <List>
+                                    <List>
+                                        <ListItem
+                                        key="perfil"
+                                        disablePadding
+                                        onClick={() => {
+                                            navigate("/perfil");
+                                        }}
+                                    >
+                                        <ListItemButton>
+                                            <ListItemIcon>
+                                               <AccountCircleIcon />
+                                            </ListItemIcon>
+                                            <ListItemText> Perfil </ListItemText>
+                                        </ListItemButton>
+                                    </ListItem>
                                     <ListItem
                                         key="fichajes"
                                         disablePadding

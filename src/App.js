@@ -12,6 +12,7 @@ import { GruposPagina } from "./paginas/GruposPaginas/GruposPagina";
 import { GrupoPagina } from "./paginas/GruposPaginas/GrupoPagina";
 import { FichajesPagina } from "./paginas/FichajesPaginas/FichajesPagina";
 import { FichajePagina } from "./paginas/FichajesPaginas/FichajePagina"
+import { PerfilPagina } from "./paginas/PerfilPagina/PerfilPagina";
 
 const queryClient = new QueryClient();
 
@@ -35,6 +36,7 @@ function App() {
             <Route path="/fichajes/" element={<FichajesPagina />} />
             <Route path="/fichaje/" element={<FichajePagina />} />
             <Route path="/fichaje/:fichajeId" element={<FichajePagina />} />
+            <Route path="/perfil" element={<PerfilPagina />} />
           </Routes>
         </QueryClientProvider>
       </GeneralContext>
