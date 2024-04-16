@@ -19,6 +19,6 @@ export const validationSchema = () => {
         // fechaHora: yup.string().required("Requerido"),
         // // longitud: yup.string().required("Requerido"),
         // latitud: yup.string().required("Requerido"),
-        // // tipo: yup.string().required("Requerido"),
+        tipo: yup.string().required("Requerido"),
     });
 };
