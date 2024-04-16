@@ -19,12 +19,12 @@ import { DateTimePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { ConvertirAFechaEs, FormatoFechaEs } from "../../servicios/TratamientoFechas";
 import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
 
-// import Radio from '@mui/material/Radio';
-// import RadioGroup from '@mui/material/RadioGroup';
-// import FormControlLabel from '@mui/material/FormControlLabel';
-// import FormControl from '@mui/material/FormControl';
-// import FormLabel from '@mui/material/FormLabel';
-// import FormHelperText from '@mui/material/FormHelperText';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
+import FormHelperText from '@mui/material/FormHelperText';
 
 export const FichajePagina = () => {
     const params = useParams();
@@ -36,18 +36,9 @@ export const FichajePagina = () => {
     const { getSession } = useContext(GeneralCtx);
     const [selectedDate, setSelectedDate] = useState(new Date());
     
-    // const [value, setValue] = useState('');
-    // const [error, setError] = useState(false);
-    // const [helperText, setHelperText] = useState('');
+  
 
     const handleSubmit = async (values) => {
-        // e.preventDefault();
-
-        // if (!value) { // Si no se ha seleccionado ningún tipo
-        //     setError(true);
-        //     setHelperText(formik.errors.tipo);
-        //     return; // Detener el envío del formulario
-        // }
         values.fechaHora = moment(selectedDate).format("YYYY-MM-DD HH:mm:ss");
         if (session.usuario.tipo === 'TRABAJADOR') values.trabajadorId = session.usuario.trabajadorId
         if (!values.fichajeId) {
@@ -290,6 +281,7 @@ export const FichajePagina = () => {
                             </LocalizationProvider>
                         </Grid>
                         <Grid item xs={4}>
+                     {/*  
                             <Autocomplete
                                 label="Tipo"
                                 options={tipos}
@@ -315,19 +307,17 @@ export const FichajePagina = () => {
                                         }
                                     ></TextField>
                                 )}
-                            />
-                            {/* <FormControl>
-                                <FormLabel id="tipo" error={error} variant="standard">Elija el tipo</FormLabel>
+                            /> */}
+                             <FormControl>
+                                <FormLabel id="tipo">Elija el tipo</FormLabel>
                                 <RadioGroup 
                                     row
                                     aria-labelledby="tipo"
                                     name="tipo"
-                                    value={value}
+                                    
                                     onChange={(e, value) => {
                                         formik.setFieldValue("tipo", value);
-                                        setValue((e.target).value);
-                                        setHelperText(' ');
-                                        setError(false);
+                                        
                                     }}
                                 >
                                     <FormControlLabel value="ENTRADA"
@@ -335,8 +325,10 @@ export const FichajePagina = () => {
                                     <FormControlLabel value="SALIDA"
                                         control={<Radio />} label="SALIDA" />
                                 </RadioGroup>
-                                <FormHelperText>{helperText}</FormHelperText>
-                            </FormControl> */}
+                                {formik.errors.tipo && formik.touched.tipo &&(
+              <FormHelperText error>{formik.errors.tipo}</FormHelperText>
+            )}
+                  </FormControl> 
 
                         </Grid>
                         <Grid item xs={4}>
