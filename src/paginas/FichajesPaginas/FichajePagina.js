@@ -12,7 +12,7 @@ import { GeneralCtx } from "../../contextos/GeneralContext";
 import { ActualizarFichaje, CrearFichaje, LeerFichaje } from "../../servicios/RQFichajes";
 import { MenuLateral } from "../../componentes/MenuLateral/MenuLateral";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
-import { LeerUsuariosTrabajadores } from "../../servicios/RQTrabajadores";
+import {LeerUsuariosTrabajadores } from "../../servicios/RQTrabajadores";
 import "moment/locale/es";
 import moment from "moment";
 import { DateTimePicker, LocalizationProvider } from "@mui/x-date-pickers";
@@ -102,17 +102,34 @@ export const FichajePagina = () => {
     );
     const [trabajadores, setTrabajadores] = useState([]);
     let trabajadorSeleccionado = null;
+    let session = getSession();
+
     const getTrabajadorIdValue = () => {
-        trabajadorSeleccionado = trabajadores.find(
-            (i) => i.trabajadorId === formik.values.trabajadorId
-        );
+        if (session.usuario.tipo === 'TRABAJADOR') {
+            trabajadorSeleccionado = trabajadores.find(
+                (i) => i.trabajadorId === session.usuario.trabajadorId
+             
+            );
+        } else {
+            trabajadorSeleccionado = trabajadores.find(
+                (i) => i.trabajadorId === formik.values.trabajadorId
+            );
+        }
+
         return trabajadorSeleccionado || null;
     };
 
+
+
     useQuery(
         "trabajadores",
-        () => {
-            return LeerUsuariosTrabajadores();
+        async () => {
+            try {
+                let data = await LeerUsuariosTrabajadores();
+                return data;
+            } catch (error) {
+                throw error
+            }
         },
         {
             onSuccess: (data) => {
@@ -129,6 +146,10 @@ export const FichajePagina = () => {
 
 
     useEffect(() => {
+        // let session = getSession()
+        // if (session.usuario.tipo === 'TRABAJADOR') {
+        //     formik.setValues('trabajadorId', session.usuario.trabajadorId)
+        // }
         if (params.fichajeId === "0") {
             if ("geolocation" in navigator) {
                 navigator.geolocation.getCurrentPosition(
@@ -152,18 +173,19 @@ export const FichajePagina = () => {
                 console.log("Geolocation is not available in your browser.");
             }
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    // Para los tipos
-    const [tipos, setTipos] = useState(['ENTRADA', 'SALIDA']);
-    let tipoSeleccionado = null;
-    const getTipoValue = () => {
-        tipoSeleccionado = tipos.find(
-            (tipo) => tipo === formik.values.tipo
-        );
-        return tipoSeleccionado || null;
-    };
+    // // Para los tipos
+    // const [tipos, setTipos] = useState(['ENTRADA', 'SALIDA']);
+    // let tipoSeleccionado = null;
+    // const getTipoValue = () => {
+    //     tipoSeleccionado = tipos.find(
+    //         (tipo) => tipo === formik.values.tipo
+    //     );
+    //     return tipoSeleccionado || null;
+    // };
 
     return (
         <>
@@ -211,11 +233,14 @@ export const FichajePagina = () => {
                                 label="Trabajador"
                                 options={trabajadores}
                                 value={getTrabajadorIdValue()}
+                                disabled={session.usuario.tipo === 'TRABAJADOR'}
                                 getOptionLabel={(option) => option.nombre + ' ' + option.apellido1 + ' ' +
                                     // si apellido2 es null o undefined, se muestra cadena vacia
                                     (option.apellido2 ?? "")}
                                 onChange={(e, value) => {
-                                    formik.setFieldValue("trabajadorId", value.trabajadorId);
+                                    session.usuario.tipo === 'TRABAJADOR' 
+                                    ? formik.setFieldValue("trabajadorId", session.usuario.trabajadorId)
+                                    : formik.setFieldValue("trabajadorId", value.trabajadorId);
                                 }}
                                 fullWidth
                                 id="trabajadorId"
@@ -245,6 +270,7 @@ export const FichajePagina = () => {
                                     renderInput={(props) =>
                                         <TextField {...props} />}
                                     label="Fecha de fichaje"
+                                    disabled={session.usuario.tipo === 'TRABAJADOR'}
                                     value={selectedDate}
                                     onChange={(newValue) => {
                                         setSelectedDate(newValue);
@@ -306,6 +332,7 @@ export const FichajePagina = () => {
                                 label="Latitud"
                                 value={formik.values.latitud}
                                 onChange={formik.handleChange}
+                                disabled={session.usuario.tipo === 'TRABAJADOR'}
                                 error={formik.touched.latitud
                                     && Boolean(formik.errors.latitud)}
                                 helperText={formik.touched.latitud
@@ -320,6 +347,7 @@ export const FichajePagina = () => {
                                 label="Longitud"
                                 value={formik.values.longitud}
                                 onChange={formik.handleChange}
+                                disabled={session.usuario.tipo === 'TRABAJADOR'}
                                 error={formik.touched.longitud
                                     && Boolean(formik.errors.longitud)}
                                 helperText={formik.touched.longitud
