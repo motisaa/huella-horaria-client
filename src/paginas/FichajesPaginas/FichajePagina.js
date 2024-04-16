@@ -12,18 +12,19 @@ import { GeneralCtx } from "../../contextos/GeneralContext";
 import { ActualizarFichaje, CrearFichaje, LeerFichaje } from "../../servicios/RQFichajes";
 import { MenuLateral } from "../../componentes/MenuLateral/MenuLateral";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
-import {LeerUsuariosTrabajadores } from "../../servicios/RQTrabajadores";
+import { LeerUsuariosTrabajadores } from "../../servicios/RQTrabajadores";
 import "moment/locale/es";
 import moment from "moment";
 import { DateTimePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { ConvertirAFechaEs, FormatoFechaEs } from "../../servicios/TratamientoFechas";
 import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
 
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormControl from '@mui/material/FormControl';
-import FormLabel from '@mui/material/FormLabel';
+// import Radio from '@mui/material/Radio';
+// import RadioGroup from '@mui/material/RadioGroup';
+// import FormControlLabel from '@mui/material/FormControlLabel';
+// import FormControl from '@mui/material/FormControl';
+// import FormLabel from '@mui/material/FormLabel';
+// import FormHelperText from '@mui/material/FormHelperText';
 
 export const FichajePagina = () => {
     const params = useParams();
@@ -34,9 +35,21 @@ export const FichajePagina = () => {
     const [mensaje, setMensaje] = useState("");
     const { getSession } = useContext(GeneralCtx);
     const [selectedDate, setSelectedDate] = useState(new Date());
+    
+    // const [value, setValue] = useState('');
+    // const [error, setError] = useState(false);
+    // const [helperText, setHelperText] = useState('');
 
     const handleSubmit = async (values) => {
+        // e.preventDefault();
+
+        // if (!value) { // Si no se ha seleccionado ningún tipo
+        //     setError(true);
+        //     setHelperText(formik.errors.tipo);
+        //     return; // Detener el envío del formulario
+        // }
         values.fechaHora = moment(selectedDate).format("YYYY-MM-DD HH:mm:ss");
+        if (session.usuario.tipo === 'TRABAJADOR') values.trabajadorId = session.usuario.trabajadorId
         if (!values.fichajeId) {
             await crearFichaje.mutateAsync(values);
         } else {
@@ -108,7 +121,7 @@ export const FichajePagina = () => {
         if (session.usuario.tipo === 'TRABAJADOR') {
             trabajadorSeleccionado = trabajadores.find(
                 (i) => i.trabajadorId === session.usuario.trabajadorId
-             
+
             );
         } else {
             trabajadorSeleccionado = trabajadores.find(
@@ -177,15 +190,15 @@ export const FichajePagina = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    // // Para los tipos
-    // const [tipos, setTipos] = useState(['ENTRADA', 'SALIDA']);
-    // let tipoSeleccionado = null;
-    // const getTipoValue = () => {
-    //     tipoSeleccionado = tipos.find(
-    //         (tipo) => tipo === formik.values.tipo
-    //     );
-    //     return tipoSeleccionado || null;
-    // };
+    // Para los tipos
+    const [tipos, setTipos] = useState(['ENTRADA', 'SALIDA']);
+    let tipoSeleccionado = null;
+    const getTipoValue = () => {
+        tipoSeleccionado = tipos.find(
+            (tipo) => tipo === formik.values.tipo
+        );
+        return tipoSeleccionado || null;
+    };
 
     return (
         <>
@@ -238,9 +251,7 @@ export const FichajePagina = () => {
                                     // si apellido2 es null o undefined, se muestra cadena vacia
                                     (option.apellido2 ?? "")}
                                 onChange={(e, value) => {
-                                    session.usuario.tipo === 'TRABAJADOR' 
-                                    ? formik.setFieldValue("trabajadorId", session.usuario.trabajadorId)
-                                    : formik.setFieldValue("trabajadorId", value.trabajadorId);
+                                    formik.setFieldValue("trabajadorId", value.trabajadorId);
                                 }}
                                 fullWidth
                                 id="trabajadorId"
@@ -279,7 +290,7 @@ export const FichajePagina = () => {
                             </LocalizationProvider>
                         </Grid>
                         <Grid item xs={4}>
-                            {/* <Autocomplete
+                            <Autocomplete
                                 label="Tipo"
                                 options={tipos}
                                 value={getTipoValue()}
@@ -304,15 +315,19 @@ export const FichajePagina = () => {
                                         }
                                     ></TextField>
                                 )}
-                            /> */}
-                            <FormControl>
-                                <FormLabel id="tipo">Elija el tipo</FormLabel>
-                                <RadioGroup
+                            />
+                            {/* <FormControl>
+                                <FormLabel id="tipo" error={error} variant="standard">Elija el tipo</FormLabel>
+                                <RadioGroup 
                                     row
                                     aria-labelledby="tipo"
                                     name="tipo"
+                                    value={value}
                                     onChange={(e, value) => {
                                         formik.setFieldValue("tipo", value);
+                                        setValue((e.target).value);
+                                        setHelperText(' ');
+                                        setError(false);
                                     }}
                                 >
                                     <FormControlLabel value="ENTRADA"
@@ -320,7 +335,8 @@ export const FichajePagina = () => {
                                     <FormControlLabel value="SALIDA"
                                         control={<Radio />} label="SALIDA" />
                                 </RadioGroup>
-                            </FormControl>
+                                <FormHelperText>{helperText}</FormHelperText>
+                            </FormControl> */}
 
                         </Grid>
                         <Grid item xs={4}>
