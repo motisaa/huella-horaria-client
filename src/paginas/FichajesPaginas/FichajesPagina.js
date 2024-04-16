@@ -16,6 +16,7 @@ import { MensajeInformativo } from "../../componentes/MensajeInformativo/Mensaje
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { FormatoFechaEs } from "../../servicios/TratamientoFechas";
 import { GeneralCtx } from "../../contextos/GeneralContext";
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 
 export const FichajesPagina = () => {
     const navigate = useNavigate();
@@ -166,9 +167,6 @@ export const FichajesPagina = () => {
                             marginTop: '1em'
                         }}>
                             <Toolbar>
-                                <Typography variant="h6" component="h6">
-                                    Fichajes
-                                </Typography>
                                 <span className="toolbarButtons">
                                     <IconButton
                                         size="large"
@@ -177,7 +175,7 @@ export const FichajesPagina = () => {
                                         onClick={newFichaje}
                                     >
                                         <Tooltip title="Nuevo fichaje">
-                                            <AddIcon />
+                                            Crear nuevo fichaje <AddCircleIcon />
                                         </Tooltip>
                                     </IconButton>
                                 </span>
