@@ -36,7 +36,12 @@ export const LoginForm = (props) => {
         setMensaje(`Login correcto: ${usuario.nombre}`);
         setHayMensaje(true);
         // Nos vamos a inicio
-        navigate("/inicio");
+        if (usuario.tipo === 'ADMINISTRADOR') {
+            navigate("/inicio");
+        } else {
+            navigate("/fichajes");
+        }
+       
     };
 
     const loginBasico = async ({ usuario, password }) => {
