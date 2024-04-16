@@ -118,14 +118,15 @@ export const FichajesPagina = () => {
     };
     const columns = [
         { field: "fichajeId", headerName: "ID", width: 50 },
-        { field: "nombreTrabajador", headerName: "Trabajador", flex: 0.4 },
+        { field: "nombreTrabajador", headerName: "Trabajador", flex: 1 },
         {
-            field: "fechaHora", headerName: "Fecha y Hora", flex: 1,
+            field: "fechaHora", headerName: "Fecha y Hora", flex: 0.5,
             valueFormatter: params => FormatoFechaEs(params)
         },
+        { field: "tipo", headerName: "Tipo", flex: 0.5 },
         { field: "longitud", headerName: "Longitud", flex: 0.5 },
         { field: "latitud", headerName: "Latitud", flex: 0.5 },
-        { field: "tipo", headerName: "Tipo", flex: 0.5 },
+        
         {
             field: "actions",
             type: "actions",
