@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useState, useEffect } from "react";
 import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
@@ -33,12 +34,12 @@ export const PerfilPagina = () => {
     queryTrabajador();
   }, []);
 
-  const editUsuarioTrabajador = (trabajadorId) => {
-    return () => {
+  const editUsuarioTrabajador = () => {
+    if (usuarioTrabajador) { // Check if usuarioTrabajador exists
+      const trabajadorId = usuarioTrabajador.trabajadorId;
       navigate(`/perfil/${trabajadorId}`);
-    };
+    }
   };
-
 
   return (
     <>
@@ -78,8 +79,7 @@ export const PerfilPagina = () => {
           </Grid>
                   
                   <Button variant="contained" sx={{ marginLeft: "3rem" }}
-                      onClick={() =>
-                          editUsuarioTrabajador(usuarioTrabajador.trabajadorId)}>
+                      onClick={editUsuarioTrabajador}>
                       Editar
                   </Button>
         </Grid>
