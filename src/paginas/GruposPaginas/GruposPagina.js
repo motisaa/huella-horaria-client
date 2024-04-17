@@ -116,9 +116,9 @@ export const GruposPagina = () => {
               marginTop: '1em'
             }}>
               <Toolbar>
-                <Typography variant="h6" component="h6">
-                  Grupos
-                </Typography>
+                {/* <Typography variant="h6" component="h6">
+                 Grupos
+                </Typography> */}
                 <span className="toolbarButtons">
                   <IconButton
                     size="large"
@@ -127,7 +127,7 @@ export const GruposPagina = () => {
                     onClick={newGrupo}
                   >
                     <Tooltip title="Nuevo grupo">
-                      <AddIcon />
+                      <span style={{ fontSize: "smaller" }}>Crear nuevo grupo <AddIcon /></span>
                     </Tooltip>
                   </IconButton>
                 </span>

@@ -135,9 +135,9 @@ export const TrabajadoresPagina = () => {
               marginTop: '1em'
             }} >
               <Toolbar>
-                <Typography variant="h6" component="h6">
+                {/* <Typography variant="h6" component="h6">
                   Trabajadores
-                </Typography>
+                </Typography> */}
                 <span className="toolbarButtons">
                   <IconButton
                     size="large"
@@ -146,7 +146,7 @@ export const TrabajadoresPagina = () => {
                     onClick={nuevoUsuarioTrabajador}
                   >
                     <Tooltip title="Nuevo usuario trabajador">
-                      <AddIcon />
+                      <span style={{ fontSize: "smaller" }}>Crear trabajador nuevo <AddIcon /></span>
                     </Tooltip>
                   </IconButton>
                 </span>

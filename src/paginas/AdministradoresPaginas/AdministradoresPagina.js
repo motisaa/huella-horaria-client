@@ -144,9 +144,9 @@ export const AdministradoresPagina = () => {
             <Grid item xs={12}>
               <AppBar position="static" sx={{ bgcolor: '#ff7b00', marginTop: '1em' }} >
                 <Toolbar>
-                  <Typography variant="h6" component="h6">
+                  {/* <Typography variant="h6" component="h6">
                     Administradores
-                  </Typography>
+                  </Typography> */}
                   <span className="toolbarButtons">
                     <IconButton
                       size="large"
@@ -155,7 +155,7 @@ export const AdministradoresPagina = () => {
                       onClick={newUsuarioAdmin}
                     >
                       <Tooltip title="Nuevo usuario administrador">
-                        <AddIcon />
+                        <span style={{ fontSize: "smaller" }}>Crear administrador nuevo <AddIcon /></span>
                       </Tooltip>
                     </IconButton>
                   </span>

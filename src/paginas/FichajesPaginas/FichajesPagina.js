@@ -31,7 +31,6 @@ export const FichajesPagina = () => {
     const [sesion, setSesion] = useState()
     const { getSession } = useContext(GeneralCtx);
 
-
     useEffect(() => {
         // Comprobación de que hay una sesión activa
         let session = getSession();
@@ -175,7 +174,7 @@ export const FichajesPagina = () => {
                                         onClick={newFichaje}
                                     >
                                         <Tooltip title="Nuevo fichaje">
-                                            Crear nuevo fichaje <AddCircleIcon />
+                                            <span style={{ fontSize: "smaller" }}>Crear nuevo fichaje <AddIcon /></span> 
                                         </Tooltip>
                                     </IconButton>
                                 </span>
