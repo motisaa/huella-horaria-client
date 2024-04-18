@@ -25,7 +25,8 @@ export const validationSchema = () => {
       nombre: yup.string().required("Requerido"),
       apellido1: yup.string().required("Requerido"),
       usuario: yup.string().required("Requerido"),
-      password: yup.string().required("Requerido"),
-      email: yup.string().required("Requerido")
+      password: yup.string()
+      .required("Requerido")
+      .min(5, 'Por favor, elija una contraseña con al menos 5 caracteres'),
   });
 };
