@@ -25,6 +25,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import FormHelperText from '@mui/material/FormHelperText';
+import { Mapa } from "../../componentes/Mapa/Mapa";
 
 export const FichajePagina = () => {
     const params = useParams();
@@ -35,8 +36,11 @@ export const FichajePagina = () => {
     const [mensaje, setMensaje] = useState("");
     const { getSession } = useContext(GeneralCtx);
     const [selectedDate, setSelectedDate] = useState(new Date());
-    
-  
+
+    const [latitud, setLatitud] = useState(0)
+    const [longitud, setLongitud] = useState(0)
+
+
 
     const handleSubmit = async (values) => {
         values.fechaHora = moment(selectedDate).format("YYYY-MM-DD HH:mm:ss");
@@ -95,6 +99,8 @@ export const FichajePagina = () => {
             onSuccess: (data) => {
                 formik.setValues({ ...formik.values, ...data.data });
                 setSelectedDate(ConvertirAFechaEs(data.data.fechaHora));
+                setLatitud(data.data.latitud)
+                setLongitud(data.data.longitud)
             },
             onError: (error, variables, context) => {
                 console.error(error);
@@ -160,6 +166,8 @@ export const FichajePagina = () => {
                     function (position) {
                         formik.setFieldValue('latitud', position.coords.latitude);
                         formik.setFieldValue('longitud', position.coords.longitude);
+                        setLatitud(position.coords.latitude)
+                        setLongitud(position.coords.longitude)
                     },
                     function (error) {
                         console.error("Error getting geolocation: ", error.message);
@@ -281,7 +289,7 @@ export const FichajePagina = () => {
                             </LocalizationProvider>
                         </Grid>
                         <Grid item xs={4}>
-                     {/*  
+                            {/*  
                             <Autocomplete
                                 label="Tipo"
                                 options={tipos}
@@ -308,17 +316,17 @@ export const FichajePagina = () => {
                                     ></TextField>
                                 )}
                             /> */}
-                             <FormControl>
+                            <FormControl>
                                 <FormLabel id="tipo">Elija el tipo</FormLabel>
-                                <RadioGroup 
+                                <RadioGroup
                                     row
                                     aria-labelledby="tipo"
                                     name="tipo"
-                                    id= "tipo"
+                                    id="tipo"
                                     value={getTipoValue()}
                                     onChange={(e, value) => {
                                         formik.setFieldValue("tipo", value);
-                                        
+
                                     }}
                                 >
                                     <FormControlLabel value="ENTRADA"
@@ -326,10 +334,10 @@ export const FichajePagina = () => {
                                     <FormControlLabel value="SALIDA"
                                         control={<Radio />} label="SALIDA" />
                                 </RadioGroup>
-                                {formik.errors.tipo && formik.touched.tipo &&(
-              <FormHelperText error>{formik.errors.tipo}</FormHelperText>
-            )}
-                  </FormControl> 
+                                {formik.errors.tipo && formik.touched.tipo && (
+                                    <FormHelperText error>{formik.errors.tipo}</FormHelperText>
+                                )}
+                            </FormControl>
 
                         </Grid>
                         <Grid item xs={4}>
@@ -340,7 +348,10 @@ export const FichajePagina = () => {
                                 name="latitud"
                                 label="Latitud"
                                 value={formik.values.latitud}
-                                onChange={formik.handleChange}
+                                onChange={(event) => {
+                                    formik.setFieldValue('latitud', event.target.value)
+                                    setLatitud(event.target.value)
+                                }}
                                 disabled={session.usuario.tipo === 'TRABAJADOR'}
                                 error={formik.touched.latitud
                                     && Boolean(formik.errors.latitud)}
@@ -355,7 +366,10 @@ export const FichajePagina = () => {
                                 name="longitud"
                                 label="Longitud"
                                 value={formik.values.longitud}
-                                onChange={formik.handleChange}
+                                onChange={(event) => {
+                                    formik.setFieldValue('longitud', event.target.value)
+                                    setLongitud(event.target.value)
+                                }}
                                 disabled={session.usuario.tipo === 'TRABAJADOR'}
                                 error={formik.touched.longitud
                                     && Boolean(formik.errors.longitud)}
@@ -392,6 +406,12 @@ export const FichajePagina = () => {
                         cerrarMensaje={() => setHayMensaje(false)}
                     />
                 </Grid>
+                {
+                    latitud && longitud ?
+                        <Mapa lat={latitud} lon={longitud}></Mapa>
+                        :
+                        ''
+                }
             </MenuLateral>
         </>
     );
