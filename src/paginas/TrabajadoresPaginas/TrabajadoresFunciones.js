@@ -9,6 +9,7 @@ export const initialValues = () => {
     apellido2: "",
     usuario: "",
     password: "",
+    confirmPassword: "",
     grupoId: "",
     /* Pongo el valor 2 porque es la única empresa existente ahora
       En caso de de tener más empresas se pone el valor 0 
@@ -28,7 +29,9 @@ export const validationSchema = () => {
       usuario: yup.string().required("Requerido"),
       password: yup.string()
       .required("Requerido")
-        .min(5, 'Por favor, elija una contraseña con al menos 5 caracteres'),
+      .min(5, 'Por favor, elija una contraseña con al menos 5 caracteres'),
+      confirmPassword: yup.string()
+      .oneOf([yup.ref('password')], 'Las contraseñas deben coincidir.'),
       grupoId: yup.string().required("Requerido"),
   });
 };

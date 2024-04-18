@@ -54,6 +54,7 @@ export const AdministradorPagina = () => {
   //   }
   // );
   const handleSubmit = async (values) => {
+    delete values.confirmPassword;
     if (!values.adminId) {
       await crearUsuarioAdmin.mutateAsync(values);
     } else {
@@ -140,7 +141,7 @@ export const AdministradorPagina = () => {
                 Aceptar
               </Button>
             </Grid>
-            <Grid item xs={1}>
+            <Grid item xs={2}>
               <TextField
                 fullWidth
                 id="adminId"
@@ -154,6 +155,46 @@ export const AdministradorPagina = () => {
                 }
                 helperText={formik.touched.adminId && formik.errors.adminId}
               />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+                fullWidth
+                id="empresaId"
+                name="empresaId"
+                label="Empresa"
+                value={"InnovaFutura"}
+                defaultValue={formik.values.empresaId}
+                disabled
+                onChange={formik.handleChange}
+                error={formik.touched.empresaId && Boolean(formik.errors.empresaId)}
+                helperText={formik.touched.empresaId && formik.errors.empresaId}
+              />
+              {/* <Autocomplete
+                label="Empresa"
+                options={empresas}
+                value={getEmpresaIdValue()}
+                getOptionLabel={(option) => option.nombre}
+                onChange={(e, value) => {
+                  formik.setFieldValue("empresaId", value.empresaId);
+                }}
+                fullWidth
+                id="empresaId"
+                name="empresaId"
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+
+                    error={
+                      formik.touched.empresaId &&
+                      Boolean(formik.errors.empresaId)
+                    }
+                    helperText={
+                      formik.touched.empresaId &&
+                      formik.errors.empresaId
+                    }
+                  ></TextField>
+                )}
+              /> */}
             </Grid>
             <Grid item xs={10} md={4}>
               <TextField
@@ -179,7 +220,7 @@ export const AdministradorPagina = () => {
                 helperText={formik.touched.apellido1 && formik.errors.apellido1}
               />
              </Grid>
-             <Grid item xs={3}>
+             <Grid item xs={4}>
               <TextField
                 fullWidth
                 id="apellido2"
@@ -229,46 +270,19 @@ export const AdministradorPagina = () => {
                 helperText={formik.touched.password && formik.errors.password}
               />
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={12} md={4}>
               <TextField
                 fullWidth
-                id="empresaId"
-                name="empresaId"
-                label="Empresa"
-                value={"InnovaFutura"}
-                defaultValue={formik.values.empresaId}
-                disabled
+                id="confirmPassword"
+                name="confirmPassword"
+                label="Repita la contraseña"
+                type="password"
                 onChange={formik.handleChange}
-                error={formik.touched.empresaId && Boolean(formik.errors.empresaId)}
-                helperText={formik.touched.empresaId && formik.errors.empresaId}
+                error={formik.touched.confirmPassword}
+                helperText={formik.touched.confirmPassword &&
+                  formik.errors.confirmPassword}
               />
-              {/* <Autocomplete
-                label="Empresa"
-                options={empresas}
-                value={getEmpresaIdValue()}
-                getOptionLabel={(option) => option.nombre}
-                onChange={(e, value) => {
-                  formik.setFieldValue("empresaId", value.empresaId);
-                }}
-                fullWidth
-                id="empresaId"
-                name="empresaId"
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-
-                    error={
-                      formik.touched.empresaId &&
-                      Boolean(formik.errors.empresaId)
-                    }
-                    helperText={
-                      formik.touched.empresaId &&
-                      formik.errors.empresaId
-                    }
-                  ></TextField>
-                )}
-              /> */}
-            </Grid>
+              </Grid>
             <Grid item xs={12} md={6}></Grid>
             <Grid item xs={12} sx={{ textAlign: "right" }}>
               <Button color="success" variant="contained" onClick={salirForm}>

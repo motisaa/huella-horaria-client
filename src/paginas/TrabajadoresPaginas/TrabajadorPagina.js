@@ -8,7 +8,8 @@ import { MensajeError } from "../../servicios/TratamientoErrores";
 import { ErrorGeneral } from "../../componentes/ErrorGeneral/ErrorGeneral";
 import { MensajeInformativo } from "../../componentes/MensajeInformativo/MensajeInformativo";
 import { Button, TextField, Typography, Grid,  Autocomplete } from "@mui/material";
-import { ActualizarUsuarioTrabajador, CrearUsuarioTrabajador, LeerUsuarioTrabajador } from "../../servicios/RQTrabajadores";
+import { ActualizarUsuarioTrabajador, CrearUsuarioTrabajador, LeerUsuarioTrabajador }
+    from "../../servicios/RQTrabajadores";
 import { MenuLateral } from "../../componentes/MenuLateral/MenuLateral";
 import { initialValues, validationSchema } from "./TrabajadoresFunciones";
 import { LeerGrupos } from "../../servicios/RQGrupos";
@@ -53,6 +54,7 @@ export const TrabajadorPagina = () => {
     const session = getSession();
 
     const handleSubmit = async (values) => {
+        delete values.confirmPassword;
         if (!values.trabajadorId) {
           await crearUsuarioTrabajador.mutateAsync(values);
         } else {
@@ -169,6 +171,22 @@ export const TrabajadorPagina = () => {
                                     && formik.errors.trabajadorId}
                             />
                         </Grid>
+                        <Grid item xs={4}>
+                            <TextField
+                                fullWidth
+                                id="empresaId"
+                                name="empresaId"
+                                label="Empresa"
+                                value={"InnovaFutura"}
+                                defaultValue={formik.values.empresaId}
+                                disabled
+                                onChange={formik.handleChange}
+                                error={formik.touched.empresaId
+                                    && Boolean(formik.errors.empresaId)}
+                                helperText={formik.touched.empresaId
+                                    && formik.errors.empresaId}
+                            />
+                        </Grid>
                         <Grid item xs={10} md={4}>
                             <TextField
                                 fullWidth
@@ -283,20 +301,19 @@ export const TrabajadorPagina = () => {
                                     && formik.errors.password}
                             />
                         </Grid>
-                        <Grid item xs={4}>
-                            <TextField
-                                fullWidth
-                                id="empresaId"
-                                name="empresaId"
-                                label="Empresa"
-                                value={"InnovaFutura"}
-                                defaultValue={formik.values.empresaId}
-                                disabled
-                                onChange={formik.handleChange}
-                                error={formik.touched.empresaId && Boolean(formik.errors.empresaId)}
-                                helperText={formik.touched.empresaId && formik.errors.empresaId}
-                            />
-                        </Grid>
+                        <Grid item xs={12} md={4}>
+              <TextField
+                fullWidth
+                id="confirmPassword"
+                name="confirmPassword"
+                label="Repita la contraseña"
+                type="password"
+                onChange={formik.handleChange}
+                error={formik.touched.confirmPassword}
+                helperText={formik.touched.confirmPassword &&
+                  formik.errors.confirmPassword}
+              />
+              </Grid>
                     </Grid>
                     <Grid item xs={12} md={6}></Grid>
                     <Grid item xs={12} sx={{ textAlign: "right", marginTop: 3 }}>
