@@ -43,7 +43,6 @@ export const AdministradoresPagina = () => {
           Si ocurre un error durante la consulta, se maneja mostrando
           un mensaje de error y estableciendo un indicador de error.
           */
-    const session = getSession();
     const queryUsuariosAdmin = useQuery(
       "administradores",
       () => {
