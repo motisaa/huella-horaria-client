@@ -12,7 +12,7 @@ import { ActualizarUsuarioTrabajador, LeerUsuarioTrabajador } from "../../servic
 import { MenuLateral } from "../../componentes/MenuLateral/MenuLateral";
 import { initialValues, validationSchema } from "./PerfilFunciones";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 
 
 export const EditarPerfilPagina = () => {
@@ -99,7 +99,7 @@ export const EditarPerfilPagina = () => {
                     <Grid container spacing={2}>
                         <Grid item xs={6} mt={4}>
                             <Typography variant="h6">
-                                Perfil:
+                               Editar Perfil <ManageAccountsIcon />
                             </Typography>
                         </Grid>
                         <Grid item xs={6} sx={{ textAlign: "right" }} mt={3}>
