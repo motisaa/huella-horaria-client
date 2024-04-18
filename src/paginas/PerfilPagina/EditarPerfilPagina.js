@@ -25,6 +25,7 @@ export const EditarPerfilPagina = () => {
 
     const handleSubmit = async (values) => {
         try {
+            delete values.confirmPassword;
             await actualizarUsuarioTrabajador.mutateAsync(values);
             navigate("/perfil");
         } catch (error) {
@@ -179,14 +180,17 @@ export const EditarPerfilPagina = () => {
                                     && formik.errors.usuario}
                             />
                         </Grid>
+                        <Grid item xs={12}>
+                            <Typography>Cambiar la contraseña: </Typography>
+                        </Grid>
+                        
                         <Grid item xs={12} md={4}>
                             <TextField
                                 fullWidth
                                 id="password"
                                 name="password"
-                                label="Contraseña"
+                                label="Contraseña nueva"
                                 type="password"
-                                value={formik.values.password}
                                 onChange={formik.handleChange}
                                 error={
                                     formik.touched.password
@@ -194,6 +198,22 @@ export const EditarPerfilPagina = () => {
                                 }
                                 helperText={formik.touched.password
                                     && formik.errors.password}
+                            />
+                        </Grid>
+                        <Grid item xs={12} md={4}>
+                            <TextField
+                                fullWidth
+                                id="confirmPassword"
+                                name="confirmPassword"
+                                label="Repite la contraseña nueva"
+                                type="password"
+                                onChange={formik.handleChange}
+                                error={
+                                    formik.touched.confirmPassword
+                                    && Boolean(formik.errors.confirmPassword)
+                                }
+                                helperText={formik.touched.confirmPassword
+                                    && formik.errors.confirmPassword}
                             />
                         </Grid>
                     </Grid>
