@@ -132,26 +132,17 @@ export const FichajesPagina = () => {
             type: "actions",
             headerName: "Acciones",
             width: 80,
-            getActions: ({ row }) => {
-                if (sesion.usuario.tipo === 'ADMINISTRADOR') {
+            getActions: ({ row }) => {  
                     return [
-                        <IconButton onClick={deleteFichaje(row)}>
+                        <IconButton onClick={deleteFichaje(row)} 
+                        disabled={sesion.usuario.tipo === 'TRABAJADOR'}>
                             <DeleteIcon />
                         </IconButton>,
-                        <IconButton onClick={editFichaje(row.fichajeId)}>
+                        <IconButton onClick={editFichaje(row.fichajeId)} 
+                        disabled={sesion.usuario.tipo === 'TRABAJADOR'}>
                             <EditIcon />
                         </IconButton>,
-                    ];
-                } else {
-                    return [
-                        <IconButton onClick={deleteFichaje(row)} disabled>
-                            <DeleteIcon />
-                        </IconButton>,
-                        <IconButton onClick={editFichaje(row.fichajeId)} disabled>
-                            <EditIcon />
-                        </IconButton>,
-                    ];
-                }
+                    ];               
             },
         },
     ];
