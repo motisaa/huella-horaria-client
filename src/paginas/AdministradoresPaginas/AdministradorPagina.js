@@ -11,9 +11,12 @@ import { GeneralCtx } from "../../contextos/GeneralContext";
 import { MensajeError } from "../../servicios/TratamientoErrores";
 import { ErrorGeneral } from "../../componentes/ErrorGeneral/ErrorGeneral";
 import { MensajeInformativo } from "../../componentes/MensajeInformativo/MensajeInformativo";
-import { Autocomplete, Button, TextField, Typography, Grid} from "@mui/material";
+import {
+ // Autocomplete,
+  Button, TextField, Typography, Grid
+} from "@mui/material";
 import { ActualizarUsuarioAdmin, CrearUsuarioAdmin, LeerUsuarioAdmin } from "../../servicios/RQAdministradores";
-import { LeerEmpresas } from "../../servicios/RQEmpresas";
+//import { LeerEmpresas } from "../../servicios/RQEmpresas";
 import { MenuLateral } from "../../componentes/MenuLateral/MenuLateral";
 
 export const AdministradorPagina = () => {
@@ -50,7 +53,6 @@ export const AdministradorPagina = () => {
   //     },
   //   }
   // );
-  const session = getSession();
   const handleSubmit = async (values) => {
     if (!values.adminId) {
       await crearUsuarioAdmin.mutateAsync(values);
@@ -220,7 +222,6 @@ export const AdministradorPagina = () => {
                 name="password"
                 label="Contraseña"
                 type="password"
-                value={formik.values.password}
                 onChange={formik.handleChange}
                 error={
                   formik.touched.password && Boolean(formik.errors.password)
