@@ -314,7 +314,8 @@ export const FichajePagina = () => {
                                     row
                                     aria-labelledby="tipo"
                                     name="tipo"
-                                    
+                                    id= "tipo"
+                                    value={getTipoValue()}
                                     onChange={(e, value) => {
                                         formik.setFieldValue("tipo", value);
                                         
