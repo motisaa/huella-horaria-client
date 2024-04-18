@@ -124,8 +124,8 @@ export const FichajesPagina = () => {
             valueFormatter: params => FormatoFechaEs(params)
         },
         { field: "tipo", headerName: "Tipo", flex: 0.5 },
-        { field: "longitud", headerName: "Longitud", flex: 0.5 },
         { field: "latitud", headerName: "Latitud", flex: 0.5 },
+        { field: "longitud", headerName: "Longitud", flex: 0.5 },
         
         {
             field: "actions",
