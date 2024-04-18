@@ -1,4 +1,4 @@
-import React, {useContext, useState} from "react";
+import React, { useContext, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useFormik } from "formik";
 import { useMutation, useQuery } from "react-query";
@@ -7,10 +7,11 @@ import { GeneralCtx } from "../../contextos/GeneralContext";
 import { MensajeError } from "../../servicios/TratamientoErrores";
 import { ErrorGeneral } from "../../componentes/ErrorGeneral/ErrorGeneral";
 import { MensajeInformativo } from "../../componentes/MensajeInformativo/MensajeInformativo";
-import { Button, TextField, Typography, Grid } from "@mui/material";
-import { ActualizarUsuarioTrabajador,  LeerUsuarioTrabajador } from "../../servicios/RQTrabajadores";
+import { Button, TextField, Typography, Grid, IconButton, InputAdornment } from "@mui/material";
+import { ActualizarUsuarioTrabajador, LeerUsuarioTrabajador } from "../../servicios/RQTrabajadores";
 import { MenuLateral } from "../../componentes/MenuLateral/MenuLateral";
 import { initialValues, validationSchema } from "./PerfilFunciones";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 
 
@@ -22,6 +23,7 @@ export const EditarPerfilPagina = () => {
     const [mensajeError, setMensajeError] = useState("");
     const [hayMensaje, setHayMensaje] = useState(false);
     const [mensaje, setMensaje] = useState("");
+    const [showPassword, setShowPassword] = useState(false);
 
     const handleSubmit = async (values) => {
         try {
@@ -33,6 +35,10 @@ export const EditarPerfilPagina = () => {
             setMensajeError(MensajeError(error));
             setHayError(true);
         }
+    };
+
+    const handleClickShowPassword = () => {
+        setShowPassword(!showPassword);
     };
 
     const formik = useFormik({
@@ -50,8 +56,8 @@ export const EditarPerfilPagina = () => {
         // Verifica si hay un evento
         // Si hay un evento, previene su comportamiento(Cancela el evento si este es cancelable)
         if (e) e.preventDefault();
-         // Navega a la pagina de trabajadores
-         navigate("/perfil");
+        // Navega a la pagina de trabajadores
+        navigate("/perfil");
     };
 
 
@@ -183,15 +189,31 @@ export const EditarPerfilPagina = () => {
                         <Grid item xs={12}>
                             <Typography>Cambiar la contraseña: </Typography>
                         </Grid>
-                        
+
                         <Grid item xs={12} md={4}>
+                            {/* source code for have eye icon toggle:
+                            https://medium.com/@sumsourabh14/how-i-created-toggle-password-visibility-with-material-ui-b3fb975b5ce4
+                             */}
                             <TextField
                                 fullWidth
                                 id="password"
                                 name="password"
                                 label="Contraseña nueva"
-                                type="password"
+                                type={showPassword ? "text" : "password"}
                                 onChange={formik.handleChange}
+                                InputProps={{
+                                    endAdornment: (
+                                        <InputAdornment position="end">
+                                            <IconButton
+                                                aria-label="toggle password visibility"
+                                                onClick={handleClickShowPassword}
+                                                edge="end"
+                                            >
+                                                {showPassword ? <VisibilityOff /> : <Visibility />}
+                                            </IconButton>
+                                        </InputAdornment>
+                                    ),
+                                }}
                                 error={
                                     formik.touched.password
                                     && Boolean(formik.errors.password)
@@ -206,8 +228,21 @@ export const EditarPerfilPagina = () => {
                                 id="confirmPassword"
                                 name="confirmPassword"
                                 label="Repite la contraseña nueva"
-                                type="password"
+                                type={showPassword ? "text" : "password"}
                                 onChange={formik.handleChange}
+                                InputProps={{
+                                    endAdornment: (
+                                        <InputAdornment position="end">
+                                            <IconButton
+                                                aria-label="toggle password visibility"
+                                                onClick={handleClickShowPassword}
+                                                edge="end"
+                                            >
+                                                {showPassword ? <VisibilityOff /> : <Visibility />}
+                                            </IconButton>
+                                        </InputAdornment>
+                                    ),
+                                }}
                                 error={
                                     formik.touched.confirmPassword
                                     && Boolean(formik.errors.confirmPassword)
