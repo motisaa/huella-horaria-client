@@ -39,6 +39,7 @@ export const FichajePagina = () => {
 
     const [latitud, setLatitud] = useState(0)
     const [longitud, setLongitud] = useState(0)
+    const [noGeo, setNoGeo] = useState(false)
 
 
 
@@ -172,6 +173,7 @@ export const FichajePagina = () => {
                     function (error) {
                         console.error("Error getting geolocation: ", error.message);
                         setHayError(true);
+                        setNoGeo(true)
                         setMensajeError("No se pudo encontrar la localización. " +
                             "Por favor, intente refrescar la página o habilite " +
                             "la ubicación en la configuración de su navegador");
@@ -188,6 +190,7 @@ export const FichajePagina = () => {
             } else {
                 console.log("Geolocation is not available in your browser.");
                 setHayError(true);
+                setNoGeo(true)
                 setMensajeError("No se pudo encontrar su ubicación. Por favor, actualice su navegador");
             }
         }
@@ -208,7 +211,7 @@ export const FichajePagina = () => {
     return (
         <>
             <MenuLateral>
-           {((!latitud && !longitud) && !hayError) ? <MensajeAviso/> : ''} 
+           {((!latitud && !longitud) && !noGeo) ? <MensajeAviso/> : ''} 
                 <form onSubmit={formik.handleSubmit}>
                     <Grid container spacing={2}>
                         <Grid item xs={6} mt={3}>
