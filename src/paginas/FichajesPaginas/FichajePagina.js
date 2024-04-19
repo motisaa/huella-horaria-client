@@ -11,12 +11,11 @@ import { Button, TextField, Typography, Grid, Autocomplete } from "@mui/material
 import { GeneralCtx } from "../../contextos/GeneralContext";
 import { ActualizarFichaje, CrearFichaje, LeerFichaje } from "../../servicios/RQFichajes";
 import { MenuLateral } from "../../componentes/MenuLateral/MenuLateral";
-import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { LeerUsuariosTrabajadores } from "../../servicios/RQTrabajadores";
 import "moment/locale/es";
 import moment from "moment";
 import { DateTimePicker, LocalizationProvider } from "@mui/x-date-pickers";
-import { ConvertirAFechaEs, FormatoFechaEs } from "../../servicios/TratamientoFechas";
+import { ConvertirAFechaEs} from "../../servicios/TratamientoFechas";
 import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
 
 import Radio from '@mui/material/Radio';
@@ -171,6 +170,8 @@ export const FichajePagina = () => {
                     },
                     function (error) {
                         console.error("Error getting geolocation: ", error.message);
+                        setHayError(true);
+                        setMensajeError(MensajeError(error.message));
                     },
                     {
                         enableHighAccuracy: true,
@@ -183,6 +184,8 @@ export const FichajePagina = () => {
                 );
             } else {
                 console.log("Geolocation is not available in your browser.");
+                setHayError(true);
+                setMensajeError("Geolocation is not available in your browser.");
             }
         }
 
