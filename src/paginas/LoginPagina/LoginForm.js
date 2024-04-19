@@ -2,7 +2,7 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import React, { useContext, useState } from "react";
-import { Button, Grid, TextField } from "@mui/material";
+import { Button, Grid, IconButton, InputAdornment, TextField } from "@mui/material";
 import { LoginBasicoUsuario } from "../../servicios/RQLogin";
 import { GeneralCtx } from "../../contextos/GeneralContext";
 import { ErrorGeneral } from "../../componentes/ErrorGeneral/ErrorGeneral";
@@ -10,6 +10,7 @@ import { MensajeInformativo } from "../../componentes/MensajeInformativo/Mensaje
 import "./LoginPagina.css";
 import { MensajeError } from "../../servicios/TratamientoErrores";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 const validationSchema = yup.object({
     usuario: yup.string("usuario").required("Requerido"),
@@ -23,6 +24,10 @@ export const LoginForm = (props) => {
     const [hayMensaje, setHayMensaje] = useState(false);
     const [mensaje, setMensaje] = useState("");
     const navigate = useNavigate();
+    const [showPassword, setShowPassword] = useState(false);
+    const handleClickShowPassword = () => {
+        setShowPassword(!showPassword);
+    };
 
     const handleSubmit = async (values) => {
         const usuario = await loginBasico({
@@ -89,8 +94,21 @@ export const LoginForm = (props) => {
                             id="password"
                             name="password"
                             label="Contraseña"
-                            type="password"
+                            type={showPassword ? "text" : "password"}
                             value={formik.values.password}
+                            InputProps={{
+                                endAdornment: (
+                                    <InputAdornment position="end">
+                                        <IconButton
+                                            aria-label="toggle password visibility"
+                                            onClick={handleClickShowPassword}
+                                            edge="end"
+                                        >
+                                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                                        </IconButton>
+                                    </InputAdornment>
+                                ),
+                            }}
                             onChange={formik.handleChange}
                             error={formik.touched.password && Boolean(formik.errors.password)}
                             helperText={formik.touched.password && formik.errors.password}
