@@ -16,7 +16,7 @@ import { MensajeInformativo } from "../../componentes/MensajeInformativo/Mensaje
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { FormatoFechaEs } from "../../servicios/TratamientoFechas";
 import { GeneralCtx } from "../../contextos/GeneralContext";
-import AddCircleIcon from '@mui/icons-material/AddCircle';
+import { esES } from '@mui/x-data-grid/locales';
 
 export const FichajesPagina = () => {
     const navigate = useNavigate();
@@ -178,7 +178,7 @@ export const FichajesPagina = () => {
                             columns={columns}
                             getRowId={(row) => row.fichajeId}
                             slots={{ toolbar: GridToolbar }}
-                        // localeText={esES.components.MuiDataGrid.defaultProps.localeText}
+                            localeText={esES.components.MuiDataGrid.defaultProps.localeText}
                         />
                     </Grid>
                 </Grid>

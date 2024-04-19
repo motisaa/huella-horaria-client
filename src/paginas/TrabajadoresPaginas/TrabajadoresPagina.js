@@ -1,18 +1,15 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { useMutation, useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { MenuLateral } from "../../componentes/MenuLateral/MenuLateral";
 import { MensajeError } from "../../servicios/TratamientoErrores";
 import { ErrorGeneral } from "../../componentes/ErrorGeneral/ErrorGeneral";
-import { LeerUsuariosTrabajadores, eliminarUsuarioTrabajador} from "../../servicios/RQTrabajadores";
+import { LeerUsuariosTrabajadores, eliminarUsuarioTrabajador } from "../../servicios/RQTrabajadores";
 import AddIcon from "@mui/icons-material/Add";
 import { AppBar, Grid, IconButton, Toolbar, Tooltip } from "@mui/material";
 import { MensajeInformativo } from "../../componentes/MensajeInformativo/MensajeInformativo";
-import {
-  DataGrid,
-  //esES, 
-  GridToolbar
-} from "@mui/x-data-grid";
+import { DataGrid, GridToolbar } from '@mui/x-data-grid';
+import { esES } from '@mui/x-data-grid/locales';
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { MensajeConfirmacion } from "../../componentes/MensajeConfirmacion/MensajeConfirmacion";
@@ -151,8 +148,7 @@ export const TrabajadoresPagina = () => {
               rows={usuariosTrabajador}
               columns={columns}
               getRowId={(row) => row.trabajadorId}
-              // localeText={esES.components.MuiDataGrid.defaultProps.localeText}
-              // components={{ Toolbar: GridToolbar }} 
+              localeText={esES.components.MuiDataGrid.defaultProps.localeText}
               slots={{ toolbar: GridToolbar }}
             />
           </Grid>

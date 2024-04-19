@@ -16,7 +16,7 @@ import {AppBar, Grid, IconButton, Toolbar, Tooltip, Typography,} from "@mui/mate
 import { MensajeConfirmacion } from "../../componentes/MensajeConfirmacion/MensajeConfirmacion";
 import { MensajeInformativo } from "../../componentes/MensajeInformativo/MensajeInformativo";
 import { DataGrid, GridToolbar} from "@mui/x-data-grid";
-
+import { esES } from '@mui/x-data-grid/locales';
 
 export const AdministradoresPagina = () => {
     const navigate = useNavigate();
@@ -28,7 +28,7 @@ export const AdministradoresPagina = () => {
     const [mensajeConfirmacion, setMensajeConfirmacion] = useState("");
     const [usuariosAdmin, setUsuariosAdmin] = useState([]);
     const [usuarioAdmin, setUsuarioAdmin] = useState();
-    const { getSession } = useContext(GeneralCtx);
+    
 
     /* useQuery: Esta función toma tres argumentos:
 
@@ -166,7 +166,7 @@ export const AdministradoresPagina = () => {
                 rows={usuariosAdmin}
                 columns={columns}
                 getRowId={(row) => row.adminId}
-                //components={{ Toolbar: GridToolbar }}
+                localeText={esES.components.MuiDataGrid.defaultProps.localeText}
                 slots={{ toolbar: GridToolbar }} 
               />
             </Grid>
