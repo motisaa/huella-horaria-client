@@ -8,7 +8,7 @@ export const ErrorGeneral = (props) => {
         <>
             <Snackbar key={uuid()} open={props.hayError} autoHideDuration={6000} onClose={props.cerrarError}
                 anchorOrigin={{ vertical: 'top', horizontal: 'left', }}>
-                <Alert onClose={props.cerrarError} severity="error" sx={{ width: '100%' }}>
+                <Alert onClose={props.cerrarError} severity="error" sx={{ width: '100%', marginTop: 10 }}>
                     {props.mensajeError}
                 </Alert>
             </Snackbar>
