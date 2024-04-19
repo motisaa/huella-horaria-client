@@ -1,22 +1,18 @@
-import React, {
-  useContext,
-  useState
-} from "react";
+import React, {useState} from "react";
 import { useMutation, useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { MenuLateral } from "../../componentes/MenuLateral/MenuLateral";
 import { MensajeError } from "../../servicios/TratamientoErrores";
 import { ErrorGeneral } from "../../componentes/ErrorGeneral/ErrorGeneral";
-import { LeerUsuariosTrabajadores, eliminarUsuarioTrabajador, LeerGrupoTrabajador } from "../../servicios/RQTrabajadores";
+import { LeerUsuariosTrabajadores, eliminarUsuarioTrabajador} from "../../servicios/RQTrabajadores";
 import AddIcon from "@mui/icons-material/Add";
-import { AppBar, Grid, IconButton, Toolbar, Tooltip, Typography, } from "@mui/material";
+import { AppBar, Grid, IconButton, Toolbar, Tooltip } from "@mui/material";
 import { MensajeInformativo } from "../../componentes/MensajeInformativo/MensajeInformativo";
 import {
   DataGrid,
   //esES, 
   GridToolbar
 } from "@mui/x-data-grid";
-import { GeneralCtx } from "../../contextos/GeneralContext";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { MensajeConfirmacion } from "../../componentes/MensajeConfirmacion/MensajeConfirmacion";
@@ -31,8 +27,6 @@ export const TrabajadoresPagina = () => {
   const [usuarioTrabajador, setUsuarioTrabajador] = useState();
   const [mensajeConfirmacion, setMensajeConfirmacion] = useState("");
   const [hayConfirmacion, setHayConfirmacion] = useState(false);
-
-  const { getSession } = useContext(GeneralCtx);
 
   const nuevoUsuarioTrabajador = () => {
     navigate(`/trabajador/0`);
@@ -76,8 +70,7 @@ export const TrabajadoresPagina = () => {
     );
     setHayMensaje(true);
   };
-  // eslint-disable-next-line 
-  const session = getSession();
+
 
   // eslint-disable-next-line no-unused-vars
   const queryUsuariosTrabajadores = useQuery(
