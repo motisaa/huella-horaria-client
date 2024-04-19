@@ -208,7 +208,7 @@ export const FichajePagina = () => {
     return (
         <>
             <MenuLateral>
-           {(!latitud && !longitud) ? <MensajeAviso/> : ''} 
+           {((!latitud && !longitud) && !hayError) ? <MensajeAviso/> : ''} 
                 <form onSubmit={formik.handleSubmit}>
                     <Grid container spacing={2}>
                         <Grid item xs={6} mt={3}>
