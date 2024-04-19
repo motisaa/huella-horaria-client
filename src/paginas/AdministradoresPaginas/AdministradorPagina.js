@@ -1,33 +1,34 @@
-import React, {
-  useContext,
-  useState
-} from "react";
+import React, {useState} from "react";
 import { useParams } from "react-router-dom";
 import { useFormik } from "formik";
 import { useMutation, useQuery } from "react-query";
 import { initialValues, validationSchema } from "./AdministradorFunciones";
 import { useNavigate } from "react-router-dom";
-import { GeneralCtx } from "../../contextos/GeneralContext";
 import { MensajeError } from "../../servicios/TratamientoErrores";
 import { ErrorGeneral } from "../../componentes/ErrorGeneral/ErrorGeneral";
 import { MensajeInformativo } from "../../componentes/MensajeInformativo/MensajeInformativo";
 import {
  // Autocomplete,
-  Button, TextField, Typography, Grid
+  Button, TextField, Typography, Grid,
+  InputAdornment,
+  IconButton
 } from "@mui/material";
 import { ActualizarUsuarioAdmin, CrearUsuarioAdmin, LeerUsuarioAdmin } from "../../servicios/RQAdministradores";
 //import { LeerEmpresas } from "../../servicios/RQEmpresas";
 import { MenuLateral } from "../../componentes/MenuLateral/MenuLateral";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 export const AdministradorPagina = () => {
   const params = useParams();
   const navigate = useNavigate();
- const { getSession } = useContext(GeneralCtx);
   const [hayError, setHayError] = useState(false);
   const [mensajeError, setMensajeError] = useState("");
   const [hayMensaje, setHayMensaje] = useState(false);
   const [mensaje, setMensaje ] = useState("");
-
+  const [showPassword, setShowPassword] = useState(false);
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
   // const [empresas, setEmpresas] = useState([]);
   // let empresaSeleccionado = null;
   // const getEmpresaIdValue = () => {
@@ -262,7 +263,20 @@ export const AdministradorPagina = () => {
                 id="password"
                 name="password"
                 label="Contraseña"
-                type="password"
+                type={showPassword ? "text" : "password"}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        edge="end"
+                      >
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
                 onChange={formik.handleChange}
                 error={
                   formik.touched.password && Boolean(formik.errors.password)
@@ -277,6 +291,19 @@ export const AdministradorPagina = () => {
                 name="confirmPassword"
                 label="Repita la contraseña"
                 type="password"
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        edge="end"
+                      >
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
                 onChange={formik.handleChange}
                 error={formik.touched.confirmPassword}
                 helperText={formik.touched.confirmPassword &&
