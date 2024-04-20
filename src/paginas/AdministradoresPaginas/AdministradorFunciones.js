@@ -30,6 +30,17 @@ export const validationSchema = () => {
       .required("Requerido")
       .min(5, 'Por favor, elija una contraseña con al menos 5 caracteres'),
       confirmPassword: yup.string()
-      .oneOf([yup.ref('password')], 'Las contraseñas deben coincidir.'),
+      .oneOf([yup.ref('password')], 'Las contraseñas deben coincidir.')
+      .required('Requerido'),
   });
 };
+
+/*
+More restrictions for password
+https://code.pieces.app/blog/react-form-validation-formik-yup
+matches(/(?=.*[a-z])(?=.*[A-Z])\w+/, "Password ahould contain at least one " +
+ "uppercase and lowercase character")
+      .matches(/\d/, "Password should contain at least one number")
+      .matches(/[`!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?~]/, "Password should " +
+      "contain at least one special character")
+*/
