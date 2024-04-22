@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useFormik } from "formik";
 import { useMutation, useQuery } from "react-query";
@@ -7,7 +7,7 @@ import { MensajeError } from "../../servicios/TratamientoErrores";
 import { ErrorGeneral } from "../../componentes/ErrorGeneral/ErrorGeneral";
 import { MensajeInformativo } from "../../componentes/MensajeInformativo/MensajeInformativo";
 import { Button, TextField, Typography, Grid, Autocomplete, InputAdornment, IconButton } from "@mui/material";
-import { ActualizarUsuarioTrabajador, CrearUsuarioTrabajador, LeerUsuarioTrabajador }
+import { ActualizarUsuarioTrabajador, CrearUsuarioTrabajador, LeerUsuarioTrabajador, LeerUsuariosTrabajadores }
     from "../../servicios/RQTrabajadores";
 import { MenuLateral } from "../../componentes/MenuLateral/MenuLateral";
 import { initialValues, validationSchema } from "./TrabajadoresFunciones";
@@ -52,16 +52,60 @@ export const TrabajadorPagina = () => {
         }
     );
 
+    const [usernames, setUsernames] = useState([]);
+    /* he sacado este useEffect con la ayuda de chatGPT
+ This useEffect is set up to handle username input, using setTimeout and clearTimeout. 
+ It's designed to manage when a user types a username that already exists, 
+ so when user changes the username to the one that doesnt exist in base de datos, requires a cleanup of the previous timeout.
+  So it will work fine as expected(user wil be created o editted).
+ */
+    useEffect(() => {
+        // Inside this useEffect, a timer is set using setTimeout, delaying for 0.5 seconds.
+        const timerId = setTimeout(async () => {
+            try {
+                const data = await LeerUsuariosTrabajadores();
+                let usernames = data.data;
+                setUsernames(usernames);
+            } catch (error) {
+                console.error(error);
+                setMensajeError(MensajeError(error));
+                setHayError(true);
+            }
+            // a timeout is set with a 0.5s delay.
+        }, 500);
+
+        return () => {
+            // It clears the timer previously set by setTimeout
+            clearTimeout(timerId);
+        };
+    }, []);
 
     const handleSubmit = async (values) => {
         delete values.confirmPassword;
-        if (!values.trabajadorId) {
-            await crearUsuarioTrabajador.mutateAsync(values);
-        } else {
-            await actualizarUsuarioTrabajador.mutateAsync(values);
+      
+        try {
+            let nombreUsuarioExistente = usernames.find(
+                (user) => user.usuario === values.usuario 
+                // excluyendo el nombre de usuario actual
+                    && user.usuario !== formik.values.usuario
+            );
+
+            if (nombreUsuarioExistente) {
+                setHayError(true);
+                setMensajeError("El nombre de usuario ya existe. Por favor, elija otro.");
+            } else {
+                if (!values.trabajadorId) {
+                    await crearUsuarioTrabajador.mutateAsync(values);
+                } else {
+                    await actualizarUsuarioTrabajador.mutateAsync(values);
+                }
+                navigate("/trabajadores");
+            }
+        } catch (error) {
+            setHayError(true);
+            setMensajeError("Error en la solicitud " + error.message);
         }
-        navigate("/trabajadores");
-    };
+    }
 
     const formik = useFormik({
         // Configuración del formulario usando Formik
@@ -140,7 +184,7 @@ export const TrabajadorPagina = () => {
                                 Datos de Trabajador:
                             </Typography>
                         </Grid>
-                        <Grid item xs={12} sx={{ textAlign: "right"}}>
+                        <Grid item xs={12} sx={{ textAlign: "right" }}>
                             <Button color="success" variant="contained"
                                 onClick={salirForm}>
                                 Salir
