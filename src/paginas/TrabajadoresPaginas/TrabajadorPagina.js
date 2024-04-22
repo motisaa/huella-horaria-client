@@ -81,11 +81,12 @@ export const TrabajadorPagina = () => {
     }, []);
 
     const handleSubmit = async (values) => {
+        // Exclude password field if it hasn't changed
+        if(!values.confirmPassword) delete values.password;
         delete values.confirmPassword;
-      
         try {
             let nombreUsuarioExistente = usernames.find(
-                (user) => user.usuario === values.usuario 
+                (user) => user.usuario === values.usuario
                 // excluyendo el nombre de usuario actual
                     && user.usuario !== formik.values.usuario
             );

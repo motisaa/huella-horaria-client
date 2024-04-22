@@ -87,13 +87,16 @@ export const AdministradorPagina = () => {
   }, []);
 
   const handleSubmit = async (values) => {
-    delete values.confirmPassword;
-
     try {
+      // Exclude password field if it hasn't changed from default value
+      if(!values.confirmPassword) delete values.password
+      // Delete confirmation password field because does not exist in backend
+      delete values.confirmPassword;
       let nombreUsuarioExistente = usernames.find( 
         (admin) => admin.usuario === values.usuario
-        /* fixed: I added the next line to ensure that if we want to edit the admin profile without changing its username, 
-        we won't encounter the error stating that the username already exists. */
+        /* fixed: I added the next line to ensure that if we want to edit the admin
+        profile without changing its username, we won't encounter the error
+        stating that the username already exists. */
         //excluyendo el caso en que el nombre de usuario sea igual al nombre de usuario actual
           && admin.usuario !== formik.values.usuario
       );
