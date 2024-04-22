@@ -345,7 +345,7 @@ export const AdministradorPagina = () => {
                 id="confirmPassword"
                 name="confirmPassword"
                 label="Repita la contraseña"
-                type="password"
+                type={showPassword ? "text" : "password"}
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end">
