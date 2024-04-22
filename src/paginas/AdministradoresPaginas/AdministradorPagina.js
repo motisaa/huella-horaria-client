@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import { useParams } from "react-router-dom";
 import { useFormik } from "formik";
 import { useMutation, useQuery } from "react-query";
@@ -13,7 +13,7 @@ import {
   InputAdornment,
   IconButton
 } from "@mui/material";
-import { ActualizarUsuarioAdmin, CrearUsuarioAdmin, LeerUsuarioAdmin } from "../../servicios/RQAdministradores";
+import { ActualizarUsuarioAdmin, CrearUsuarioAdmin, LeerUsuarioAdmin, LeerUsuariosAdmin } from "../../servicios/RQAdministradores";
 //import { LeerEmpresas } from "../../servicios/RQEmpresas";
 import { MenuLateral } from "../../componentes/MenuLateral/MenuLateral";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
@@ -29,6 +29,8 @@ export const AdministradorPagina = () => {
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
   };
+
+
   // const [empresas, setEmpresas] = useState([]);
   // let empresaSeleccionado = null;
   // const getEmpresaIdValue = () => {
@@ -54,26 +56,72 @@ export const AdministradorPagina = () => {
   //     },
   //   }
   // );
+
+  const [usernames, setUsernames] = useState([]);
+
+  /* he sacado este useEffect con la ayuda de chatGPT
+  This useEffect is set up to handle username input, using setTimeout and clearTimeout. 
+  It's designed to manage when a user types a username that already exists, 
+  so when user changes the username to the one that doesnt exist in base de datos, requires a cleanup of the previous timeout.
+   So it will work fine as expected(user wil be created o editted).
+  */
+  useEffect(() => {
+    // Inside this useEffect, a timer is set using setTimeout, delaying for 0.5 seconds.
+    const timerId = setTimeout(async () => {
+      try {
+        const data = await LeerUsuariosAdmin();
+        let usernames = data.data;
+        setUsernames(usernames);
+      } catch (error) {
+        console.error(error);
+        setMensajeError(MensajeError(error));
+        setHayError(true);
+      }
+      // a timeout is set with a 0.5s delay.
+    }, 500);
+
+    return () => {
+      // It clears the timer previously set by setTimeout to avoid memory leaks.
+      clearTimeout(timerId);
+    };
+  }, []);
+
   const handleSubmit = async (values) => {
     delete values.confirmPassword;
-    if (!values.adminId) {
-      await crearUsuarioAdmin.mutateAsync(values);
-    } else {
-      await actualizarUsuarioAdmin.mutateAsync(values);
+
+    try {
+      let nombreUsuarioExistente = usernames.find( 
+        (admin) => admin.usuario === values.usuario
+      );
+
+      if (nombreUsuarioExistente) {
+        setHayError(true);
+        setMensajeError("El nombre de usuario ya existe. Por favor, elija otro.");
+      } else {
+        if (values.adminId) {
+          await actualizarUsuarioAdmin.mutateAsync(values);
+        } else {
+          await crearUsuarioAdmin.mutateAsync(values);
+        }
+        navigate("/administradores");
+      }
+    } catch (error) {
+      setHayError(true);
+      setMensajeError("Error en la solicitud ");
     }
-    navigate("/administradores");
-  };
+  }
 
-  const formik = useFormik({
-    initialValues: initialValues(),
-    validationSchema: validationSchema(),
-    onSubmit: handleSubmit,
-  });
 
-  const salirForm = (e) => {
-    if (e) e.preventDefault();
-    navigate("/administradores");
-  };
+    const formik = useFormik({
+      initialValues: initialValues(),
+      validationSchema: validationSchema(),
+      onSubmit: handleSubmit,
+    });
+
+    const salirForm = (e) => {
+      if (e) e.preventDefault();
+      navigate("/administradores");
+    };
 
   const actualizarUsuarioAdmin = useMutation(
     (admin) => {
