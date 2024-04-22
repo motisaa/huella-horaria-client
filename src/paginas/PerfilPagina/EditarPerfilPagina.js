@@ -23,8 +23,6 @@ export const EditarPerfilPagina = () => {
     const [hayMensaje, setHayMensaje] = useState(false);
     const [mensaje, setMensaje] = useState("");
     const [showPassword, setShowPassword] = useState(false);
-    const { getSession } = useContext(GeneralCtx);
-    let session = getSession();
     const [usernames, setUsernames] = useState([]);
     /* he sacado este useEffect con la ayuda de chatGPT
  This useEffect is set up to handle username input, using setTimeout and clearTimeout. 
@@ -54,16 +52,21 @@ export const EditarPerfilPagina = () => {
     }, []);
 
     const handleSubmit = async (values) => {
-        
-        let usernameActual = session.usuario.usuario;
+        let usernameActual = formik.values.usuario;
         try {
             let nombreUsuarioExistente = usernames.find(
-                (user) => user.usuario === values.usuario && user.usuario !== usernameActual
+                (user) => user.usuario === values.usuario
+                    && user.usuario !== usernameActual
             );
             if (nombreUsuarioExistente) {
                 setHayError(true);
                 setMensajeError("El nombre de usuario ya existe. Por favor, elija otro.");
             } else {
+                if (!values.confirmPassword) {
+                    // Exclude password field if it hasn't changed from default value
+                    delete values.password;
+                }
+                // Delete confirmation password field because does not exist in backend
                 delete values.confirmPassword;
                 await actualizarUsuarioTrabajador.mutateAsync(values);
                 navigate("/perfil");
