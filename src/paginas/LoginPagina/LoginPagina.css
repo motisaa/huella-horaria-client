@@ -1,4 +1,4 @@
-:root {
+:html {
     background-color: #283141;
 }
 .fondoImagenLogin {
@@ -7,7 +7,6 @@
     margin: 0;
     color: white;
     background-image: url("../../images/kevin-ku-aiyBwbrWWlo-unsplash.jpg");
-    /* Center and scale the image nicely */
     background-position: top;
     background-repeat: no-repeat;
     background-size: cover;
@@ -32,6 +31,7 @@
         display: none;
     }
     .loginForm {
-        margin-top: 8rem !important;;
+        margin-top: 8rem !important;
+        background-color: white;
     }
 }
