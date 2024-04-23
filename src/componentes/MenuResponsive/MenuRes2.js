@@ -93,21 +93,56 @@ export const MenuRes2 = (props) => {
                                     color="inherit"
                                 >
                                     <MenuIcon />
+                                    {/* Diseño para móviles
+                                     sm significa despositivos small*/}
                                 </IconButton>
-                            </Box>
-                            <Avatar alt="Logo" src={logo} sx={{
+                                <Avatar alt="Logo" src={logo}
+                                sx={{
                                 width: 80,
-                                height: 80, m: 1
-                            }} />
-                            <Typography variant="h6" component="div"
-                                >
-                                vers.: {version}
-                            </Typography>
+                                height: 80,
+                                m: 1,
+                                display: {xs: 'flex',  md: 'none'},
+                                mr: 1 
+                                    }} />
+                            <Typography
+                        variant="h5"
+                        noWrap
+                        component="div"
+                        sx={{
+                            mr: 2,
+                            display: { xs: 'flex', md: 'none' },
+                            color: 'inherit',
+                            textDecoration: 'none',
+                            marginTop: 4,
+                        }}
+                    >
+                       v.: {version}
+                    </Typography>
+                            </Box>
+                            <Avatar alt="Logo" src={logo}
+                                sx={{
+                                width: 80,
+                                height: 80,
+                                m: 1,
+                                    display: { md: 'flex', xs: 'none',},
+                                mr: 1 
+                                }} />
+                            {/* Diseño para Desktop : 
+                            md signfica despositivos mediums*/}
+                    <Typography variant="h6" component="div"
+                        noWrap
+                        sx={{
+                            mr: 2,
+                            display: { xs: 'none', md: 'flex' },
+                            color: 'inherit',
+                            textDecoration: 'none' }}>
+                        vers.: {version}
+                    </Typography>
                             <Box sx={{
                                 flexGrow: 1, marginLeft: 3,
                                     display: {
                                     xs: 'none',
-                                    md: 'flex'
+                                    md: 'flex',
                                 }
                             }}>
                                 
@@ -179,6 +214,7 @@ export const MenuRes2 = (props) => {
                             >
                                 <ExitToAppIcon />
                             </IconButton>
+
                         </Toolbar>
                     </AppBar>
                     <Drawer
