@@ -1,4 +1,7 @@
 
+:root{
+    background-color: #283141;
+}
 .fondoImagenLogin {
     padding: 1.875rem;
     height: 100vh;
@@ -22,4 +25,12 @@
     padding: 1.25em; 
     margin-top: 0.31em;
     max-width: 21.87em; 
+}
+@media (max-width: 600px) { /* Cambia 600px al ancho deseado para dispositivos pequeños */
+    .fondoImagenLogin {
+        display: none;
+    }
+    .loginForm {
+    display: flex;
+    }
 }

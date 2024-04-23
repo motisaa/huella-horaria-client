@@ -16,7 +16,7 @@ export const LoginPagina = () => {
     return (
         <>
            <Grid container>
-                <Grid item xs={8} className="fondoImagenLogin">
+                <Grid item xs={false} sm={6} md={8} className="fondoImagenLogin">
                     <Typography variant='h3'>
                         Huella Horaria
                     </Typography>
@@ -27,7 +27,8 @@ export const LoginPagina = () => {
                         versión: {version}
                     </Typography>
                 </Grid>
-                <Grid item xs={4} className="loginForm">
+                <Grid item xs={12} sm={6} md={4}
+                    className="loginForm">
                     <div className='recuadro'>
                         <LoginForm/>
                     </div>
