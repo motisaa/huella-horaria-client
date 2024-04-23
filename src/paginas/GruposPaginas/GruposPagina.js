@@ -13,6 +13,7 @@ import { AppBar, Grid, IconButton, Toolbar, Tooltip, Typography,
 import { MensajeConfirmacion } from "../../componentes/MensajeConfirmacion/MensajeConfirmacion";
 import { MensajeInformativo } from "../../componentes/MensajeInformativo/MensajeInformativo";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import { esES } from '@mui/x-data-grid/locales';
 
 export const GruposPagina = () => {
   const navigate = useNavigate();
@@ -139,8 +140,8 @@ export const GruposPagina = () => {
               rows={grupos}
               columns={columns}
               getRowId={(row) => row.grupoId}
-              slots={{ toolbar: GridToolbar }}
-              // localeText={esES.components.MuiDataGrid.defaultProps.localeText}
+              localeText={esES.components.MuiDataGrid.defaultProps.localeText}
+              slots={{ toolbar: GridToolbar }} 
             />
           </Grid>
         </Grid>

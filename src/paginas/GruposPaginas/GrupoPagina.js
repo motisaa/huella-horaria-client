@@ -87,31 +87,31 @@ export const GrupoPagina = () => {
       enabled: params.grupoId !== "0",
     }
     );
-    const [empresas, setEmpresas] = useState([]);
-  let empresaSeleccionado = null;
-  const getEmpresaIdValue = () => {
-    empresaSeleccionado = empresas.find(
-      (i) => i.empresaId === formik.values.empresaId
-    );
-    return empresaSeleccionado || null;
-  };
-  useQuery(
-    "empresas",
-    () => {
-      return LeerEmpresas();
-    },
-    {
-      onSuccess: (data) => {
-        let opcionesEmpresas = data.data;
-        setEmpresas(opcionesEmpresas);
-      },
-      onError: (error) => {
-        console.error(error);
-        setMensajeError(MensajeError(error));
-        setHayError(true);
-      },
-    }
-  );
+  //   const [empresas, setEmpresas] = useState([]);
+  // let empresaSeleccionado = null;
+  // const getEmpresaIdValue = () => {
+  //   empresaSeleccionado = empresas.find(
+  //     (i) => i.empresaId === formik.values.empresaId
+  //   );
+  //   return empresaSeleccionado || null;
+  // };
+  // useQuery(
+  //   "empresas",
+  //   () => {
+  //     return LeerEmpresas();
+  //   },
+  //   {
+  //     onSuccess: (data) => {
+  //       let opcionesEmpresas = data.data;
+  //       setEmpresas(opcionesEmpresas);
+  //     },
+  //     onError: (error) => {
+  //       console.error(error);
+  //       setMensajeError(MensajeError(error));
+  //       setHayError(true);
+  //     },
+  //   }
+  // );
   const columns = [
     { field: "trabajadorId", headerName: "ID", width: 50 },
     { field: "nombre", headerName: "Nombre", flex: 0.4 },
@@ -129,7 +129,7 @@ export const GrupoPagina = () => {
             <Grid item xs={6}  mt={4}>
               <Typography variant="h6">Datos de Grupo:</Typography>
             </Grid>
-            <Grid item xs={6} sx={{ textAlign: "right" }}  mt={4}>
+            <Grid item xs={12} sx={{ textAlign: "right" }}  mt={2}>
               <Button color="success" variant="contained" onClick={salirForm}>
                 Salir
               </Button>
@@ -142,7 +142,7 @@ export const GrupoPagina = () => {
                 Aceptar
               </Button>
             </Grid>
-            <Grid item xs={2}>
+            <Grid item xs={3}>
               <TextField
                 fullWidth
                 id="grupoId"
@@ -172,8 +172,20 @@ export const GrupoPagina = () => {
                 helperText={formik.touched.nombre && formik.errors.nombre}
               />
             </Grid>
-            <Grid item xs={4}>
-              <Autocomplete
+            <Grid item xs={12} md={4}>
+              <TextField
+                fullWidth
+                id="empresaId"
+                name="empresaId"
+                label="Empresa"
+                value={"InnovaFutura"}
+                defaultValue={formik.values.empresaId}
+                disabled
+                onChange={formik.handleChange}
+                error={formik.touched.empresaId && Boolean(formik.errors.empresaId)}
+                helperText={formik.touched.empresaId && formik.errors.empresaId}
+              />
+              {/* <Autocomplete
                 label="Empresa"
                 options={empresas}
                 value={getEmpresaIdValue()}
@@ -198,7 +210,7 @@ export const GrupoPagina = () => {
                     }
                   ></TextField>
                 )}
-              />
+              /> */}
             </Grid>       
             <Grid item xs={12} style={{ height: "80vh", width: "100%" }}>
               <DataGrid

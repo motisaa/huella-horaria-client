@@ -217,7 +217,7 @@ export const FichajePagina = () => {
                         <Grid item xs={6} mt={3}>
                             <Typography variant="h6">Datos de Fichaje:</Typography>
                         </Grid>
-                        <Grid item xs={6} sx={{ textAlign: "right" }} mt={4}>
+                        <Grid item xs={12} md={6} sx={{ textAlign: "right", marginBottom:2 }} mt={4}>
                             <Button color="success"
                                 variant="contained" onClick={salirForm}>
                                 Salir
@@ -231,7 +231,7 @@ export const FichajePagina = () => {
                                 Aceptar
                             </Button>
                         </Grid>
-                        <Grid item xs={2}>
+                        <Grid item xs={2} md={3}>
                             <TextField
                                 fullWidth
                                 id="fichajeId"
@@ -250,7 +250,7 @@ export const FichajePagina = () => {
                                 }
                             />
                         </Grid>
-                        <Grid item xs={6}>
+                        <Grid item xs={10} md={4}>
                             <Autocomplete
                                 label="Trabajador"
                                 options={trabajadores}
@@ -281,7 +281,7 @@ export const FichajePagina = () => {
                                 )}
                             />
                         </Grid>
-                        <Grid item xs={4}>
+                        <Grid item xs={12} md={4}>
                             <LocalizationProvider
                                 dateAdapter={AdapterMoment}
                                 adapterLocale="es-ES"
@@ -298,7 +298,7 @@ export const FichajePagina = () => {
                                 />
                             </LocalizationProvider>
                         </Grid>
-                        <Grid item xs={4}>
+                        <Grid item xs={10} md={3}>
                             {/*  
                             <Autocomplete
                                 label="Tipo"
@@ -350,7 +350,7 @@ export const FichajePagina = () => {
                             </FormControl>
 
                         </Grid>
-                        <Grid item xs={4}>
+                        <Grid item xs={12} md={4}>
 
                             <TextField
                                 fullWidth
@@ -369,7 +369,7 @@ export const FichajePagina = () => {
                                     && formik.errors.latitud}
                             />
                         </Grid>
-                        <Grid item xs={4}>
+                        <Grid item xs={12} md={4}>
                             <TextField
                                 fullWidth
                                 id="longitud"

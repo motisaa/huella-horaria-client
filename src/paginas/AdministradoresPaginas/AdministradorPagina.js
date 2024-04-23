@@ -184,7 +184,7 @@ export const AdministradorPagina = () => {
             <Grid item xs={6}  mt={4}>
               <Typography variant="h6">Datos de administrador:</Typography>
             </Grid>
-            <Grid item xs={6} sx={{ textAlign: "right" }}  mt={3}>
+            <Grid item xs={12} md={6} sx={{ textAlign: "right", marginBottom: 2 }}  mt={2}>
               <Button color="success" variant="contained" onClick={salirForm}>
                 Salir
               </Button>

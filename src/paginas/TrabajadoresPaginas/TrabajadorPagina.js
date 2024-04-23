@@ -216,7 +216,7 @@ export const TrabajadorPagina = () => {
                                     && formik.errors.trabajadorId}
                             />
                         </Grid>
-                        <Grid item xs={6} md={2}>
+                        <Grid item xs={9} md={2}>
                             <TextField
                                 fullWidth
                                 id="empresaId"
@@ -260,7 +260,7 @@ export const TrabajadorPagina = () => {
                                     && formik.errors.apellido1}
                             />
                         </Grid>
-                        <Grid item xs={6} md={3}>
+                        <Grid item xs={8} md={3}>
                             <TextField
                                 fullWidth
                                 id="apellido2"
@@ -274,7 +274,7 @@ export const TrabajadorPagina = () => {
                                     && formik.errors.apellido2}
                             />
                         </Grid>
-                        <Grid item xs={6} md={2}>
+                        <Grid item xs={8} md={4}>
                             <Autocomplete
                                 label="Grupo"
                                 options={grupos}
