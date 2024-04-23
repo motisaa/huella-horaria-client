@@ -143,7 +143,7 @@ export const EditarPerfilPagina = () => {
                                 Editar Perfil <ManageAccountsIcon />
                             </Typography>
                         </Grid>
-                        <Grid item xs={6} sx={{ textAlign: "right" }} mt={3}>
+                        <Grid item xs={12} md={6} sx={{ textAlign: "right" }} mt={3}>
                             <Button color="success" variant="contained"
                                 onClick={salirForm}>
                                 Salir
@@ -157,7 +157,7 @@ export const EditarPerfilPagina = () => {
                                 Aceptar
                             </Button>
                         </Grid>
-                        <Grid item xs={10} md={4}>
+                        <Grid item xs={12} md={4}>
                             <TextField
                                 fullWidth
                                 id="nombre"
@@ -185,7 +185,7 @@ export const EditarPerfilPagina = () => {
                                     && formik.errors.apellido1}
                             />
                         </Grid>
-                        <Grid item xs={3}>
+                        <Grid item xs={12} md={4}>
                             <TextField
                                 fullWidth
                                 id="apellido2"
@@ -268,7 +268,7 @@ export const EditarPerfilPagina = () => {
                                 fullWidth
                                 id="confirmPassword"
                                 name="confirmPassword"
-                                label="Repite la contraseña nueva"
+                                label="Repita la contraseña nueva"
                                 type={showPassword ? "text" : "password"}
                                 onChange={formik.handleChange}
                                 InputProps={{
