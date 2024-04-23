@@ -197,7 +197,7 @@ export const AdministradorPagina = () => {
                 Aceptar
               </Button>
             </Grid>
-            <Grid item xs={2}>
+            <Grid item xs={3} md={2}>
               <TextField
                 fullWidth
                 id="adminId"
@@ -212,7 +212,7 @@ export const AdministradorPagina = () => {
                 helperText={formik.touched.adminId && formik.errors.adminId}
               />
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={6} md={2}>
               <TextField
                 fullWidth
                 id="empresaId"
@@ -252,7 +252,7 @@ export const AdministradorPagina = () => {
                 )}
               /> */}
             </Grid>
-            <Grid item xs={10} md={4}>
+            <Grid item xs={12} md={4}>
               <TextField
                 fullWidth
                 id="nombre"
@@ -276,7 +276,7 @@ export const AdministradorPagina = () => {
                 helperText={formik.touched.apellido1 && formik.errors.apellido1}
               />
              </Grid>
-             <Grid item xs={4}>
+            <Grid item xs={12} md={4}>
               <TextField
                 fullWidth
                 id="apellido2"
