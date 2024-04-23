@@ -4,7 +4,9 @@ export const initialValues = () => {
   return {
     grupoId: "",
     nombre: "",
-    empresaId: "",
+    // el valor es 2 porque es la única empresa que tenemos ahora
+    // si hay más empresas el valor debe ser 0
+    empresaId: 2,
   };
 };
 /* This function defines the validation rules for the form fields using Yup.
