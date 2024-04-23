@@ -1,5 +1,4 @@
-
-:root{
+:root {
     background-color: #283141;
 }
 .fondoImagenLogin {
@@ -15,22 +14,24 @@
 }
 .loginForm {
     background-color: #283141;
-    padding: 5em;
-    align-content: center;
+    padding: 2em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .recuadro {
-    border: 1px solid; 
-    border-radius: 1.25em; 
+    border: 1px solid;
+    border-radius: 1.25em;
     background-color: white;
-    padding: 1.25em; 
-    margin-top: 0.31em;
-    max-width: 21.87em; 
+    padding: 1.25em;
+    max-width: 21.87em;
 }
-@media (max-width: 600px) { /* Cambia 600px al ancho deseado para dispositivos pequeños */
+
+@media (max-width: 600px) {
     .fondoImagenLogin {
         display: none;
     }
     .loginForm {
-    display: flex;
+        margin-top: 8rem !important;;
     }
 }

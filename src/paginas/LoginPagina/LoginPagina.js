@@ -1,7 +1,7 @@
 import { Grid, Typography } from "@mui/material";
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import { leerVersion } from '../../servicios/ApiLib';
-import { LoginForm } from "./LoginForm";
+import { LoginForm } from './LoginForm';
 
 export const LoginPagina = () => {
     const [version, setVersion] = useState('0.0.0');
@@ -15,8 +15,8 @@ export const LoginPagina = () => {
 
     return (
         <>
-           <Grid container>
-                <Grid item xs={false} sm={6} md={8} className="fondoImagenLogin">
+            <Grid container>
+                <Grid item sm={6} md={8} className="fondoImagenLogin">
                     <Typography variant='h3'>
                         Huella Horaria
                     </Typography>
@@ -27,10 +27,9 @@ export const LoginPagina = () => {
                         versión: {version}
                     </Typography>
                 </Grid>
-                <Grid item xs={12} sm={6} md={4}
-                    className="loginForm">
+                <Grid item xs={12} sm={6} md={4} className="loginForm">
                     <div className='recuadro'>
-                        <LoginForm/>
+                        <LoginForm />
                     </div>
                 </Grid>
             </Grid>
