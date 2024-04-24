@@ -12,9 +12,17 @@ export const InicioPagina = () => {
                         <Paper variant='outlined' sx={{ padding: 12 }}>
                             <Typography variant='h3'> Huella Horaria </Typography>
                             <Typography>
-                                ¡Bienvenido a nuestra aplicación! Si estás accediendo desde desde un dispositivo móvil, el menú está oculto por defecto,
-                                pero puedes mostrarlo u ocultarlo con un clic en el icono <MenuIcon /> que está en la parte superior izquierda 
-                                de la barra de navegación.
+                                ¡Bienvenido a nuestra aplicación! Para ver el menu
+                                o ocultarlo haz clic en el icono <MenuIcon />  
+                                que está en la parte izquierda de la
+                                barra de navegación. Si estás
+                                accediendo desde un dispositivo móvil o tablet
+                                o has ajustado la ventanta de navegador
+                                para que sea más pequeña, encontrarás el icono
+                                del menú ahí.
+                                En el caso de que estés accediendo desde un
+                                escritorio o portátil tienes los items de menu en
+                                la barra de navegación.
                             </Typography>
                         </Paper>
                     </Grid>
