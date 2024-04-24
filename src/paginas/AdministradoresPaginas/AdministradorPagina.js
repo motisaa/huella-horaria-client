@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useFormik } from "formik";
 import { useMutation, useQuery } from "react-query";
@@ -7,12 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { MensajeError } from "../../servicios/TratamientoErrores";
 import { ErrorGeneral } from "../../componentes/ErrorGeneral/ErrorGeneral";
 import { MensajeInformativo } from "../../componentes/MensajeInformativo/MensajeInformativo";
-import {
- // Autocomplete,
-  Button, TextField, Typography, Grid,
-  InputAdornment,
-  IconButton
-} from "@mui/material";
+import { Button, TextField, Typography, Grid, InputAdornment, IconButton } from "@mui/material";
 import { ActualizarUsuarioAdmin, CrearUsuarioAdmin, LeerUsuarioAdmin, LeerUsuariosAdmin } from "../../servicios/RQAdministradores";
 //import { LeerEmpresas } from "../../servicios/RQEmpresas";
 import { MenuLateral } from "../../componentes/MenuLateral/MenuLateral";
@@ -24,46 +19,21 @@ export const AdministradorPagina = () => {
   const [hayError, setHayError] = useState(false);
   const [mensajeError, setMensajeError] = useState("");
   const [hayMensaje, setHayMensaje] = useState(false);
-  const [mensaje, setMensaje ] = useState("");
+  const [mensaje, setMensaje] = useState("");
+  const [antPassword, setAntPassword] = useState()
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
   };
 
-
-  // const [empresas, setEmpresas] = useState([]);
-  // let empresaSeleccionado = null;
-  // const getEmpresaIdValue = () => {
-  //   empresaSeleccionado = empresas.find(
-  //     (i) => i.empresaId === formik.values.empresaId
-  //   );
-  //   return empresaSeleccionado || null;
-  // };
-  // useQuery(
-  //   "empresas",
-  //   () => {
-  //     return LeerEmpresas();
-  //   },
-  //   {
-  //     onSuccess: (data) => {
-  //       let opcionesEmpresas = data.data;
-  //       setEmpresas(opcionesEmpresas);
-  //     },
-  //     onError: (error) => {
-  //       console.error(error);
-  //       setMensajeError(MensajeError(error));
-  //       setHayError(true);
-  //     },
-  //   }
-  // );
-
   const [usernames, setUsernames] = useState([]);
 
   /* he sacado este useEffect con la ayuda de chatGPT
-  This useEffect is set up to handle username input, using setTimeout and clearTimeout. 
-  It's designed to manage when a user types a username that already exists, 
-  so when user changes the username to the one that doesnt exist in base de datos, requires a cleanup of the previous timeout.
-   So it will work fine as expected(user wil be created o editted).
+   Para gestionar cuando un usuario escribe un nombre de usuario que ya existe,
+   por lo que cuando el usuario cambia el nombre de usuario a uno que no existe
+   en la base de datos, requiere una limpieza del tiempo de espera anterior.
+   Así que funcionará bien como se espera (el usuario será creado o editado).
+   Sin este useEffect el usuario debería resfrescar la página
   */
   useEffect(() => {
     // Inside this useEffect, a timer is set using setTimeout, delaying for 0.5 seconds.
@@ -88,16 +58,12 @@ export const AdministradorPagina = () => {
 
   const handleSubmit = async (values) => {
     try {
-      // Exclude password field if it hasn't changed from default value
-      if(!values.confirmPassword) delete values.password
-      // Delete confirmation password field because does not exist in backend
-      delete values.confirmPassword;
-      let nombreUsuarioExistente = usernames.find( 
+      let nombreUsuarioExistente = usernames.find(
         (admin) => admin.usuario === values.usuario
-        /* fixed: I added the next line to ensure that if we want to edit the admin
-        profile without changing its username, we won't encounter the error
-        stating that the username already exists. */
-        //excluyendo el caso en que el nombre de usuario sea igual al nombre de usuario actual
+          /* fixed: I added the next line to ensure that if we want to edit the admin
+          profile without changing its username, we won't encounter the error
+          stating that the username already exists. */
+          //excluyendo el caso en que el nombre de usuario sea igual al nombre de usuario actual
           && admin.usuario !== formik.values.usuario
       );
 
@@ -105,12 +71,42 @@ export const AdministradorPagina = () => {
         setHayError(true);
         setMensajeError("El nombre de usuario ya existe. Por favor, elija otro.");
       } else {
+        // significa que queremos actualizar un usuario, ya tiene su id
         if (values.adminId) {
-          await actualizarUsuarioAdmin.mutateAsync(values);
+          // Validación de contraseñas al editar un usuario
+          /* Verificar si se está creando un nuevo usuario.
+          Si la contraseña ingresada no coincide con la de actual
+          Significa que el usuario quiere cambiar la contraseña
+          */
+          if (values.password !== antPassword) {
+            // si las contraseñas no son iguales(pass y confirm pass)
+            if (values.confirmPassword !== values.password) {
+              setHayError(true);
+              setMensajeError("Las contraseñas deben coincidir.");
+              return;
+            }
+            // Remove the confirmPassword field before sending to the backend
+            delete values.confirmPassword;
+            await actualizarUsuarioAdmin.mutateAsync(values);
+            // Navigate only if there are no errors
+            navigate("/administradores");
+          }
         } else {
-          await crearUsuarioAdmin.mutateAsync(values);
+          // si no tine id significa que queremos crear un usuario admin
+          /*  Validación de contraseñas al crear un nuevo usuario.
+             Si la contraseña y su confirmación no coinciden  */
+          if (values.confirmPassword !== values.password) {
+            setHayError(true);
+            setMensajeError("Las contraseñas deben coincidir.");
+            return;
+          } else {
+            // Eliminar campo de confirmPassword anted de enviar al backend
+            delete values.confirmPassword;
+            await crearUsuarioAdmin.mutateAsync(values);
+            // Navegar solo si no hay errores
+            navigate("/administradores");
+          }
         }
-        navigate("/administradores");
       }
     } catch (error) {
       setHayError(true);
@@ -119,16 +115,16 @@ export const AdministradorPagina = () => {
   }
 
 
-    const formik = useFormik({
-      initialValues: initialValues(),
-      validationSchema: validationSchema(),
-      onSubmit: handleSubmit,
-    });
+  const formik = useFormik({
+    initialValues: initialValues(),
+    validationSchema: validationSchema(),
+    onSubmit: handleSubmit,
+  });
 
-    const salirForm = (e) => {
-      if (e) e.preventDefault();
-      navigate("/administradores");
-    };
+  const salirForm = (e) => {
+    if (e) e.preventDefault();
+    navigate("/administradores");
+  };
 
   const actualizarUsuarioAdmin = useMutation(
     (admin) => {
@@ -156,7 +152,7 @@ export const AdministradorPagina = () => {
     }
   );
 
- 
+
   useQuery(
     ["administrador", params.adminId],
     () => {
@@ -165,6 +161,7 @@ export const AdministradorPagina = () => {
     {
       onSuccess: (data) => {
         formik.setValues({ ...formik.values, ...data.data });
+        setAntPassword(data.data.password)
       },
 
       onError: (error) => {
@@ -181,10 +178,10 @@ export const AdministradorPagina = () => {
       <MenuLateral>
         <form onSubmit={formik.handleSubmit}>
           <Grid container spacing={2}>
-            <Grid item xs={6}  mt={4}>
+            <Grid item xs={6} mt={4}>
               <Typography variant="h6">Datos de administrador:</Typography>
             </Grid>
-            <Grid item xs={12} md={6} sx={{ textAlign: "right", marginBottom: 2 }}  mt={2}>
+            <Grid item xs={12} md={6} sx={{ textAlign: "right", marginBottom: 2 }} mt={2}>
               <Button color="success" variant="contained" onClick={salirForm}>
                 Salir
               </Button>
@@ -225,32 +222,6 @@ export const AdministradorPagina = () => {
                 error={formik.touched.empresaId && Boolean(formik.errors.empresaId)}
                 helperText={formik.touched.empresaId && formik.errors.empresaId}
               />
-              {/* <Autocomplete
-                label="Empresa"
-                options={empresas}
-                value={getEmpresaIdValue()}
-                getOptionLabel={(option) => option.nombre}
-                onChange={(e, value) => {
-                  formik.setFieldValue("empresaId", value.empresaId);
-                }}
-                fullWidth
-                id="empresaId"
-                name="empresaId"
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-
-                    error={
-                      formik.touched.empresaId &&
-                      Boolean(formik.errors.empresaId)
-                    }
-                    helperText={
-                      formik.touched.empresaId &&
-                      formik.errors.empresaId
-                    }
-                  ></TextField>
-                )}
-              /> */}
             </Grid>
             <Grid item xs={12} md={4}>
               <TextField
@@ -275,7 +246,7 @@ export const AdministradorPagina = () => {
                 error={formik.touched.apellido1 && Boolean(formik.errors.apellido1)}
                 helperText={formik.touched.apellido1 && formik.errors.apellido1}
               />
-             </Grid>
+            </Grid>
             <Grid item xs={12} md={4}>
               <TextField
                 fullWidth
@@ -287,7 +258,7 @@ export const AdministradorPagina = () => {
                 error={formik.touched.apellido2 && Boolean(formik.errors.apellido2)}
                 helperText={formik.touched.apellido2 && formik.errors.apellido2}
               />
-            </Grid>          
+            </Grid>
             <Grid item xs={12} md={4}>
               <TextField
                 fullWidth
@@ -364,7 +335,7 @@ export const AdministradorPagina = () => {
                 helperText={formik.touched.confirmPassword &&
                   formik.errors.confirmPassword}
               />
-              </Grid>
+            </Grid>
             <Grid item xs={12} md={6}></Grid>
             <Grid item xs={12} sx={{ textAlign: "right" }}>
               <Button color="success" variant="contained" onClick={salirForm}>

@@ -30,7 +30,6 @@ export const validationSchema = () => {
       .required("Requerido")
       .min(5, 'Por favor, elija una contraseña con al menos 5 caracteres'),
       confirmPassword: yup.string()
-      .oneOf([yup.ref('password')], 'Las contraseñas deben coincidir.')
   });
 };
 
