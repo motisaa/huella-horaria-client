@@ -40,16 +40,27 @@ export const FichajePagina = () => {
     const [latitud, setLatitud] = useState(0)
     const [longitud, setLongitud] = useState(0)
     const [noGeo, setNoGeo] = useState(false)
-
-
+    const [tipoAnt, setTipoAnt] = useState('');
 
     const handleSubmit = async (values) => {
+        // Formatear la fecha y hora
         values.fechaHora = moment(selectedDate).format("YYYY-MM-DD HH:mm:ss");
-        if (session.usuario.tipo === 'TRABAJADOR') values.trabajadorId = session.usuario.trabajadorId
+        // Si el usuario es un trabajador, asignar su ID al fichaje
+        if (session.usuario.tipo === 'TRABAJADOR') {
+            values.trabajadorId = session.usuario.trabajadorId;
+        }
         if (!values.fichajeId) {
             await crearFichaje.mutateAsync(values);
         } else {
-            await actualizarFichaje.mutateAsync(values);
+            /* Si el usuario no es un administrador y está tratando de cambiar
+              el tipo de fichaje, mostrar un error */
+            if (!isAdmin && values.tipo !== tipoAnt) {
+                setHayError(true);
+                setMensajeError('No se puede cambiar el tipo de fichaje');
+                return;
+            }
+            // Si el usuario es un administrador, actualiza el fichaje existente
+            if (isAdmin) await actualizarFichaje.mutateAsync(values);
         }
         navigate("/fichajes");
     };
@@ -108,6 +119,7 @@ export const FichajePagina = () => {
                 setSelectedDate(ConvertirAFechaEs(data.data.fechaHora));
                 setLatitud(data.data.latitud)
                 setLongitud(data.data.longitud)
+                setTipoAnt(data.data.tipo)
             },
             onError: (error, variables, context) => {
                 console.error(error);
@@ -223,7 +235,7 @@ export const FichajePagina = () => {
                         <Grid item xs={6} mt={3}>
                             <Typography variant="h6">Datos de Fichaje:</Typography>
                         </Grid>
-                        {isAdmin ?
+                       
                             <Grid item xs={12} md={6} sx={{
                                 textAlign: "right",
                                 marginBottom: 2
@@ -241,7 +253,7 @@ export const FichajePagina = () => {
                                 Aceptar
                             </Button>
                             </Grid>
-                            : <Grid item xs={12} />}
+                            
                        
                         <Grid item xs={2} md={3}>
                             <TextField
@@ -400,8 +412,7 @@ export const FichajePagina = () => {
                             />
                         </Grid>
                         <Grid item xs={12}></Grid>
-                        {isAdmin
-                            ? <Grid item xs={12} sx={{ textAlign: "right" }}>
+                            <Grid item xs={12} sx={{ textAlign: "right" }}>
                             <Button color="success" variant="contained"
                                 onClick={salirForm}>
                                 Salir
@@ -415,7 +426,7 @@ export const FichajePagina = () => {
                                 Aceptar
                             </Button>
                             </Grid>
-                            : ''}
+                          
                         
                     </Grid>
                 </form>
