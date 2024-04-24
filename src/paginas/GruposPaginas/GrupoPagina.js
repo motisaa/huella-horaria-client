@@ -12,7 +12,7 @@ import { GeneralCtx } from "../../contextos/GeneralContext";
 import { ActualizarGrupo, CrearGrupo, LeerGrupo } from "../../servicios/RQGrupos";
 import { MenuLateral } from "../../componentes/MenuLateral/MenuLateral";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
-import { LeerEmpresas } from "../../servicios/RQEmpresas";
+import { esES } from '@mui/x-data-grid/locales';
 
 export const GrupoPagina = () => {
   const params = useParams();
@@ -87,31 +87,6 @@ export const GrupoPagina = () => {
       enabled: params.grupoId !== "0",
     }
     );
-  //   const [empresas, setEmpresas] = useState([]);
-  // let empresaSeleccionado = null;
-  // const getEmpresaIdValue = () => {
-  //   empresaSeleccionado = empresas.find(
-  //     (i) => i.empresaId === formik.values.empresaId
-  //   );
-  //   return empresaSeleccionado || null;
-  // };
-  // useQuery(
-  //   "empresas",
-  //   () => {
-  //     return LeerEmpresas();
-  //   },
-  //   {
-  //     onSuccess: (data) => {
-  //       let opcionesEmpresas = data.data;
-  //       setEmpresas(opcionesEmpresas);
-  //     },
-  //     onError: (error) => {
-  //       console.error(error);
-  //       setMensajeError(MensajeError(error));
-  //       setHayError(true);
-  //     },
-  //   }
-  // );
   const columns = [
     { field: "trabajadorId", headerName: "ID", width: 50 },
     { field: "nombre", headerName: "Nombre", flex: 0.4 },
@@ -160,7 +135,7 @@ export const GrupoPagina = () => {
                 }
               />
             </Grid>
-            <Grid item xs={12} md={4}>
+            <Grid item xs={9} md={4}>
               <TextField
                 fullWidth
                 id="nombre"
@@ -172,46 +147,6 @@ export const GrupoPagina = () => {
                 helperText={formik.touched.nombre && formik.errors.nombre}
               />
             </Grid>
-            <Grid item xs={12} md={4}>
-              <TextField
-                fullWidth
-                id="empresaId"
-                name="empresaId"
-                label="Empresa"
-                value={"InnovaFutura"}
-                defaultValue={formik.values.empresaId}
-                disabled
-                onChange={formik.handleChange}
-                error={formik.touched.empresaId && Boolean(formik.errors.empresaId)}
-                helperText={formik.touched.empresaId && formik.errors.empresaId}
-              />
-              {/* <Autocomplete
-                label="Empresa"
-                options={empresas}
-                value={getEmpresaIdValue()}
-                getOptionLabel={(option) => option.nombre}
-                onChange={(e, value) => {
-                  formik.setFieldValue("empresaId", value.empresaId);
-                }}
-                fullWidth
-                id="empresaId"
-                name="empresaId"
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    label="Elija una empresa"
-                    error={
-                      formik.touched.empresaId &&
-                      Boolean(formik.errors.empresaId)
-                    }
-                    helperText={
-                      formik.touched.empresaId &&
-                      formik.errors.empresaId
-                    }
-                  ></TextField>
-                )}
-              /> */}
-            </Grid>       
             <Grid item xs={12} style={{ height: "80vh", width: "100%" }}>
               <DataGrid
                 /* verificar si formik.values.trabajadores es undefined antes de asignarlo a rows. */
@@ -219,7 +154,7 @@ export const GrupoPagina = () => {
                 columns={columns}
                 getRowId={(row) => row.trabajadorId}
                 slots={{ toolbar: GridToolbar }}
-                //localeText={esES.components.MuiDataGrid.defaultProps.localeText}
+                localeText={esES.components.MuiDataGrid.defaultProps.localeText}
               />
             </Grid>
             <Grid item xs={12} md={6}></Grid>

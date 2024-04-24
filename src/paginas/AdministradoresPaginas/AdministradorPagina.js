@@ -210,21 +210,7 @@ export const AdministradorPagina = () => {
                 helperText={formik.touched.adminId && formik.errors.adminId}
               />
             </Grid>
-            <Grid item xs={6} md={2}>
-              <TextField
-                fullWidth
-                id="empresaId"
-                name="empresaId"
-                label="Empresa"
-                value={"InnovaFutura"}
-                defaultValue={formik.values.empresaId}
-                disabled
-                onChange={formik.handleChange}
-                error={formik.touched.empresaId && Boolean(formik.errors.empresaId)}
-                helperText={formik.touched.empresaId && formik.errors.empresaId}
-              />
-            </Grid>
-            <Grid item xs={12} md={4}>
+            <Grid item xs={9} md={4}>
               <TextField
                 fullWidth
                 id="nombre"

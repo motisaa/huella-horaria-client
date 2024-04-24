@@ -238,23 +238,7 @@ export const TrabajadorPagina = () => {
                                     && formik.errors.trabajadorId}
                             />
                         </Grid>
-                        <Grid item xs={9} md={2}>
-                            <TextField
-                                fullWidth
-                                id="empresaId"
-                                name="empresaId"
-                                label="Empresa"
-                                value={"InnovaFutura"}
-                                defaultValue={formik.values.empresaId}
-                                disabled
-                                onChange={formik.handleChange}
-                                error={formik.touched.empresaId
-                                    && Boolean(formik.errors.empresaId)}
-                                helperText={formik.touched.empresaId
-                                    && formik.errors.empresaId}
-                            />
-                        </Grid>
-                        <Grid item xs={6} md={3}>
+                        <Grid item xs={9} md={3}>
                             <TextField
                                 fullWidth
                                 id="nombre"
@@ -268,7 +252,7 @@ export const TrabajadorPagina = () => {
                                     && formik.errors.nombre}
                             />
                         </Grid>
-                        <Grid item xs={6} md={3}>
+                        <Grid item xs={12} md={3}>
                             <TextField
                                 fullWidth
                                 id="apellido1"
@@ -282,7 +266,7 @@ export const TrabajadorPagina = () => {
                                     && formik.errors.apellido1}
                             />
                         </Grid>
-                        <Grid item xs={8} md={3}>
+                        <Grid item xs={12} md={3}>
                             <TextField
                                 fullWidth
                                 id="apellido2"
@@ -296,7 +280,7 @@ export const TrabajadorPagina = () => {
                                     && formik.errors.apellido2}
                             />
                         </Grid>
-                        <Grid item xs={8} md={4}>
+                        <Grid item xs={12} md={4}>
                             <Autocomplete
                                 label="Grupo"
                                 options={grupos}
