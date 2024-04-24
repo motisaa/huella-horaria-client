@@ -17,6 +17,7 @@ import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { FormatoFechaEs } from "../../servicios/TratamientoFechas";
 import { GeneralCtx } from "../../contextos/GeneralContext";
 import { esES } from '@mui/x-data-grid/locales';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 export const FichajesPagina = () => {
     const navigate = useNavigate();
@@ -30,6 +31,10 @@ export const FichajesPagina = () => {
     const [fichaje, setFichaje] = useState();
     const [sesion, setSesion] = useState()
     const { getSession } = useContext(GeneralCtx);
+    const mobileMediaQuery = useMediaQuery('(max-width: 37.5em)'); // 600px / 16px = 37.5em
+    const tabletMediaQuery = useMediaQuery('(max-width: 64em)'); // 1024px / 16px  = 64em
+    const [isAdmin, setIsAdmin] = useState(false)
+
 
     useEffect(() => {
         // Comprobación de que hay una sesión activa
@@ -48,8 +53,10 @@ export const FichajesPagina = () => {
                 let session = getSession();
                 if (session.usuario.tipo === 'ADMINISTRADOR') {
                     data = await LeerFichajes();
+                    setIsAdmin(true);
                 } else {
                     data = await LeerFichajesTrabajador(session.usuario.trabajadorId);
+                    setIsAdmin(false);
                 }
                 return data;
             } catch (error) {
@@ -58,7 +65,7 @@ export const FichajesPagina = () => {
         },
         {
             onSuccess: (data) => {
-                    setFichajes(data.data);
+                setFichajes(data.data);
             },
             onError: (error) => {
                 console.error(error);
@@ -67,11 +74,6 @@ export const FichajesPagina = () => {
             },
         }
     );
-
-
-
-
-
 
     const eliminaFichaje = useMutation(
         ({ fichajeId }) => {
@@ -116,6 +118,74 @@ export const FichajesPagina = () => {
         );
         setHayMensaje(true);
     };
+
+    const columnsMobileTrabajador = [
+        {
+            field: "fechaHora", headerName: "Fecha y Hora", flex: 1,
+            valueFormatter: params => FormatoFechaEs(params)
+        },
+        { field: "tipo", headerName: "Tipo", flex: 0.5 },
+    ]
+
+    const columnsMobileAdmin = [
+        { field: "fichajeId", headerName: "ID", width: 50 },
+        {
+            field: "fechaHora", headerName: "Fecha y Hora", flex: 0.5,
+            valueFormatter: params => FormatoFechaEs(params)
+        },
+        {
+            field: "actions",
+            type: "actions",
+            headerName: "Acciones",
+            flex: 0.3,
+            getActions: ({ row }) => {
+                return [
+                    <IconButton onClick={deleteFichaje(row)}>
+                        <DeleteIcon />
+                    </IconButton>,
+                    <IconButton onClick={editFichaje(row.fichajeId)}>
+                        <EditIcon />
+                    </IconButton>,
+                ];
+            },
+        },
+    ]
+    const columnsTabletTrabajador = [
+        {
+            field: "fechaHora", headerName: "Fecha y Hora", flex: 1,
+            valueFormatter: params => FormatoFechaEs(params)
+        },
+        { field: "tipo", headerName: "Tipo", flex: 0.5 },
+        { field: "latitud", headerName: "Latitud", flex: 0.5 },
+        { field: "longitud", headerName: "Longitud", flex: 0.5 },
+    ]
+    const columnsTabletAdmin = [
+
+        { field: "nombreTrabajador", headerName: "Trabajador", flex: 1 },
+        {
+            field: "fechaHora", headerName: "Fecha y Hora", flex: 1,
+            valueFormatter: params => FormatoFechaEs(params)
+        },
+        { field: "tipo", headerName: "Tipo", flex: 0.5 },
+        {
+            field: "actions",
+            type: "actions",
+            headerName: "Acciones",
+            flex: 0.3,
+            getActions: ({ row }) => {
+                return [
+                    <IconButton onClick={deleteFichaje(row)}>
+                        <DeleteIcon />
+                    </IconButton>,
+                    <IconButton onClick={editFichaje(row.fichajeId)}>
+                        <EditIcon />
+                    </IconButton>,
+                ];
+            },
+        },
+    ]
+
+
     const columns = [
         { field: "fichajeId", headerName: "ID", width: 50 },
         { field: "nombreTrabajador", headerName: "Trabajador", flex: 1 },
@@ -126,23 +196,22 @@ export const FichajesPagina = () => {
         { field: "tipo", headerName: "Tipo", flex: 0.5 },
         { field: "latitud", headerName: "Latitud", flex: 0.5 },
         { field: "longitud", headerName: "Longitud", flex: 0.5 },
-        
         {
             field: "actions",
             type: "actions",
             headerName: "Acciones",
             width: 80,
-            getActions: ({ row }) => {  
-                    return [
-                        <IconButton onClick={deleteFichaje(row)} 
+            getActions: ({ row }) => {
+                return [
+                    <IconButton onClick={deleteFichaje(row)}
                         disabled={sesion.usuario.tipo === 'TRABAJADOR'}>
-                            <DeleteIcon />
-                        </IconButton>,
-                        <IconButton onClick={editFichaje(row.fichajeId)} 
+                        <DeleteIcon />
+                    </IconButton>,
+                    <IconButton onClick={editFichaje(row.fichajeId)}
                         disabled={sesion.usuario.tipo === 'TRABAJADOR'}>
-                            <EditIcon />
-                        </IconButton>,
-                    ];               
+                        <EditIcon />
+                    </IconButton>,
+                ];
             },
         },
     ];
@@ -165,7 +234,7 @@ export const FichajesPagina = () => {
                                         onClick={newFichaje}
                                     >
                                         <Tooltip title="Nuevo fichaje">
-                                            <span style={{ fontSize: "smaller" }}>Crear nuevo fichaje <AddIcon /></span> 
+                                            <span style={{ fontSize: "smaller" }}>Crear nuevo fichaje <AddIcon /></span>
                                         </Tooltip>
                                     </IconButton>
                                 </span>
@@ -175,11 +244,18 @@ export const FichajesPagina = () => {
                     <Grid item xs={12} style={{ height: "80vh", width: "100%" }}>
                         <DataGrid
                             rows={fichajes}
-                            columns={columns}
+                            columns={
+                                (mobileMediaQuery && isAdmin) ? columnsMobileAdmin :
+                                (mobileMediaQuery && !isAdmin) ? columnsMobileTrabajador :
+                                (tabletMediaQuery && isAdmin) ? columnsTabletAdmin:
+                                (tabletMediaQuery && !isAdmin) ? columnsTabletTrabajador :
+                                columns                                    
+                            }
                             getRowId={(row) => row.fichajeId}
                             slots={{ toolbar: GridToolbar }}
                             localeText={esES.components.MuiDataGrid.defaultProps.localeText}
                         />
+
                     </Grid>
                 </Grid>
                 <ErrorGeneral
