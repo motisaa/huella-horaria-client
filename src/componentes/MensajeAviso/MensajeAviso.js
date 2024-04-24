@@ -11,7 +11,7 @@ export const MensajeAviso = () => {
     };
 
     return (
-        <Stack sx={{ width: '70%', marginTop: 5, marginLeft: 2 }}
+        <Stack sx={{ width: '70%', marginTop: 15, marginLeft: 2 }}
             spacing={2}>
             {mostrarMensaje && (
                 <Alert severity="warning" onClose={handleClose}>
