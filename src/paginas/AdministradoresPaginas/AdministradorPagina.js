@@ -85,12 +85,13 @@ export const AdministradorPagina = () => {
               setMensajeError("Las contraseñas deben coincidir.");
               return;
             }
-            // Remove the confirmPassword field before sending to the backend
-            delete values.confirmPassword;
-            await actualizarUsuarioAdmin.mutateAsync(values);
-            // Navigate only if there are no errors
-            navigate("/administradores");
           }
+          // in the case that admin does not change the user password
+          // cuando admin no quiere cambiar password y cambia otro info del usuario
+          delete values.confirmPassword;
+          await actualizarUsuarioAdmin.mutateAsync(values);
+          // Navigate only if there are no errors
+          navigate("/administradores");
         } else {
           // si no tine id significa que queremos crear un usuario admin
           /*  Validación de contraseñas al crear un nuevo usuario.

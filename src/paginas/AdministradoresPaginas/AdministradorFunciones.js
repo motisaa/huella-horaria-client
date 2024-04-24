@@ -29,7 +29,6 @@ export const validationSchema = () => {
       password: yup.string()
       .required("Requerido")
       .min(5, 'Por favor, elija una contraseña con al menos 5 caracteres'),
-      confirmPassword: yup.string()
   });
 };
 
