@@ -7,12 +7,11 @@ import { useNavigate } from "react-router-dom";
 import { MenuLateral } from "../../componentes/MenuLateral/MenuLateral";
 import { MensajeError } from "../../servicios/TratamientoErrores";
 import { ErrorGeneral } from "../../componentes/ErrorGeneral/ErrorGeneral";
-import { GeneralCtx } from "../../contextos/GeneralContext";
 import { LeerUsuariosAdmin, eliminarUsuarioAdmin } from "../../servicios/RQAdministradores";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
-import {AppBar, Grid, IconButton, Toolbar, Tooltip, Typography,} from "@mui/material";
+import {AppBar, Grid, IconButton, Toolbar, Tooltip, useMediaQuery,} from "@mui/material";
 import { MensajeConfirmacion } from "../../componentes/MensajeConfirmacion/MensajeConfirmacion";
 import { MensajeInformativo } from "../../componentes/MensajeInformativo/MensajeInformativo";
 import { DataGrid, GridToolbar} from "@mui/x-data-grid";
@@ -28,7 +27,8 @@ export const AdministradoresPagina = () => {
     const [mensajeConfirmacion, setMensajeConfirmacion] = useState("");
     const [usuariosAdmin, setUsuariosAdmin] = useState([]);
     const [usuarioAdmin, setUsuarioAdmin] = useState();
-    
+    const mobileMediaQuery = useMediaQuery('(max-width: 37.5em)'); // 600px / 16px = 37.5em
+    const tabletMediaQuery = useMediaQuery('(max-width: 64em)'); // 1024px / 16px  = 64em
 
     /* useQuery: Esta función toma tres argumentos:
 
@@ -111,6 +111,48 @@ export const AdministradoresPagina = () => {
       setHayMensaje(true);
     };
 
+    const columnsMobile = [
+      { field: "nombre", headerName: "Nombre", flex: 0.5 },
+      { field: "apellido1", headerName: "Apellido1", flex: 0.4 },
+      {
+        field: "actions",
+        type: "actions",
+        headerName: "Acciones",
+        flex: 0.3,
+        getActions: ({ row }) => {
+          return [
+            <IconButton onClick={deleteUsuarioAdmin(row)}>
+              <DeleteIcon />
+            </IconButton>,
+            <IconButton onClick={editUsuarioAdmin(row.adminId)}>
+              <EditIcon />
+            </IconButton>,
+          ];
+        },
+      },
+    ]
+
+    const columnsTablet = [
+      { field: "nombre", headerName: "Nombre", flex: 0.5 },
+      { field: "apellido1", headerName: "Apellido1", flex: 0.4 },
+      { field: "usuario", headerName: "Nombre de Usuario", flex: 0.4 },
+      {
+        field: "actions",
+        type: "actions",
+        headerName: "Acciones",
+        flex: 0.3,
+        getActions: ({ row }) => {
+          return [
+            <IconButton onClick={deleteUsuarioAdmin(row)}>
+              <DeleteIcon />
+            </IconButton>,
+            <IconButton onClick={editUsuarioAdmin(row.adminId)}>
+              <EditIcon />
+            </IconButton>,
+          ];
+        },
+      },
+    ]
     const columns = [
       { field: "adminId", headerName: "ID", width: 50 },
       { field: "nombre", headerName: "Nombre", flex: 0.5 },
@@ -143,9 +185,6 @@ export const AdministradoresPagina = () => {
             <Grid item xs={12}>
               <AppBar position="static" sx={{ bgcolor: '#ff7b00', marginTop: '1em' }} >
                 <Toolbar>
-                  {/* <Typography variant="h6" component="h6">
-                    Administradores
-                  </Typography> */}
                   <span className="toolbarButtons">
                     <IconButton
                       size="large"
@@ -164,7 +203,11 @@ export const AdministradoresPagina = () => {
             <Grid item xs={12} style={{ height: "80vh", width: "100%" }}>
               <DataGrid
                 rows={usuariosAdmin}
-                columns={columns}
+                columns={
+                  mobileMediaQuery ? columnsMobile :
+                  tabletMediaQuery ? columnsTablet :
+                  columns
+                }
                 getRowId={(row) => row.adminId}
                 localeText={esES.components.MuiDataGrid.defaultProps.localeText}
                 slots={{ toolbar: GridToolbar }} 
