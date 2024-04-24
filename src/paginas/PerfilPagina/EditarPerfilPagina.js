@@ -24,10 +24,12 @@ export const EditarPerfilPagina = () => {
     const [mensaje, setMensaje] = useState("");
     const [showPassword, setShowPassword] = useState(false);
     const [usernames, setUsernames] = useState([]);
+    const [antPassword, setAntPassword] = useState()
     /* he sacado este useEffect con la ayuda de chatGPT
- This useEffect is set up to handle username input, using setTimeout and clearTimeout. 
- It's designed to manage when a user types a username that already exists, 
- so when user changes the username to the one that doesnt exist in base de datos, requires a cleanup of the previous timeout.
+ This useEffect is set up to handle username input, using setTimeout
+ and clearTimeout. It's designed to manage when a user types a username
+ that already exists, so when user changes the username to the one that
+  doesnt exist in base de datos, requires a cleanup of the previous timeout.
   So it will work fine as expected(user wil be created o editted).
  */
     useEffect(() => {
@@ -62,11 +64,14 @@ export const EditarPerfilPagina = () => {
                 setHayError(true);
                 setMensajeError("El nombre de usuario ya existe. Por favor, elija otro.");
             } else {
-                if (!values.confirmPassword) {
-                    // Exclude password field if it hasn't changed from default value
-                    delete values.password;
+                if (values.password !== antPassword) {
+                    // si las contraseñas no son iguales(pass y confirm pass)
+                    if (values.confirmPassword !== values.password) {
+                        setHayError(true);
+                        setMensajeError("Las contraseñas deben coincidir.");
+                        return;
+                    }
                 }
-                // Delete confirmation password field because does not exist in backend
                 delete values.confirmPassword;
                 await actualizarUsuarioTrabajador.mutateAsync(values);
                 navigate("/perfil");
@@ -95,7 +100,8 @@ export const EditarPerfilPagina = () => {
 
     const salirForm = (e) => {
         // Verifica si hay un evento
-        // Si hay un evento, previene su comportamiento(Cancela el evento si este es cancelable)
+        // Si hay un evento, previene su comportamiento
+        // Cancela el evento si este es cancelable
         if (e) e.preventDefault();
         // Navega a la pagina de trabajadores
         navigate("/perfil");
@@ -110,6 +116,7 @@ export const EditarPerfilPagina = () => {
         {
             onSuccess: (data) => {
                 formik.setValues({ ...formik.values, ...data.data });
+                setAntPassword(data.data.password);
             },
 
             onError: (error) => {
