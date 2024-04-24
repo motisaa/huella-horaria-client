@@ -23,6 +23,7 @@ export const TrabajadorPagina = () => {
     const [hayMensaje, setHayMensaje] = useState(false);
     const [mensaje, setMensaje] = useState("");
     const [showPassword, setShowPassword] = useState(false);
+    const [antPassword, setAntPassword] = useState()
     const handleClickShowPassword = () => {
         setShowPassword(!showPassword);
     };
@@ -81,13 +82,10 @@ export const TrabajadorPagina = () => {
     }, []);
 
     const handleSubmit = async (values) => {
-        // Exclude password field if it hasn't changed
-        if(!values.confirmPassword) delete values.password;
-        delete values.confirmPassword;
         try {
             let nombreUsuarioExistente = usernames.find(
                 (user) => user.usuario === values.usuario
-                // excluyendo el nombre de usuario actual
+                    // excluyendo el nombre de usuario actual
                     && user.usuario !== formik.values.usuario
             );
 
@@ -96,12 +94,36 @@ export const TrabajadorPagina = () => {
                 setMensajeError("El nombre de usuario ya existe. Por favor, elija otro.");
             } else {
                 if (!values.trabajadorId) {
-                    await crearUsuarioTrabajador.mutateAsync(values);
+                    // Verificar si se está creando un nuevo usuario y las contraseñas no son iguales
+                    if (values.confirmPassword !== values.password) {
+                        setHayError(true);
+                        setMensajeError("Las contraseñas deben coincidir.");
+                    } else {
+                        // Eliminar campo de confirmación para enviar al backend
+                        delete values.confirmPassword;
+                        await crearUsuarioTrabajador.mutateAsync(values);
+                        // Navegar solo si no hay errores
+                        navigate("/trabajadores");
+                    }
                 } else {
-                    await actualizarUsuarioTrabajador.mutateAsync(values);
+                    /* Verificar si se está actualizando la contraseña de un usuario
+                     Si la contraseña actual no es igual que la contraseña anterior */
+                    if (values.password !== antPassword) {
+                        if (values.confirmPassword !== values.password) {
+                            setHayError(true);
+                            setMensajeError("Las contraseñas deben coincidir.");
+                            return;
+                        }
+                    } else {
+                        // Eliminar campo de confirmación para enviar al backend
+                        delete values.confirmPassword;
+                        await actualizarUsuarioTrabajador.mutateAsync(values);
+                        // Navegar solo si no hay errores
+                        navigate("/trabajadores");
+                    }
                 }
-                navigate("/trabajadores");
             }
+
         } catch (error) {
             setHayError(true);
             setMensajeError("Error en la solicitud " + error.message);
@@ -152,6 +174,7 @@ export const TrabajadorPagina = () => {
         {
             onSuccess: (data) => {
                 formik.setValues({ ...formik.values, ...data.data });
+                setAntPassword(data.data.password)
             },
 
             onError: (error) => {
