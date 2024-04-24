@@ -7,12 +7,12 @@ import { useNavigate } from "react-router-dom";
 import { MensajeError } from "../../servicios/TratamientoErrores";
 import { ErrorGeneral } from "../../componentes/ErrorGeneral/ErrorGeneral";
 import { MensajeInformativo } from "../../componentes/MensajeInformativo/MensajeInformativo";
-import { Button, TextField, Typography, Grid, Autocomplete } from "@mui/material";
-import { GeneralCtx } from "../../contextos/GeneralContext";
+import { Button, TextField, Typography, Grid, useMediaQuery } from "@mui/material";
 import { ActualizarGrupo, CrearGrupo, LeerGrupo } from "../../servicios/RQGrupos";
 import { MenuLateral } from "../../componentes/MenuLateral/MenuLateral";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { esES } from '@mui/x-data-grid/locales';
+
 
 export const GrupoPagina = () => {
   const params = useParams();
@@ -21,7 +21,8 @@ export const GrupoPagina = () => {
   const [mensajeError, setMensajeError] = useState("");
   const [hayMensaje, setHayMensaje] = useState(false);
   const [mensaje, setMensaje] = useState("");
-  const { getSession } = useContext(GeneralCtx);
+  const mobileMediaQuery = useMediaQuery('(max-width: 37.5em)'); // 600px / 16px = 37.5em
+  const tabletMediaQuery = useMediaQuery('(max-width: 64em)'); // 1024px / 16px  = 64em
 
   const handleSubmit = async (values) => {
     delete values.trabajadores;
@@ -86,7 +87,17 @@ export const GrupoPagina = () => {
       },
       enabled: params.grupoId !== "0",
     }
-    );
+  );
+  const columnsMobile = [
+    { field: "nombre", headerName: "Nombre", flex: 0.4 },
+    { field: "apellido1", headerName: "Apellido 1", flex: 0.4 },
+  ]
+  const columnsTablet = [
+    { field: "trabajadorId", headerName: "ID", width: 50 },
+    { field: "nombre", headerName: "Nombre", flex: 0.4 },
+    { field: "apellido1", headerName: "Primer Apellido", flex: 0.4 },
+    { field: "usuario", headerName: "usuario", flex: 0.4 },
+  ];
   const columns = [
     { field: "trabajadorId", headerName: "ID", width: 50 },
     { field: "nombre", headerName: "Nombre", flex: 0.4 },
@@ -151,7 +162,11 @@ export const GrupoPagina = () => {
               <DataGrid
                 /* verificar si formik.values.trabajadores es undefined antes de asignarlo a rows. */
                 rows={formik.values.trabajadores ? formik.values.trabajadores : []}
-                columns={columns}
+                columns={
+                  mobileMediaQuery ? columnsMobile
+                  : tabletMediaQuery ? columnsTablet
+                  : columns
+                }
                 getRowId={(row) => row.trabajadorId}
                 slots={{ toolbar: GridToolbar }}
                 localeText={esES.components.MuiDataGrid.defaultProps.localeText}
