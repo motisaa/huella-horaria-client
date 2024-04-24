@@ -14,7 +14,6 @@ import { FichajesPagina } from "./paginas/FichajesPaginas/FichajesPagina";
 import { FichajePagina } from "./paginas/FichajesPaginas/FichajePagina"
 import { PerfilPagina } from "./paginas/PerfilPagina/PerfilPagina";
 import { EditarPerfilPagina } from "./paginas/PerfilPagina/EditarPerfilPagina";
-import { Test } from "./componentes/MenuResponsive/Test"
 
 const queryClient = new QueryClient();
 
@@ -40,7 +39,6 @@ function App() {
             <Route path="/fichaje/:fichajeId" element={<FichajePagina />} />
             <Route path="/perfil" element={<PerfilPagina />} />
             <Route path="/perfil/:trabajadorId" element={<EditarPerfilPagina />} />
-            <Route path="/test" element={<Test />} />
           </Routes>
         </QueryClientProvider>
       </GeneralContext>
