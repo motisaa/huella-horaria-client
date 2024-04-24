@@ -18,6 +18,7 @@ import { FormatoFechaEs } from "../../servicios/TratamientoFechas";
 import { GeneralCtx } from "../../contextos/GeneralContext";
 import { esES } from '@mui/x-data-grid/locales';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import { Map, Preview } from "@mui/icons-material";
 
 export const FichajesPagina = () => {
     const navigate = useNavigate();
@@ -33,6 +34,7 @@ export const FichajesPagina = () => {
     const { getSession } = useContext(GeneralCtx);
     const mobileMediaQuery = useMediaQuery('(max-width: 37.5em)'); // 600px / 16px = 37.5em
     const tabletMediaQuery = useMediaQuery('(max-width: 64em)'); // 1024px / 16px  = 64em
+    const desktopMediaQuery = useMediaQuery('(min-width: 64em)') // 1024px / 16px = 64em
     const [isAdmin, setIsAdmin] = useState(false)
 
 
@@ -124,7 +126,20 @@ export const FichajesPagina = () => {
             field: "fechaHora", headerName: "Fecha y Hora", flex: 1,
             valueFormatter: params => FormatoFechaEs(params)
         },
-        { field: "tipo", headerName: "Tipo", flex: 0.5 },
+        {
+            field: "actions",
+            type: "actions",
+            headerName: "Acción",
+            flex: 0.3,
+            getActions: ({ row }) => {
+                return [
+                    //no puede editar, solo puede ver
+                    <IconButton onClick={editFichaje(row.fichajeId)}>
+                    <Preview />
+                    </IconButton>
+                ];
+            },
+        },
     ]
 
     const columnsMobileAdmin = [
@@ -152,12 +167,26 @@ export const FichajesPagina = () => {
     ]
     const columnsTabletTrabajador = [
         {
-            field: "fechaHora", headerName: "Fecha y Hora", flex: 1,
+            field: "fechaHora", headerName: "Fecha y Hora", flex: 0.7,
             valueFormatter: params => FormatoFechaEs(params)
         },
         { field: "tipo", headerName: "Tipo", flex: 0.5 },
         { field: "latitud", headerName: "Latitud", flex: 0.5 },
         { field: "longitud", headerName: "Longitud", flex: 0.5 },
+        {
+            field: "actions",
+            type: "actions",
+            headerName: "Acción",
+            flex: 0.3,
+            getActions: ({ row }) => {
+                return [
+                    //no puede editar, solo puede ver
+                    <IconButton onClick={editFichaje(row.fichajeId)}>
+                    <Preview />
+                    </IconButton>,
+                ];
+            },
+        },
     ]
     const columnsTabletAdmin = [
 
@@ -185,8 +214,31 @@ export const FichajesPagina = () => {
         },
     ]
 
+    const columnsDesktopTrabajador = [
+        {
+            field: "fechaHora", headerName: "Fecha y Hora", flex: 0.5,
+            valueFormatter: params => FormatoFechaEs(params)
+        },
+        { field: "tipo", headerName: "Tipo", flex: 0.5 },
+        { field: "latitud", headerName: "Latitud", flex: 0.5 },
+        { field: "longitud", headerName: "Longitud", flex: 0.5 },
+        {
+            field: "actions",
+            type: "actions",
+            headerName: "Acción",
+            width: 80,
+            getActions: ({ row }) => {
+                return [
+                    //no puede editar, solo puede ver
+                    <IconButton onClick={editFichaje(row.fichajeId)}>
+                        <Preview />
+                    </IconButton>,
+                ];
+            },
+        },
+    ];
 
-    const columns = [
+    const columnsDesktopAdmin = [
         { field: "fichajeId", headerName: "ID", width: 50 },
         { field: "nombreTrabajador", headerName: "Trabajador", flex: 1 },
         {
@@ -203,12 +255,10 @@ export const FichajesPagina = () => {
             width: 80,
             getActions: ({ row }) => {
                 return [
-                    <IconButton onClick={deleteFichaje(row)}
-                        disabled={sesion.usuario.tipo === 'TRABAJADOR'}>
+                    <IconButton onClick={deleteFichaje(row)}>
                         <DeleteIcon />
                     </IconButton>,
-                    <IconButton onClick={editFichaje(row.fichajeId)}
-                        disabled={sesion.usuario.tipo === 'TRABAJADOR'}>
+                    <IconButton onClick={editFichaje(row.fichajeId)}>
                         <EditIcon />
                     </IconButton>,
                 ];
@@ -249,7 +299,8 @@ export const FichajesPagina = () => {
                                 (mobileMediaQuery && !isAdmin) ? columnsMobileTrabajador :
                                 (tabletMediaQuery && isAdmin) ? columnsTabletAdmin:
                                 (tabletMediaQuery && !isAdmin) ? columnsTabletTrabajador :
-                                columns                                    
+                                (desktopMediaQuery && !isAdmin) ? columnsDesktopTrabajador:         
+                                columnsDesktopAdmin                                    
                             }
                             getRowId={(row) => row.fichajeId}
                             slots={{ toolbar: GridToolbar }}

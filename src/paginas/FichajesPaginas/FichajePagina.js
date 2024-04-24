@@ -36,7 +36,7 @@ export const FichajePagina = () => {
     const [mensaje, setMensaje] = useState("");
     const { getSession } = useContext(GeneralCtx);
     const [selectedDate, setSelectedDate] = useState(new Date());
-
+    const [isAdmin, setIsAdmin] = useState(false);
     const [latitud, setLatitud] = useState(0)
     const [longitud, setLongitud] = useState(0)
     const [noGeo, setNoGeo] = useState(false)
@@ -94,6 +94,12 @@ export const FichajePagina = () => {
     useQuery(
         ["fichajes", params.fichajeId],
         () => {
+            let session = getSession();
+            if (session.usuario.tipo === 'ADMINISTRADOR') {
+                setIsAdmin(true);
+            } else {
+                setIsAdmin(false);
+            }
             return LeerFichaje(params.fichajeId);
         },
         {
@@ -217,7 +223,11 @@ export const FichajePagina = () => {
                         <Grid item xs={6} mt={3}>
                             <Typography variant="h6">Datos de Fichaje:</Typography>
                         </Grid>
-                        <Grid item xs={12} md={6} sx={{ textAlign: "right", marginBottom:2 }} mt={4}>
+                        {isAdmin ?
+                            <Grid item xs={12} md={6} sx={{
+                                textAlign: "right",
+                                marginBottom: 2
+                            }} mt={4}>
                             <Button color="success"
                                 variant="contained" onClick={salirForm}>
                                 Salir
@@ -230,7 +240,9 @@ export const FichajePagina = () => {
                             >
                                 Aceptar
                             </Button>
-                        </Grid>
+                            </Grid>
+                            : <Grid item xs={12} />}
+                       
                         <Grid item xs={2} md={3}>
                             <TextField
                                 fullWidth
@@ -388,7 +400,8 @@ export const FichajePagina = () => {
                             />
                         </Grid>
                         <Grid item xs={12}></Grid>
-                        <Grid item xs={12} sx={{ textAlign: "right" }}>
+                        {isAdmin
+                            ? <Grid item xs={12} sx={{ textAlign: "right" }}>
                             <Button color="success" variant="contained"
                                 onClick={salirForm}>
                                 Salir
@@ -401,7 +414,9 @@ export const FichajePagina = () => {
                             >
                                 Aceptar
                             </Button>
-                        </Grid>
+                            </Grid>
+                            : ''}
+                        
                     </Grid>
                 </form>
                 <Grid item xs={12}>
