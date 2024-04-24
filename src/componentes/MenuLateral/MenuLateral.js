@@ -83,7 +83,12 @@ export const MenuLateral = (props) => {
                         }}
                     >
                         <Toolbar>
-                            <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+                            <Box sx={{
+                                flexGrow: 1, display: {
+                                    xs: 'flex',
+                                    md: 'none'
+                                }
+                            }}>
                                 <IconButton
                                     size="large"
                                     aria-label="account of current user"
@@ -138,14 +143,17 @@ export const MenuLateral = (props) => {
                                     pagesAdmin.map((page) => (
                                         <Button
                                             key={page}
-                                            onClick={() => handlePageNavigation(page)}
+                                            onClick={() =>
+                                                handlePageNavigation(page)}
                                             sx={{
                                                 my: 2,
                                                 display: 'block',
                                                 backgroundColor:
-                                                    location.pathname === `/${page}` ? 'white' : 'transparent',
+                                                    location.pathname === `/${page}`
+                                                        ? 'white' : 'transparent',
                                                 color:
-                                                    location.pathname === `/${page}` ? 'black' : 'inherit',
+                                                    location.pathname === `/${page}`
+                                                        ? 'black' : 'inherit',
                                             }}
                                         >
                                             {page}
@@ -156,14 +164,17 @@ export const MenuLateral = (props) => {
                                     pagesTrabajador.map((page) => (
                                         <Button
                                             key={page}
-                                            onClick={() => handlePageNavigation(page)}
+                                            onClick={() =>
+                                                handlePageNavigation(page)}
                                             sx={{
                                                 my: 2,
                                                 display: 'block',
                                                 backgroundColor:
-                                                    location.pathname === `/${page}` ? 'white' : 'transparent',
+                                                    location.pathname === `/${page}`
+                                                        ? 'white' : 'transparent',
                                                 color:
-                                                    location.pathname === `/${page}` ? 'black' : 'inherit',
+                                                    location.pathname === `/${page}`
+                                                        ? 'black' : 'inherit',
                                             }}
                                         >
                                             {page}
