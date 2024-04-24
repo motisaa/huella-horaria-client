@@ -114,13 +114,12 @@ export const TrabajadorPagina = () => {
                             setMensajeError("Las contraseñas deben coincidir.");
                             return;
                         }
-                    } else {
+                    }
                         // Eliminar campo de confirmación para enviar al backend
                         delete values.confirmPassword;
                         await actualizarUsuarioTrabajador.mutateAsync(values);
                         // Navegar solo si no hay errores
                         navigate("/trabajadores");
-                    }
                 }
             }
 
