@@ -12,7 +12,7 @@ import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import { Home } from "@mui/icons-material";
-import { Grid, ListItemText } from "@mui/material";
+import { Button, Grid, ListItemText } from "@mui/material";
 import ListItem from "@mui/material/ListItem";
 import PersonIcon from "@mui/icons-material/Person";
 import Drawer from "@mui/material/Drawer";
@@ -24,13 +24,14 @@ import EngineeringIcon from '@mui/icons-material/Engineering';
 import GroupsIcon from '@mui/icons-material/Groups';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { useLocation } from "react-router-dom";
 
 const drawerWidth = 230;
 export const MenuLateral = (props) => {
     const navigate = useNavigate();
-
+    const pagesAdmin = ['inicio', 'administradores', 'trabajadores', 'grupos', 'fichajes'];
+    const pagesTrabajador = ['perfil', 'fichajes'];
     const [verMenuAdmin, setverMenuAdmin] = useState(false);
-
     const { getSession } = useContext(GeneralCtx);
     const [drVariant, setDrVariant] = useState("temporary");
     const [drOpen, setDrOpen] = useState(false);
@@ -40,6 +41,7 @@ export const MenuLateral = (props) => {
         const { data: versionData } = await leerVersion()
         setVersion(versionData.version)
     };
+    const location = useLocation();
     const handleDrOpen = () => {
         if (drOpen) {
             // ya está abierto y lo cerramos
@@ -56,7 +58,9 @@ export const MenuLateral = (props) => {
         // Navegar a la página de login
         navigate("/");
     };
-
+    const handlePageNavigation = (page) => {
+        navigate(`/${page}`);
+    };
     useEffect(() => {
         // Comprobación de que hay una sesión activa
         let session = getSession();
@@ -65,8 +69,6 @@ export const MenuLateral = (props) => {
         if (session.usuario.tipo === 'ADMINISTRADOR') setverMenuAdmin(true)
         if (session.usuario.tipo === 'TRABAJADOR') setverMenuAdmin(false)
         consultarVersion();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-
     }, []);
 
     return (
@@ -81,24 +83,95 @@ export const MenuLateral = (props) => {
                         }}
                     >
                         <Toolbar>
-                            <IconButton
-                                size="large"
-                                edge="start"
-                                color="inherit"
-                                aria-label="menu"
-                                sx={{ mr: 2 }}
-                                onClick={handleDrOpen}
-                            >
-                                <MenuIcon />
-                            </IconButton>
-                            <Avatar alt="Logo" src={logo} sx={{
-                                width: 80,
-                                height: 80, m: 1
-                            }} />
+                            <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+                                <IconButton
+                                    size="large"
+                                    aria-label="account of current user"
+                                    aria-controls="menu-appbar"
+                                    aria-haspopup="true"
+                                    onClick={handleDrOpen}
+                                    color="inherit"
+                                >
+                                    <MenuIcon />
+                                    {/* Diseño para móviles
+                                     sm significa despositivos small*/}
+                                </IconButton>
+                                <Avatar alt="Logo" src={logo}
+                                    sx={{
+                                        width: 80,
+                                        height: 80,
+                                        m: 1,
+                                        display: { xs: 'flex', md: 'none' },
+                                        mr: 1
+                                    }} />
+                            </Box>
+                            {/* Diseño para Desktop : 
+                            md signfica despositivos mediums*/}
+                            <Avatar alt="Logo" src={logo}
+                                sx={{
+                                    width: 80,
+                                    height: 80,
+                                    m: 1,
+                                    display: { md: 'flex', xs: 'none', },
+                                    mr: 1
+                                }} />
                             <Typography variant="h6" component="div"
-                                sx={{ flexGrow: 1 }}>
+                                noWrap
+                                sx={{
+                                    mr: 2,
+                                    display: { xs: 'none', md: 'flex' },
+                                    color: 'inherit',
+                                    textDecoration: 'none'
+                                }}>
                                 vers.: {version}
                             </Typography>
+                            <Box sx={{
+                                flexGrow: 1, marginLeft: 3,
+                                display: {
+                                    xs: 'none',
+                                    md: 'flex',
+                                }
+                            }}>
+
+                                {verMenuAdmin ? (
+                                    // Menu for Administrador
+                                    pagesAdmin.map((page) => (
+                                        <Button
+                                            key={page}
+                                            onClick={() => handlePageNavigation(page)}
+                                            sx={{
+                                                my: 2,
+                                                display: 'block',
+                                                backgroundColor:
+                                                    location.pathname === `/${page}` ? 'white' : 'transparent',
+                                                color:
+                                                    location.pathname === `/${page}` ? 'black' : 'inherit',
+                                            }}
+                                        >
+                                            {page}
+                                        </Button>
+                                    ))
+                                ) : (
+                                    // Menu for Trabajador
+                                    pagesTrabajador.map((page) => (
+                                        <Button
+                                            key={page}
+                                            onClick={() => handlePageNavigation(page)}
+                                            sx={{
+                                                my: 2,
+                                                display: 'block',
+                                                backgroundColor:
+                                                    location.pathname === `/${page}` ? 'white' : 'transparent',
+                                                color:
+                                                    location.pathname === `/${page}` ? 'black' : 'inherit',
+                                            }}
+                                        >
+                                            {page}
+                                        </Button>
+                                    ))
+                                )}
+
+                            </Box>
                             <IconButton
                                 size="large"
                                 edge="start"
@@ -109,6 +182,8 @@ export const MenuLateral = (props) => {
                                 <Typography ml={1}>
                                     {sesion ? sesion.usuario.nombre : ""}
                                 </Typography>
+
+
                             </IconButton>
                             <IconButton
                                 size="large"
@@ -120,6 +195,7 @@ export const MenuLateral = (props) => {
                             >
                                 <ExitToAppIcon />
                             </IconButton>
+
                         </Toolbar>
                     </AppBar>
                     <Drawer
@@ -210,8 +286,8 @@ export const MenuLateral = (props) => {
                                     </ListItem>
                                 </List>
                             ) : (
-                                    <List>
-                                        <ListItem
+                                <List>
+                                    <ListItem
                                         key="perfil"
                                         disablePadding
                                         onClick={() => {
@@ -220,7 +296,7 @@ export const MenuLateral = (props) => {
                                     >
                                         <ListItemButton>
                                             <ListItemIcon>
-                                               <AccountCircleIcon />
+                                                <AccountCircleIcon />
                                             </ListItemIcon>
                                             <ListItemText> Perfil </ListItemText>
                                         </ListItemButton>
