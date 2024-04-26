@@ -5,10 +5,9 @@ import React, { useContext, useState } from "react";
 import { Button, Grid, IconButton, InputAdornment, TextField } from "@mui/material";
 import { LoginBasicoUsuario } from "../../servicios/RQLogin";
 import { GeneralCtx } from "../../contextos/GeneralContext";
-import { ErrorGeneral } from "../../componentes/ErrorGeneral/ErrorGeneral";
+import { ErrorLogin } from "../../componentes/ErrorGeneral/ErrorGeneral";
 import { MensajeInformativo } from "../../componentes/MensajeInformativo/MensajeInformativo";
 import "./LoginPagina.css";
-import { MensajeError } from "../../servicios/TratamientoErrores";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 
@@ -55,7 +54,7 @@ export const LoginForm = (props) => {
             return user;
         } catch (error) {
             console.log("error", error);
-            setMensajeError(MensajeError(error));
+            setMensajeError("El nombre de usuario y/o la contraseña son incorrectos");
             setHayError(true);
         }
     };
@@ -121,7 +120,7 @@ export const LoginForm = (props) => {
                     </Grid>
                 </Grid>
             </form>
-            <ErrorGeneral
+            <ErrorLogin
                 hayError={hayError}
                 mensajeError={mensajeError}
                 cerrarError={() => setHayError(false)}
