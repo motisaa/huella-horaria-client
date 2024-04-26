@@ -5,41 +5,12 @@ import moment from "moment-timezone";
 export const FormatoFechaEs = (fechaMysql) => {
   if (!fechaMysql) return "";
   const dateInUTC = moment.utc(fechaMysql);
-  const dateInLocal = dateInUTC.local("Europe/Madrid");
-  let fr = moment(fechaMysql).format("DD/MM/YYYY HH:mm:ss");
-  // return dateInLocal.format("DD/MM/YYYY HH:mm:ss");
-  return fr;
-};
+  const dateInLocal = moment(dateInUTC).tz("Europe/Madrid").format();
+  let formatted = moment(dateInLocal).format("DD/MM/YYYY HH:mm:ss");
 
-export const FormatoFechaCortaEs = (fechaMysql) => {
-  if (!fechaMysql) return "";
-  const dateInUTC = moment.utc(fechaMysql);
-  const dateInLocal = dateInUTC.local("Europe/Madrid");
-  return dateInLocal.format("DD/MM/YYYY");
-};
-
-export const FormatoHoraCortaEs = (fechaMysql) => {
-  if (!fechaMysql) return "";
-  const dateInUTC = moment.utc(fechaMysql, "HH:mm:ss");
-  const dateInLocal = dateInUTC.local("Europe/Madrid");
-  return dateInLocal.format("HH:mm");
+  return formatted;
 };
 
 export const ConvertirAFechaEs = (fechaMysql) => {
-  //   const dateInUTC = moment.utc(fechaMysql);
-  //   const dateInLocal = dateInUTC.local("Europe/Madrid");
-  //   return dateInLocal.format();
-  return fechaMysql;
-};
-
-export const FechaContinuaISO = (fechaMysql) => {
-  const dateInUTC = moment.utc(fechaMysql);
-  const dateInLocal = dateInUTC.local("Europe/Madrid");
-  return dateInLocal.format("YYYYMMDDHHmmss");
-};
-
-export const FechaLocalES = () => {
-  const dateInUTC = moment.utc();
-  const dateInLocal = dateInUTC.local("Europe/Madrid");
-  return dateInLocal;
+  return moment(fechaMysql).tz("Europe/Madrid").format();
 };
