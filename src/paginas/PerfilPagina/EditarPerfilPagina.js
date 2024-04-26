@@ -71,6 +71,8 @@ export const EditarPerfilPagina = () => {
                         setMensajeError("Las contraseñas deben coincidir.");
                         return;
                     }
+                    setHayMensaje(true);
+                    setMensaje('La contraseña ha cambiado con exito');
                 }
                 delete values.confirmPassword;
                 await actualizarUsuarioTrabajador.mutateAsync(values);

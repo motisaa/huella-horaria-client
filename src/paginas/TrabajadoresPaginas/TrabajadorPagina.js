@@ -114,6 +114,8 @@ export const TrabajadorPagina = () => {
                             setMensajeError("Las contraseñas deben coincidir.");
                             return;
                         }
+                        setHayMensaje(true);
+                        setMensaje('La contraseña ha cambiado con exito');
                     }
                         // Eliminar campo de confirmación para enviar al backend
                         delete values.confirmPassword;

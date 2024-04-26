@@ -74,7 +74,7 @@ export const AdministradorPagina = () => {
         // significa que queremos actualizar un usuario, ya tiene su id
         if (values.adminId) {
           // Validación de contraseñas al editar un usuario
-          /* Verificar si se está creando un nuevo usuario.
+          /*
           Si la contraseña ingresada no coincide con la de actual
           Significa que el usuario quiere cambiar la contraseña
           */
@@ -85,9 +85,9 @@ export const AdministradorPagina = () => {
               setMensajeError("Las contraseñas deben coincidir.");
               return;
             }
+            setHayMensaje(true);
+            setMensaje('La contraseña ha cambiado con exito');
           }
-          // in the case that admin does not change the user password
-          // cuando admin no quiere cambiar password y cambia otro info del usuario
           delete values.confirmPassword;
           await actualizarUsuarioAdmin.mutateAsync(values);
           // Navigate only if there are no errors
