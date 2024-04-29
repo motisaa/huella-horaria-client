@@ -289,6 +289,8 @@ export const FichajePagina = () => {
                                 fullWidth
                                 id="trabajadorId"
                                 name="trabajadorId"
+                                // fixed: clear button(x) desaperece cuando se elige un trabajador
+                                disableClearable={formik.values.trabajadorId !== null} 
                                 renderInput={(params) => (
                                     <TextField
                                         {...params}
