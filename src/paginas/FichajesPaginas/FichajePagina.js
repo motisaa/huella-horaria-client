@@ -323,7 +323,8 @@ export const FichajePagina = () => {
                             </LocalizationProvider>
                         </Grid>
                         <Grid item xs={10} md={3}>
-                            {/*  
+                            {/* Desplegable */}
+                            {/*
                             <Autocomplete
                                 label="Tipo"
                                 options={tipos}
@@ -350,6 +351,7 @@ export const FichajePagina = () => {
                                     ></TextField>
                                 )}
                             /> */}
+                            {/* Radio button */}
                             <FormControl>
                                 <FormLabel id="tipo">Elija el tipo</FormLabel>
                                 <RadioGroup
