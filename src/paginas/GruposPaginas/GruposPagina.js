@@ -8,8 +8,7 @@ import { LeerGrupos, EliminarGrupo } from "../../servicios/RQGrupos";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
-import { AppBar, Grid, IconButton, Toolbar, Tooltip, Typography,
-} from "@mui/material";
+import { AppBar, Grid, IconButton, Toolbar, Tooltip } from "@mui/material";
 import { MensajeConfirmacion } from "../../componentes/MensajeConfirmacion/MensajeConfirmacion";
 import { MensajeInformativo } from "../../componentes/MensajeInformativo/MensajeInformativo";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
@@ -52,7 +51,7 @@ export const GruposPagina = () => {
         // si ocurre un error, se imprime en la consola (console.error(error)),
         console.error(error);
         // se establece un mensaje de error utilizando la función MensajeError(error
-        setMensajeError(MensajeError(error));
+        setMensajeError("No es posible eliminar este grupo debido a que tiene miembros");
         setHayError(true);
       },
     }

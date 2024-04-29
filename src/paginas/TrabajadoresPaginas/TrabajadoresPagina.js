@@ -45,8 +45,8 @@ export const TrabajadoresPagina = () => {
       onError: (error) => {
         // si ocurre un error, se imprime en la consola (console.error(error)),
         console.error(error);
-        // se establece un mensaje de error utilizando la función MensajeError(error
-        setMensajeError(MensajeError(error));
+        // se establece un mensaje de error
+        setMensajeError("No es posible eliminar a este trabajador debido a que tiene fichajes registrados");
         setHayError(true);
       },
     }
@@ -55,7 +55,7 @@ export const TrabajadoresPagina = () => {
     return () => {
       setUsuarioTrabajador(row);
       setMensajeConfirmacion(
-        `¿Realmente desea eliminar el trabajador ${row.nombre}?`
+        `¿Realmente desea eliminar el/la empleado/a ${row.nombre} ${row.apellido1}?`
       );
       setHayConfirmacion(true);
     };
@@ -72,7 +72,7 @@ export const TrabajadoresPagina = () => {
   };
 
 
-  // eslint-disable-next-line no-unused-vars
+
   const queryUsuariosTrabajadores = useQuery(
     "trabajadores",
     () => {
@@ -170,9 +170,6 @@ export const TrabajadoresPagina = () => {
               marginTop: '1em'
             }} >
               <Toolbar>
-                {/* <Typography variant="h6" component="h6">
-                  Trabajadores
-                </Typography> */}
                 <span className="toolbarButtons">
                   <IconButton
                     size="large"
