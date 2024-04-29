@@ -45,6 +45,11 @@ export const FichajePagina = () => {
     const handleSubmit = async (values) => {
         // Formatear la fecha y hora
         values.fechaHora = moment(selectedDate).format("YYYY-MM-DD HH:mm:ss");
+        if (!selectedDate) {
+            setHayError(true);
+            setMensajeError("Por favor, elija la fecha y hora");
+            return;
+        }
         // Si el usuario es un trabajador, asignar su ID al fichaje
         if (session.usuario.tipo === 'TRABAJADOR') {
             values.trabajadorId = session.usuario.trabajadorId;
