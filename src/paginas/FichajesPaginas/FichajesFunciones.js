@@ -4,7 +4,7 @@ import * as yup from "yup";
 export const initialValues = () => {
     return {
         fichajeId: 0,
-        trabajadorId: 0,
+        trabajadorId: null,
         fechaHora: "",
         longitud: 0,
         latitud: 0,
@@ -16,9 +16,7 @@ export const initialValues = () => {
 export const validationSchema = () => {
     // Define validation rules for form fields
     return yup.object({
-        // fechaHora: yup.string().required("Requerido"),
-        // // longitud: yup.string().required("Requerido"),
-        // latitud: yup.string().required("Requerido"),
         tipo: yup.string().required("Requerido"),
+        trabajadorId:  yup.number().required("Debe elegir un trabajador")
     });
 };
