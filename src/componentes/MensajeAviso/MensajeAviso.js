@@ -1,17 +1,20 @@
 import React, { useState } from 'react';
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
-import { AlertTitle } from '@mui/material';
+import { AlertTitle, useMediaQuery } from '@mui/material';
 
 export const MensajeAviso = () => {
     const [mostrarMensaje, setMostrarMensaje] = useState(true);
-
+    const isMobile = useMediaQuery('(max-width: 37.5em)');
     const handleClose = () => {
         setMostrarMensaje(false);
     };
 
     return (
-        <Stack sx={{ width: '70%', marginTop: 15, marginLeft: 2 }}
+        <Stack sx={{
+            width: isMobile ? '100%' :'70%', 
+            marginLeft: 2,
+            marginTop: isMobile ? 0 : 15}}
             spacing={2}>
             {mostrarMensaje && (
                 <Alert severity="warning" onClose={handleClose}>
