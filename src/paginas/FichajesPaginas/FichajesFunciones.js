@@ -17,6 +17,6 @@ export const validationSchema = () => {
     // Define validation rules for form fields
     return yup.object({
         tipo: yup.string().required("Requerido"),
-        trabajadorId:  yup.number().required("Debe elegir un trabajador")
+      //  trabajadorId:  yup.number().required("Debe elegir un trabajador")
     });
 };

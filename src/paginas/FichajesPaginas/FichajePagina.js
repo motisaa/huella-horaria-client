@@ -54,6 +54,11 @@ export const FichajePagina = () => {
         if (session.usuario.tipo === 'TRABAJADOR') {
             values.trabajadorId = session.usuario.trabajadorId;
         }
+        if (!values.trabajadorId) {
+            setHayError(true);
+            setMensajeError("Por favor, elija un trabajador");
+            return;
+        }
         if (!values.fichajeId) {
             await crearFichaje.mutateAsync(values);
         } else {
@@ -369,7 +374,6 @@ export const FichajePagina = () => {
                                     value={getTipoValue()}
                                     onChange={(e, value) => {
                                         formik.setFieldValue("tipo", value);
-
                                     }}
                                 >
                                     <FormControlLabel value="ENTRADA"
