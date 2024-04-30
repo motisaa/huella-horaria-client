@@ -198,6 +198,12 @@ export const FichajePagina = () => {
                         formik.setFieldValue('longitud', position.coords.longitude);
                         setLatitud(position.coords.latitude)
                         setLongitud(position.coords.longitude)
+                        /* MDN:
+                        A positive double representing the accuracy, with a 
+                        95% confidence level, of the GeolocationCoordinates.latitude 
+                        and GeolocationCoordinates.longitude properties expressed 
+                        in meters.
+                        */
                         setAccuracy(position.coords.accuracy)
                     },
                     function (error) {
@@ -459,7 +465,23 @@ export const FichajePagina = () => {
                 </Grid>
                 {
                     latitud && longitud ?
-                        <Mapa lat={latitud} lon={longitud} accuracy={accuracy}></Mapa>
+                        <Mapa
+                            lat={latitud}
+                            lon={longitud}
+                            accuracy={
+                                /* si no hay accuracy no muestra nada
+                                 en el caso que usuario está editando 
+                                 un fichaje, le sale acurracy 0. En este caso
+                                 no lo mostramos */
+                                !accuracy ? ''
+                                :
+                                (accuracy >= 1000)
+                                ? 'Precisión: ' + (accuracy / 1000).toFixed(2) + ' km'
+                                : 'Precisión: ' + accuracy.toFixed(2) + ' m'}
+                        
+                        >
+                            
+                        </Mapa>
                         :
                         ''
                 }

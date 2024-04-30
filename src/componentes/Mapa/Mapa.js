@@ -45,7 +45,7 @@ export const Mapa = (props) => {
                 
             </MarkerClusterGroup>
             {/* Displaying accuracy */}
-             <p className="accuracy-tooltip">Precisión: {props.accuracy} m</p>
+             <p className="accuracy-tooltip">{props.accuracy}</p>
         </MapContainer>
         
     );
