@@ -24,7 +24,8 @@ const createClusterCustomIcon = function (cluster) {
     });
 };
 
-export const Mapa = (props) =>  {
+export const Mapa = (props) => {
+    
     return (
         <MapContainer center={[props.lat, props.lon]} zoom={15}>
             <ChangeView center={[props.lat, props.lon]} zoom={15} /> 
@@ -33,7 +34,6 @@ export const Mapa = (props) =>  {
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
-
             <MarkerClusterGroup
                 chunkedLoading
                 iconCreateFunction={createClusterCustomIcon}
@@ -41,8 +41,12 @@ export const Mapa = (props) =>  {
                 {/* Mapping through the markers */}
                 
                 <Marker position={[props.lat, props.lon]} icon={customIcon}>
-                    </Marker>
+                </Marker>
+                
             </MarkerClusterGroup>
+            {/* Displaying accuracy */}
+             <p className="accuracy-tooltip">Precisión: {props.accuracy} m</p>
         </MapContainer>
+        
     );
 }

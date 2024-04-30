@@ -3,6 +3,17 @@
     width: 100%;
     border-radius: 1rem;
     margin-top: 0.75rem;
-    /* margin: 3rem;
-    margin-left: 30rem; */
+}
+.map-container {
+    position: relative;
+}
+
+.accuracy-tooltip {
+    position: absolute;
+    bottom: 0.5em; 
+    right: 0;
+    background-color: rgba(255, 255, 255, 0.824);
+    padding: 0.3em;
+    border: 1px solid #ccc;
+    z-index: 1000; /* para que el texto salga encima del mapa */
 }

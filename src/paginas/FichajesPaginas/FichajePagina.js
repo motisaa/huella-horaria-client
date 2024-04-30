@@ -41,6 +41,7 @@ export const FichajePagina = () => {
     const [longitud, setLongitud] = useState(0)
     const [noGeo, setNoGeo] = useState(false)
     const [tipoAnt, setTipoAnt] = useState('');
+    const [accuracy, setAccuracy] = useState(0);
 
     const handleSubmit = async (values) => {
         // Formatear la fecha y hora
@@ -197,6 +198,7 @@ export const FichajePagina = () => {
                         formik.setFieldValue('longitud', position.coords.longitude);
                         setLatitud(position.coords.latitude)
                         setLongitud(position.coords.longitude)
+                        setAccuracy(position.coords.accuracy)
                     },
                     function (error) {
                         console.error("Error getting geolocation: ", error.message);
@@ -457,7 +459,7 @@ export const FichajePagina = () => {
                 </Grid>
                 {
                     latitud && longitud ?
-                        <Mapa lat={latitud} lon={longitud}></Mapa>
+                        <Mapa lat={latitud} lon={longitud} accuracy={accuracy}></Mapa>
                         :
                         ''
                 }
