@@ -53,6 +53,7 @@ export const GruposPagina = () => {
         // se establece un mensaje de error utilizando la función MensajeError(error
         setMensajeError("No es posible eliminar este grupo debido a que tiene miembros");
         setHayError(true);
+        setHayConfirmacion(false);
       },
     }
   );
@@ -77,13 +78,16 @@ export const GruposPagina = () => {
     };
   };
   const deleteConfirmado = async () => {
-    await eliminaGrupo.mutateAsync({ grupoId: grupo.grupoId });
-    queryGrupos.refetch();
-    setHayConfirmacion(false);
-    setMensaje(
-      `El grupo ${grupo.nombre} ha sido eliminado de la base de datos`
-    );
-    setHayMensaje(true);
+    try {
+      await eliminaGrupo.mutateAsync({ grupoId: grupo.grupoId });
+      queryGrupos.refetch();
+      setHayConfirmacion(false);
+      setMensaje(
+        `El grupo ${grupo.nombre} ha sido eliminado de la base de datos`
+      );
+      setHayMensaje(true);
+    } catch (error) {
+    }
   };
   const columns = [
     { field: "grupoId", headerName: "ID", width: 50 },

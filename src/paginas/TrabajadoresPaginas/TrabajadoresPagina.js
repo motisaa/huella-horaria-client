@@ -63,13 +63,18 @@ export const TrabajadoresPagina = () => {
   };
 
   const deleteConfirmado = async () => {
-    await eliminaUsuario.mutateAsync({ trabajadorId: usuarioTrabajador.trabajadorId });
-    queryUsuariosTrabajadores.refetch();
-    setHayConfirmacion(false);
-    setMensaje(
-      `El trabajador ${usuarioTrabajador.nombre} ha sido eliminado de la base de datos`
-    );
-    setHayMensaje(true);
+    try {
+      await eliminaUsuario.mutateAsync({ trabajadorId: usuarioTrabajador.trabajadorId });
+      queryUsuariosTrabajadores.refetch();
+      setHayConfirmacion(false);
+      setMensaje(
+        `El trabajador ${usuarioTrabajador.nombre} ha sido eliminado de la base de datos`
+      );
+      setHayMensaje(true);
+    } catch (error) {
+      
+    }
+    
   };
 
 
