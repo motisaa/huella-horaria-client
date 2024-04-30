@@ -48,6 +48,7 @@ export const TrabajadoresPagina = () => {
         // se establece un mensaje de error
         setMensajeError("No es posible eliminar a este trabajador debido a que tiene fichajes registrados");
         setHayError(true);
+        setHayConfirmacion(false);
       },
     }
   );
