@@ -25,7 +25,7 @@ import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import FormHelperText from '@mui/material/FormHelperText';
 import { Mapa } from "../../componentes/Mapa/Mapa";
-import { MensajeAviso } from "../../componentes/MensajeAviso/MensajeAviso";
+//import { MensajeAviso } from "../../componentes/MensajeAviso/MensajeAviso";
 
 export const FichajePagina = () => {
     const params = useParams();
@@ -247,7 +247,7 @@ export const FichajePagina = () => {
     return (
         <>
             <MenuLateral>
-           {((!latitud && !longitud) && !noGeo) ? <MensajeAviso/> : ''} 
+           {/* {((!latitud && !longitud) && !noGeo) ? <MensajeAviso/> : ''}  */}
                 <form onSubmit={formik.handleSubmit}>
                     <Grid container spacing={2}>
                         <Grid item xs={6} mt={3}>
