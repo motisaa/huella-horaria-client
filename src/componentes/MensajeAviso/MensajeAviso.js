@@ -60,7 +60,7 @@ export const WarnMsg = (props) => {
             aria-describedby="alert-dialog-description"
         >
             <DialogTitle id="alert-dialog-title">
-                {"De el permiso al navegador cuando vaya al fichar "}
+                {"De permiso al navegador cuando vaya a fichar "}
             </DialogTitle>
             <DialogContent>
                 <DialogContentText id="alert-dialog-description">
