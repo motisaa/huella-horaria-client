@@ -18,7 +18,8 @@ import { FormatoFechaEs } from "../../servicios/TratamientoFechas";
 import { GeneralCtx } from "../../contextos/GeneralContext";
 import { esES } from '@mui/x-data-grid/locales';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { Map, Preview } from "@mui/icons-material";
+import { Preview } from "@mui/icons-material";
+import { WarnMsg } from "../../componentes/MensajeAviso/MensajeAviso";
 
 export const FichajesPagina = () => {
     const navigate = useNavigate();
@@ -31,12 +32,12 @@ export const FichajesPagina = () => {
     const [fichajes, setFichajes] = useState([]);
     const [fichaje, setFichaje] = useState();
     const [sesion, setSesion] = useState()
-    const { getSession } = useContext(GeneralCtx);
+    const { getSession, getNoMostrarCookie } = useContext(GeneralCtx);
     const mobileMediaQuery = useMediaQuery('(max-width: 37.5em)'); // 600px / 16px = 37.5em
     const tabletMediaQuery = useMediaQuery('(max-width: 64em)'); // 1024px / 16px  = 64em
     const desktopMediaQuery = useMediaQuery('(min-width: 64em)') // 1024px / 16px = 64em
     const [isAdmin, setIsAdmin] = useState(false)
-
+    const [aviso, setAviso] = useState(false)
 
     useEffect(() => {
         // Comprobación de que hay una sesión activa
@@ -44,6 +45,10 @@ export const FichajesPagina = () => {
         if (!session) navigate("/");
         setSesion(session)
         // eslint-disable-next-line react-hooks/exhaustive-deps
+        const noMostrar = getNoMostrarCookie();
+        if (noMostrar) {
+            setAviso(false); // Hide the warning message if the cookie is set
+        }
     }, []);
 
 
@@ -93,8 +98,13 @@ export const FichajesPagina = () => {
     );
 
     const newFichaje = () => {
-        navigate(`/fichaje/0`);
-    };
+        if (getNoMostrarCookie) {
+            setAviso(true);
+        } else {
+            navigate(`/fichaje/0`);
+            setAviso(false);
+        }
+    };    
 
     const editFichaje = (fichajeId) => {
         return () => {
@@ -324,6 +334,10 @@ export const FichajesPagina = () => {
                     mensaje={mensajeConfirmacion}
                     confirmar={deleteConfirmado}
                     cerrarConfirmacion={() => setHayConfirmacion(false)}
+                />
+                <WarnMsg
+                    aviso={aviso}
+                    cerrarAviso={() => setAviso(false) }
                 />
             </MenuLateral>
         </>
