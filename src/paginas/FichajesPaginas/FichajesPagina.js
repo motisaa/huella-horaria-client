@@ -37,7 +37,7 @@ export const FichajesPagina = () => {
     const tabletMediaQuery = useMediaQuery('(max-width: 64em)'); // 1024px / 16px  = 64em
     const desktopMediaQuery = useMediaQuery('(min-width: 64em)') // 1024px / 16px = 64em
     const [isAdmin, setIsAdmin] = useState(false)
-    const [aviso, setAviso] = useState(false)
+    const [hayAviso, setHayAviso] = useState(false)
 
     useEffect(() => {
         // Comprobación de que hay una sesión activa
@@ -47,7 +47,7 @@ export const FichajesPagina = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
         const noMostrar = getNoMostrarCookie();
         if (noMostrar) {
-            setAviso(false); // Hide the warning message if the cookie is set
+            setHayAviso(false); // Hide the warning message if the cookie is set
         }
     }, []);
 
@@ -98,11 +98,17 @@ export const FichajesPagina = () => {
     );
 
     const newFichaje = () => {
-        if (getNoMostrarCookie) {
-            setAviso(true);
-        } else {
+      // Buscamos en las cookies si el usuario ha seleccionado previamente la opción de no mostrar.
+        let noMostrarAviso = getNoMostrarCookie()
+        // Si el usuario ha elegido que no le mostramos el mensaje de aviso,
+        if (noMostrarAviso) {
+            //navegamos a la página de fichar sin mostrarle el mensaje de aviso
             navigate(`/fichaje/0`);
-            setAviso(false);
+            setHayAviso(false);
+        } else {
+            // si el usuario aún no ha elegido que no le mostramos otra vez,
+            // le sale el mensaje de aviso
+            setHayAviso(true);
         }
     };    
 
@@ -336,8 +342,8 @@ export const FichajesPagina = () => {
                     cerrarConfirmacion={() => setHayConfirmacion(false)}
                 />
                 <WarnMsg
-                    aviso={aviso}
-                    cerrarAviso={() => setAviso(false) }
+                    aviso={hayAviso}
+                    cerrarAviso={() => setHayAviso(false) }
                 />
             </MenuLateral>
         </>
