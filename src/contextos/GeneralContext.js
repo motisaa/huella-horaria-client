@@ -66,14 +66,23 @@ const GeneralContext = props => {
     const deleteSession = () => {
         deleteCookie('session');
     }
-
+    const setNoMostrarCookie = (value) => {
+        setCookie('noMostrarMas', value.toString(), 365); // Convert boolean to string representation
+    }
+    
+    const getNoMostrarCookie = () => {
+        const value = getCookie('noMostrarMas');
+        return value === 'true'; // Compare with string representation
+    }
     return (
         <GeneralCtx.Provider value={{
             setSession,
             getSession,
             deleteSession,
             setFiltros,
-            getFiltros
+            getFiltros,
+            setNoMostrarCookie,
+            getNoMostrarCookie,
         }}>
             {props.children}
         </GeneralCtx.Provider>
