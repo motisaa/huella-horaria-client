@@ -143,7 +143,7 @@ export const FichajesPagina = () => {
 
     const columnsMobileTrabajador = [
         {
-            field: "fechaHora", headerName: "Fecha y Hora", flex: 1,
+            field: "fechaHora", headerName: "Fecha y Hora", type:"date", flex: 1,
             valueFormatter: params => FormatoFechaEs(params)
         },
         {
@@ -165,7 +165,7 @@ export const FichajesPagina = () => {
     const columnsMobileAdmin = [
         { field: "fichajeId", headerName: "ID", width: 50 },
         {
-            field: "fechaHora", headerName: "Fecha y Hora", flex: 0.5,
+            field: "fechaHora", headerName: "Fecha y Hora", type: "date", flex: 0.5,
             valueFormatter: params => FormatoFechaEs(params)
         },
         {
@@ -187,7 +187,7 @@ export const FichajesPagina = () => {
     ]
     const columnsTabletTrabajador = [
         {
-            field: "fechaHora", headerName: "Fecha y Hora", flex: 0.7,
+            field: "fechaHora", headerName: "Fecha y Hora", type: "date", flex: 0.7,
             valueFormatter: params => FormatoFechaEs(params)
         },
         { field: "tipo", headerName: "Tipo", flex: 0.5 },
@@ -212,7 +212,7 @@ export const FichajesPagina = () => {
 
         { field: "nombreTrabajador", headerName: "Trabajador", flex: 1 },
         {
-            field: "fechaHora", headerName: "Fecha y Hora", flex: 1,
+            field: "fechaHora", headerName: "Fecha y Hora", type: "date", flex: 1,
             valueFormatter: params => FormatoFechaEs(params)
         },
         { field: "tipo", headerName: "Tipo", flex: 0.5 },
@@ -236,7 +236,7 @@ export const FichajesPagina = () => {
 
     const columnsDesktopTrabajador = [
         {
-            field: "fechaHora", headerName: "Fecha y Hora", flex: 0.5,
+            field: "fechaHora", headerName: "Fecha y Hora", type: "date", flex: 0.5,
             valueFormatter: params => FormatoFechaEs(params)
         },
         { field: "tipo", headerName: "Tipo", flex: 0.5 },
@@ -262,7 +262,7 @@ export const FichajesPagina = () => {
         { field: "fichajeId", headerName: "ID", width: 50 },
         { field: "nombreTrabajador", headerName: "Trabajador", flex: 1 },
         {
-            field: "fechaHora", headerName: "Fecha y Hora", flex: 0.5,
+            field: "fechaHora", headerName: "Fecha y Hora", type: "date", flex: 0.5,
             valueFormatter: params => FormatoFechaEs(params)
         },
         { field: "tipo", headerName: "Tipo", flex: 0.5 },
