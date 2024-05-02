@@ -39,7 +39,7 @@ export const FichajePagina = () => {
     const [isAdmin, setIsAdmin] = useState(false);
     const [latitud, setLatitud] = useState(0)
     const [longitud, setLongitud] = useState(0)
-    const [noGeo, setNoGeo] = useState(false)
+   // const [noGeo, setNoGeo] = useState(false)
     const [tipoAnt, setTipoAnt] = useState('');
     const [accuracy, setAccuracy] = useState(0);
 
@@ -209,7 +209,7 @@ export const FichajePagina = () => {
                     function (error) {
                         console.error("Error getting geolocation: ", error.message);
                         setHayError(true);
-                        setNoGeo(true)
+                       // setNoGeo(true)
                         setMensajeError("No se pudo encontrar la localización. " +
                             "Por favor, intente refrescar la página o habilite " +
                             "la ubicación en la configuración de su navegador");
@@ -226,7 +226,7 @@ export const FichajePagina = () => {
             } else {
                 console.log("Geolocation is not available in your browser.");
                 setHayError(true);
-                setNoGeo(true)
+              //  setNoGeo(true)
                 setMensajeError("No se pudo encontrar su ubicación. Por favor, actualice su navegador");
             }
         }
@@ -273,7 +273,7 @@ export const FichajePagina = () => {
                             </Grid>
                             
                        
-                        <Grid item xs={2} md={3}>
+                        <Grid item xs={3} md={3}>
                             <TextField
                                 fullWidth
                                 id="fichajeId"
@@ -292,7 +292,7 @@ export const FichajePagina = () => {
                                 }
                             />
                         </Grid>
-                        <Grid item xs={10} md={4}>
+                        <Grid item xs={9} md={4}>
                             <Autocomplete
                                 label="Trabajador"
                                 options={trabajadores}

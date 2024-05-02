@@ -44,12 +44,16 @@ export const FichajesPagina = () => {
         let session = getSession();
         if (!session) navigate("/");
         setSesion(session)
-        // eslint-disable-next-line react-hooks/exhaustive-deps
         const noMostrar = getNoMostrarCookie();
         if (noMostrar) {
             setHayAviso(false); // Hide the warning message if the cookie is set
         }
-    }, []);
+        /* Este array de dependencias dice que el efecto debe ser ejecutado nuevamente
+         solo si alguna de las variables dentro del array cambia su valor. 
+         sin embargo, si pasamos un array vacío ([]) como segundo argumento,
+         el efecto se ejecutará solo una vez, después del primer renderizado.
+         */
+    }, [getSession, getNoMostrarCookie, navigate]);
 
 
     const queryFichajes = useQuery(
@@ -139,7 +143,7 @@ export const FichajesPagina = () => {
 
     const columnsMobileTrabajador = [
         {
-            field: "fechaHora", headerName: "Fecha y Hora", flex: 1,
+            field: "fechaHora", headerName: "Fecha y Hora", type:"date", flex: 1,
             valueFormatter: params => FormatoFechaEs(params)
         },
         {
@@ -161,7 +165,7 @@ export const FichajesPagina = () => {
     const columnsMobileAdmin = [
         { field: "fichajeId", headerName: "ID", width: 50 },
         {
-            field: "fechaHora", headerName: "Fecha y Hora", flex: 0.5,
+            field: "fechaHora", headerName: "Fecha y Hora", type: "date", flex: 0.5,
             valueFormatter: params => FormatoFechaEs(params)
         },
         {
@@ -183,7 +187,7 @@ export const FichajesPagina = () => {
     ]
     const columnsTabletTrabajador = [
         {
-            field: "fechaHora", headerName: "Fecha y Hora", flex: 0.7,
+            field: "fechaHora", headerName: "Fecha y Hora", type: "date", flex: 0.7,
             valueFormatter: params => FormatoFechaEs(params)
         },
         { field: "tipo", headerName: "Tipo", flex: 0.5 },
@@ -208,7 +212,7 @@ export const FichajesPagina = () => {
 
         { field: "nombreTrabajador", headerName: "Trabajador", flex: 1 },
         {
-            field: "fechaHora", headerName: "Fecha y Hora", flex: 1,
+            field: "fechaHora", headerName: "Fecha y Hora", type: "date", flex: 1,
             valueFormatter: params => FormatoFechaEs(params)
         },
         { field: "tipo", headerName: "Tipo", flex: 0.5 },
@@ -232,7 +236,7 @@ export const FichajesPagina = () => {
 
     const columnsDesktopTrabajador = [
         {
-            field: "fechaHora", headerName: "Fecha y Hora", flex: 0.5,
+            field: "fechaHora", headerName: "Fecha y Hora", type: "date", flex: 0.5,
             valueFormatter: params => FormatoFechaEs(params)
         },
         { field: "tipo", headerName: "Tipo", flex: 0.5 },
@@ -258,7 +262,7 @@ export const FichajesPagina = () => {
         { field: "fichajeId", headerName: "ID", width: 50 },
         { field: "nombreTrabajador", headerName: "Trabajador", flex: 1 },
         {
-            field: "fechaHora", headerName: "Fecha y Hora", flex: 0.5,
+            field: "fechaHora", headerName: "Fecha y Hora", type: "date", flex: 0.5,
             valueFormatter: params => FormatoFechaEs(params)
         },
         { field: "tipo", headerName: "Tipo", flex: 0.5 },
