@@ -44,12 +44,16 @@ export const FichajesPagina = () => {
         let session = getSession();
         if (!session) navigate("/");
         setSesion(session)
-        // eslint-disable-next-line react-hooks/exhaustive-deps
         const noMostrar = getNoMostrarCookie();
         if (noMostrar) {
             setHayAviso(false); // Hide the warning message if the cookie is set
         }
-    }, []);
+        /* Este array de dependencias dice que el efecto debe ser ejecutado nuevamente
+         solo si alguna de las variables dentro del array cambia su valor. 
+         sin embargo, si pasamos un array vacío ([]) como segundo argumento,
+         el efecto se ejecutará solo una vez, después del primer renderizado.
+         */
+    }, [getSession, getNoMostrarCookie, navigate]);
 
 
     const queryFichajes = useQuery(
