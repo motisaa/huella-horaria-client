@@ -7,14 +7,13 @@ import { FormControlLabel } from '@mui/material';
 
 export const WarnMsg = (props) => {
     const navigate = useNavigate();
-    const [noMostrarMas, setNoMostrarMas] = useState(false)
-    const { setNoMostrarCookie } = useContext(GeneralCtx); // Get the functions from the context
+    const [noMostrarMasChecked, setNoMostrarMasChecked] = useState(false)
+    const { setNoMostrarCookie } = useContext(GeneralCtx);
 
      // Handler for the "Ok" button click
      const handleOkClick = () => {
-        if (noMostrarMas) {
+         if (noMostrarMasChecked) {
             setNoMostrarCookie(true);
-            setNoMostrarMas(true)
         }
          props.cerrarAviso(); // Close the modal
          navigate(`/fichaje/0`);
@@ -22,7 +21,15 @@ export const WarnMsg = (props) => {
 
     // Handler for the "No mostrar más" checkbox change
     const handleCheckboxChange = () => {
-        setNoMostrarMas(true); // Update the state of "No mostrar más" checkbox
+
+        /* FIXED:
+        Actualiza el estado del checkbox "No mostrar más"
+        con el valor opuesto de noMostrarMasChecked.
+        Porque el usuario podría marcar y luego desmarcar la casilla, 
+        y luego hace clic en en botón de ok
+        Si establecemos el valor en true( setNoMostrarMasChecked(true); ),
+        el mensaje de aviso no se mostrará la próxima vez. (en el caso de marcar y desmarcar la casila) */
+        setNoMostrarMasChecked(!noMostrarMasChecked); 
         
     };
 
