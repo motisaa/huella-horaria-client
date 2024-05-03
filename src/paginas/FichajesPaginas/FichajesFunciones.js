@@ -17,6 +17,15 @@ export const validationSchema = () => {
     // Define validation rules for form fields
     return yup.object({
         tipo: yup.string().required("Requerido"),
+        longitud: yup.number()
+            .required("Requerido")
+            // added this rule with the help of chatGPT
+            .test('no-zero', 'Por favor permite al navegador localizar su ubicación',
+             value => value !== 0),
+        latitud: yup.number()
+            .required("Requerido")
+            .test('no-zero', 'Por favor permite al navegador localizar su ubicación', 
+            value => value !== 0)
       //  trabajadorId:  yup.number().required("Debe elegir un trabajador")
     });
 };
