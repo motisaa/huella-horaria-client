@@ -83,46 +83,59 @@ export const TrabajadorPagina = () => {
 
     const handleSubmit = async (values) => {
         try {
-            let nombreUsuarioExistente = usernames.find(
-                (user) => user.usuario === values.usuario
-                    // excluyendo el nombre de usuario actual
-                    && user.usuario !== formik.values.usuario
-            );
-
-            if (nombreUsuarioExistente) {
-                setHayError(true);
-                setMensajeError("El nombre de usuario ya existe. Por favor, elija otro.");
+            let nombreUsuarioExistente;
+            // Crear un nuevo usuario
+            if (!values.trabajadorId) {
+                // buscamos si el nombre de usuario ya existe en la base de datos
+                nombreUsuarioExistente = usernames.find(
+                    (trabajador) => trabajador.usuario === values.usuario
+                );
+                if (nombreUsuarioExistente) {
+                    setHayError(true);
+                    setMensajeError("El nombre de usuario ya existe. Por favor, elija otro.");
+                    return;
+                }
+                // Verificar si se está creando un nuevo usuario y las contraseñas no son iguales
+                if (values.confirmPassword !== values.password) {
+                    setHayError(true);
+                    setMensajeError("Las contraseñas deben coincidir.");
+                    return;
+                } else {
+                    // Eliminar campo de confirmación para enviar al backend
+                    delete values.confirmPassword;
+                    await crearUsuarioTrabajador.mutateAsync(values);
+                    // Navegar solo si no hay errores
+                    navigate("/trabajadores");
+                }
             } else {
-                if (!values.trabajadorId) {
-                    // Verificar si se está creando un nuevo usuario y las contraseñas no son iguales
+                // Actualizar un usuario existente
+                nombreUsuarioExistente = usernames.find(
+                    (trabajador) => trabajador.usuario === values.usuario
+                    // excluyendo el nombre de usuario actual 
+                    //cuando está editando el perfil de trabajador sin cambiar su nombre de usuario
+                        && trabajador.usuario !== values.usuario
+                );
+                if (nombreUsuarioExistente) {
+                    setHayError(true);
+                    setMensajeError("El nombre de usuario ya existe. Por favor, elija otro.");
+                    return;
+                }
+                /* Verificar si se está actualizando la contraseña de un usuario
+                     Si la contraseña actual no es igual que la contraseña anterior */
+                if (values.password !== antPassword) {
                     if (values.confirmPassword !== values.password) {
                         setHayError(true);
                         setMensajeError("Las contraseñas deben coincidir.");
-                    } else {
-                        // Eliminar campo de confirmación para enviar al backend
-                        delete values.confirmPassword;
-                        await crearUsuarioTrabajador.mutateAsync(values);
-                        // Navegar solo si no hay errores
-                        navigate("/trabajadores");
+                        return;
                     }
-                } else {
-                    /* Verificar si se está actualizando la contraseña de un usuario
-                     Si la contraseña actual no es igual que la contraseña anterior */
-                    if (values.password !== antPassword) {
-                        if (values.confirmPassword !== values.password) {
-                            setHayError(true);
-                            setMensajeError("Las contraseñas deben coincidir.");
-                            return;
-                        }
-                        setHayMensaje(true);
-                        setMensaje('La contraseña ha cambiado con exito');
-                    }
-                        // Eliminar campo de confirmación para enviar al backend
-                        delete values.confirmPassword;
-                        await actualizarUsuarioTrabajador.mutateAsync(values);
-                        // Navegar solo si no hay errores
-                        navigate("/trabajadores");
+                    setHayMensaje(true);
+                    setMensaje('La contraseña ha cambiado con éxito');
                 }
+                // Eliminar campo de confirmación para enviar al backend
+                delete values.confirmPassword;
+                await actualizarUsuarioTrabajador.mutateAsync(values);
+                // Navegar solo si no hay errores
+                navigate("/trabajadores");
             }
 
         } catch (error) {
