@@ -54,6 +54,9 @@ export const TrabajadorPagina = () => {
     );
 
     const handleSubmit = async (values) => {
+        // we save the value of confirmPass in another variable,
+        // so we can recuperate it after deleting its value
+        let confirmPassword2 = values.confirmPassword
         try {
             // Crear un nuevo usuario
             if (!values.trabajadorId) {
@@ -83,12 +86,19 @@ export const TrabajadorPagina = () => {
                     setMensaje('La contraseña ha cambiado con éxito');
                 }
                 // Eliminar campo de confirmación para enviar al backend
+                // because this confirmPass does not exits in Mysql
                 delete values.confirmPassword;
                 await actualizarUsuarioTrabajador.mutateAsync(values);
                 // Navegar solo si no hay errores
                 navigate("/trabajadores");
             }
         } catch (error) {
+            /*fixed: if there is any error in edit and create, we recuperate
+             deleted confirmPassword field, so we can resend it to backEnd without
+             having error: Las contraseñas deben coincidir. Because of deleting
+             confirmPassword, before creating and editing its value
+             becomes undefined */
+            formik.setFieldValue('confirmPassword',confirmPassword2)
             // si el error está relacionado con una respuesta de solicitud HTTP.
             if (error.response) {
             setHayError(true);
@@ -98,7 +108,6 @@ export const TrabajadorPagina = () => {
             setHayError(true);
             setMensajeError(error.message);
             }
-            
         }
     }
 
