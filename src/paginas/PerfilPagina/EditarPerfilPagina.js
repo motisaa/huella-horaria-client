@@ -3,12 +3,11 @@ import { useParams } from "react-router-dom";
 import { useFormik } from "formik";
 import { useMutation, useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
-import { GeneralCtx } from "../../contextos/GeneralContext";
 import { MensajeError } from "../../servicios/TratamientoErrores";
 import { ErrorGeneral } from "../../componentes/ErrorGeneral/ErrorGeneral";
 import { MensajeInformativo } from "../../componentes/MensajeInformativo/MensajeInformativo";
 import { Button, TextField, Typography, Grid, IconButton, InputAdornment } from "@mui/material";
-import { ActualizarUsuarioTrabajador, LeerUsuarioTrabajador, LeerUsuariosTrabajadores } from "../../servicios/RQTrabajadores";
+import { ActualizarUsuarioTrabajador, LeerUsuarioTrabajador } from "../../servicios/RQTrabajadores";
 import { MenuLateral } from "../../componentes/MenuLateral/MenuLateral";
 import { initialValues, validationSchema } from "./PerfilFunciones";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
@@ -23,67 +22,48 @@ export const EditarPerfilPagina = () => {
     const [hayMensaje, setHayMensaje] = useState(false);
     const [mensaje, setMensaje] = useState("");
     const [showPassword, setShowPassword] = useState(false);
-    const [usernames, setUsernames] = useState([]);
     const [antPassword, setAntPassword] = useState()
-    /* he sacado este useEffect con la ayuda de chatGPT
- This useEffect is set up to handle username input, using setTimeout
- and clearTimeout. It's designed to manage when a user types a username
- that already exists, so when user changes the username to the one that
-  doesnt exist in base de datos, requires a cleanup of the previous timeout.
-  So it will work fine as expected(user wil be created o editted).
- */
-    useEffect(() => {
-        // Inside this useEffect, a timer is set using setTimeout, delaying for 0.5 seconds.
-        const timerId = setTimeout(async () => {
-            try {
-                const data = await LeerUsuariosTrabajadores();
-                let usernames = data.data;
-                setUsernames(usernames);
-            } catch (error) {
-                console.error(error);
-                setMensajeError(MensajeError(error));
-                setHayError(true);
-            }
-            // a timeout is set with a 0.5s delay.
-        }, 500);
-
-        return () => {
-            // It clears the timer previously set by setTimeout
-            clearTimeout(timerId);
-        };
-    }, []);
+ 
 
     const handleSubmit = async (values) => {
-        let usernameActual = formik.values.usuario;
+        // we save the value of confirmPass in another variable,
+        // so we can recuperate it after deleting its value
+        let confirmPassword2 = values.confirmPassword
         try {
-            let nombreUsuarioExistente = usernames.find(
-                (user) => user.usuario === values.usuario
-                    && user.usuario !== usernameActual
-            );
-            if (nombreUsuarioExistente) {
-                setHayError(true);
-                setMensajeError("El nombre de usuario ya existe. Por favor, elija otro.");
-            } else {
-                if (values.password !== antPassword) {
-                    // si las contraseñas no son iguales(pass y confirm pass)
-                    if (values.confirmPassword !== values.password) {
-                        setHayError(true);
-                        setMensajeError("Las contraseñas deben coincidir.");
-                        return;
-                    }
-                    setHayMensaje(true);
-                    setMensaje('La contraseña ha cambiado con exito');
+            if (values.password !== antPassword) {
+                if (values.confirmPassword !== values.password) {
+                    setHayError(true);
+                    setMensajeError("Las contraseñas deben coincidir.");
+                    return;
                 }
-                delete values.confirmPassword;
-                await actualizarUsuarioTrabajador.mutateAsync(values);
-                navigate("/perfil");
+                setHayMensaje(true);
+                setMensaje('La contraseña ha cambiado con éxito');
             }
+            // Eliminar campo de confirmación para enviar al backend
+            // because this confirmPass does not exits in Mysql
+            delete values.confirmPassword;
+            await actualizarUsuarioTrabajador.mutateAsync(values);
+            // Navegar solo si no hay errores
+            navigate("/perfil");
         } catch (error) {
-            console.error(error);
-            setMensajeError(MensajeError(error));
-            setHayError(true);
+            /*fixed: if there is any error in edit and create, we recuperate
+             deleted confirmPassword field, so we can resend it to backEnd without
+             having error: Las contraseñas deben coincidir. Because of deleting
+             confirmPassword, before creating and editing its value
+             becomes undefined */
+             formik.setFieldValue('confirmPassword',confirmPassword2)
+             // si el error está relacionado con una respuesta de solicitud HTTP.
+             if (error.response) {
+             setHayError(true);
+             // mostramos la detalle de error al usuario
+             setMensajeError(error.response.data);
+             } else {
+             setHayError(true);
+             setMensajeError(error.message);
+             }
         }
-    };
+
+    }
 
     const handleClickShowPassword = () => {
         setShowPassword(!showPassword);
