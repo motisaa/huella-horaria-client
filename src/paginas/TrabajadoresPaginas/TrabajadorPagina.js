@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useFormik } from "formik";
 import { useMutation, useQuery } from "react-query";
@@ -7,7 +7,7 @@ import { MensajeError } from "../../servicios/TratamientoErrores";
 import { ErrorGeneral } from "../../componentes/ErrorGeneral/ErrorGeneral";
 import { MensajeInformativo } from "../../componentes/MensajeInformativo/MensajeInformativo";
 import { Button, TextField, Typography, Grid, Autocomplete, InputAdornment, IconButton } from "@mui/material";
-import { ActualizarUsuarioTrabajador, CrearUsuarioTrabajador, LeerUsuarioTrabajador, LeerUsuariosTrabajadores }
+import { ActualizarUsuarioTrabajador, CrearUsuarioTrabajador, LeerUsuarioTrabajador}
     from "../../servicios/RQTrabajadores";
 import { MenuLateral } from "../../componentes/MenuLateral/MenuLateral";
 import { initialValues, validationSchema } from "./TrabajadoresFunciones";
@@ -53,48 +53,10 @@ export const TrabajadorPagina = () => {
         }
     );
 
-    const [usernames, setUsernames] = useState([]);
-    /* he sacado este useEffect con la ayuda de chatGPT
- This useEffect is set up to handle username input, using setTimeout and clearTimeout. 
- It's designed to manage when a user types a username that already exists, 
- so when user changes the username to the one that doesnt exist in base de datos, requires a cleanup of the previous timeout.
-  So it will work fine as expected(user wil be created o editted).
- */
-    useEffect(() => {
-        // Inside this useEffect, a timer is set using setTimeout, delaying for 0.5 seconds.
-        const timerId = setTimeout(async () => {
-            try {
-                const data = await LeerUsuariosTrabajadores();
-                let usernames = data.data;
-                setUsernames(usernames);
-            } catch (error) {
-                console.error(error);
-                setMensajeError(MensajeError(error));
-                setHayError(true);
-            }
-            // a timeout is set with a 0.5s delay.
-        }, 500);
-
-        return () => {
-            // It clears the timer previously set by setTimeout
-            clearTimeout(timerId);
-        };
-    }, []);
-
     const handleSubmit = async (values) => {
         try {
-            let nombreUsuarioExistente;
             // Crear un nuevo usuario
             if (!values.trabajadorId) {
-                // buscamos si el nombre de usuario ya existe en la base de datos
-                nombreUsuarioExistente = usernames.find(
-                    (trabajador) => trabajador.usuario === values.usuario
-                );
-                if (nombreUsuarioExistente) {
-                    setHayError(true);
-                    setMensajeError("El nombre de usuario ya existe. Por favor, elija otro.");
-                    return;
-                }
                 // Verificar si se está creando un nuevo usuario y las contraseñas no son iguales
                 if (values.confirmPassword !== values.password) {
                     setHayError(true);
@@ -109,17 +71,6 @@ export const TrabajadorPagina = () => {
                 }
             } else {
                 // Actualizar un usuario existente
-                nombreUsuarioExistente = usernames.find(
-                    (trabajador) => trabajador.usuario === values.usuario
-                    // excluyendo el nombre de usuario actual 
-                    //cuando está editando el perfil de trabajador sin cambiar su nombre de usuario
-                        && trabajador.usuario !== values.usuario
-                );
-                if (nombreUsuarioExistente) {
-                    setHayError(true);
-                    setMensajeError("El nombre de usuario ya existe. Por favor, elija otro.");
-                    return;
-                }
                 /* Verificar si se está actualizando la contraseña de un usuario
                      Si la contraseña actual no es igual que la contraseña anterior */
                 if (values.password !== antPassword) {
@@ -137,10 +88,17 @@ export const TrabajadorPagina = () => {
                 // Navegar solo si no hay errores
                 navigate("/trabajadores");
             }
-
         } catch (error) {
+            // si el error está relacionado con una respuesta de solicitud HTTP.
+            if (error.response) {
             setHayError(true);
-            setMensajeError("Error en la solicitud " + error.message);
+            // mostramos la detalle de error al usuario
+            setMensajeError(error.response.data);
+            } else {
+            setHayError(true);
+            setMensajeError(error.message);
+            }
+            
         }
     }
 
