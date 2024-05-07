@@ -53,9 +53,15 @@ export const LoginForm = (props) => {
             const { data: user } = await LoginBasicoUsuario(usuario, password);
             return user;
         } catch (error) {
-            console.log("error", error);
-            setMensajeError("El nombre de usuario y/o la contraseña son incorrectos");
-            setHayError(true);
+            // si el error está relacionado con una respuesta de solicitud HTTP.
+            if (error.response) {
+                setHayError(true);
+                // mostramos la detalle de error al usuario
+                setMensajeError(error.response.data);
+                } else {
+                setHayError(true);
+                setMensajeError(error.message);
+                }
         }
     };
 
