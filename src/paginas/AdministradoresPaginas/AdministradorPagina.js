@@ -26,51 +26,13 @@ export const AdministradorPagina = () => {
     setShowPassword(!showPassword);
   };
 
-  const [usernames, setUsernames] = useState([]);
-
-  /* he sacado este useEffect con la ayuda de chatGPT
-   Para gestionar cuando un usuario escribe un nombre de usuario que ya existe,
-   por lo que cuando el usuario cambia el nombre de usuario a uno que no existe
-   en la base de datos, requiere una limpieza del tiempo de espera anterior.
-   Así que funcionará bien como se espera (el usuario será creado o editado).
-   Sin este useEffect el usuario debería resfrescar la página
-  */
-  useEffect(() => {
-    // Inside this useEffect, a timer is set using setTimeout, delaying for 0.5 seconds.
-    const timerId = setTimeout(async () => {
-      try {
-        const data = await LeerUsuariosAdmin();
-        let usernames = data.data;
-        setUsernames(usernames);
-      } catch (error) {
-        console.error(error);
-        setMensajeError(MensajeError(error));
-        setHayError(true);
-      }
-      // a timeout is set with a 0.5s delay.
-    }, 500);
-
-    return () => {
-      // It clears the timer previously set by setTimeout to avoid memory leaks.
-      clearTimeout(timerId);
-    };
-  }, []);
+ 
 
   const handleSubmit = async (values) => {
+    // we save the value of confirmPass in another variable,
+    // so we can recuperate it after deleting its value
+    let confirmPassword2 = values.confirmPassword 
     try {
-      let nombreUsuarioExistente = usernames.find(
-        (admin) => admin.usuario === values.usuario
-          /* fixed: I added the next line to ensure that if we want to edit the admin
-          profile without changing its username, we won't encounter the error
-          stating that the username already exists. */
-          //excluyendo el caso en que el nombre de usuario sea igual al nombre de usuario actual
-          && admin.usuario !== formik.values.usuario
-      );
-
-      if (nombreUsuarioExistente) {
-        setHayError(true);
-        setMensajeError("El nombre de usuario ya existe. Por favor, elija otro.");
-      } else {
         // significa que queremos actualizar un usuario, ya tiene su id
         if (values.adminId) {
           // Validación de contraseñas al editar un usuario
@@ -108,10 +70,22 @@ export const AdministradorPagina = () => {
             navigate("/administradores");
           }
         }
-      }
     } catch (error) {
-      setHayError(true);
-      setMensajeError("Error en la solicitud ");
+      /*fixed: if there is any error in edit and create, we recuperate
+             deleted confirmPassword field, so we can resend it to backEnd without
+             having error: Las contraseñas deben coincidir. Because of deleting
+             confirmPassword, before creating and editing its value
+             becomes undefined */
+      formik.setFieldValue('confirmPassword', confirmPassword2)
+      // si el error está relacionado con una respuesta de solicitud HTTP.
+      if (error.response) {
+        setHayError(true);
+        // mostramos la detalle de error al usuario
+        setMensajeError(error.response.data);
+      } else {
+        setHayError(true);
+        setMensajeError("Error en la solicitud" + error.message);
+      }
     }
   }
 
