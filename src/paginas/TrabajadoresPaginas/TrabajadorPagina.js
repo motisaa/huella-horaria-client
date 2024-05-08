@@ -271,6 +271,8 @@ export const TrabajadorPagina = () => {
                                 onChange={(e, value) => {
                                     formik.setFieldValue("grupoId", value.grupoId);
                                 }}
+                                // fixed: clear button(x) desaperece cuando ya está elegido un grupo
+                                disableClearable={formik.values.grupoId !== null} 
                                 fullWidth
                                 id="grupoId"
                                 name="grupoId"
@@ -368,7 +370,9 @@ export const TrabajadorPagina = () => {
                                     ),
                                 }}
                                 onChange={formik.handleChange}
-                                error={formik.touched.confirmPassword}
+                                error={
+                                    formik.touched.confirmPassword && Boolean(formik.errors.confirmPassword)
+                                }
                                 helperText={formik.touched.confirmPassword &&
                                     formik.errors.confirmPassword}
                             />

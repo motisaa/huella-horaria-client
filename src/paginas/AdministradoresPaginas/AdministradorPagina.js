@@ -292,7 +292,9 @@ export const AdministradorPagina = () => {
                   ),
                 }}
                 onChange={formik.handleChange}
-                error={formik.touched.confirmPassword}
+                error={
+                  formik.touched.confirmPassword && Boolean(formik.errors.confirmPassword)
+                }
                 helperText={formik.touched.confirmPassword &&
                   formik.errors.confirmPassword}
               />
