@@ -1,5 +1,6 @@
 import axios from "axios";
 import Entorno from "./Entorno";
+import key from "../apikey.json"
 
 export const LoginBasicoUsuario = (usuario, password) => {
     const ent = Entorno.getEnv();
@@ -11,7 +12,7 @@ export const LoginBasicoUsuario = (usuario, password) => {
     };
     return axios.post(url, data, {
         headers: {
-            'api-key': 'Nz&V*M_9,bfjS5-<L:K'
+            'api-key': key["api-key"]
         }
     });
 };

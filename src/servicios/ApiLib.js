@@ -1,5 +1,6 @@
 import axios from 'axios'
 import Entorno from './Entorno'
+import key from "../apikey.json"
 
 export const leerVersion = () => {
     const ent = Entorno.getEnv()
@@ -7,7 +8,7 @@ export const leerVersion = () => {
     const url = `${url_base}/v1/version`
     return axios.get(url, {
         headers: {
-            'api-key': 'Nz&V*M_9,bfjS5-<L:K'
+            'api-key': key["api-key"]
         }
     })
 }

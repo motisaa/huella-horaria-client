@@ -1,5 +1,6 @@
 import axios from "axios";
 import Entorno from "./Entorno";
+import key from "../apikey.json"
 
 export const LeerUsuariosTrabajadores = () => {
     const ent = Entorno.getEnv();
@@ -8,7 +9,7 @@ export const LeerUsuariosTrabajadores = () => {
 
     return axios.get(url, {
         headers: {
-            'api-key': 'Nz&V*M_9,bfjS5-<L:K'
+            'api-key': key["api-key"]
         }
     });
 };
@@ -18,7 +19,7 @@ export const CrearUsuarioTrabajador = (usuario) => {
     const url = `${url_base}/v1/trabajadores`;
     return axios.post(url, usuario, {
         headers: {
-            'api-key': 'Nz&V*M_9,bfjS5-<L:K'
+            'api-key': key["api-key"]
         }
     });
 };
@@ -28,7 +29,7 @@ export const LeerUsuarioTrabajador = (trabajadorId) => {
     const url = `${url_base}/v1/trabajadores/${trabajadorId}`;
     return axios.get(url, {
         headers: {
-            'api-key': 'Nz&V*M_9,bfjS5-<L:K'
+            'api-key': key["api-key"]
         }
     });
 };
@@ -38,7 +39,7 @@ export const LeerGrupoTrabajador = (trabajadorId) => {
     const url = `${url_base}/v1/trabajadores/${trabajadorId}/grupo`;
     return axios.get(url, {
         headers: {
-            'api-key': 'Nz&V*M_9,bfjS5-<L:K'
+            'api-key': key["api-key"]
         }
     });
 };
@@ -48,7 +49,7 @@ export const ActualizarUsuarioTrabajador = (trabajadorId) => {
     const url = `${url_base}/v1/trabajadores`;
     return axios.put(url, trabajadorId, {
         headers: {
-            'api-key': 'Nz&V*M_9,bfjS5-<L:K'
+            'api-key': key["api-key"]
         }
     });
 };
@@ -58,7 +59,7 @@ export const eliminarUsuarioTrabajador = (trabajadorId) => {
     const url = `${url_base}/v1/trabajadores/${trabajadorId}`;
     return axios.delete(url, {
         headers: {
-            'api-key': 'Nz&V*M_9,bfjS5-<L:K'
+            'api-key': key["api-key"]
         }
     });
 };

@@ -1,5 +1,6 @@
 import axios from "axios";
 import Entorno from "./Entorno";
+import key from "../apikey.json"
 
 export const LeerFichajes = () => {
   const ent = Entorno.getEnv();
@@ -8,7 +9,7 @@ export const LeerFichajes = () => {
 
   return axios.get(url, {
     headers: {
-      'api-key': 'Nz&V*M_9,bfjS5-<L:K'
+      'api-key': key["api-key"]
     }
   });
 };
@@ -19,7 +20,7 @@ export const LeerFichajesTrabajador = (trabajadorId) => {
 
   return axios.get(url, {
     headers: {
-      'api-key': 'Nz&V*M_9,bfjS5-<L:K'
+      'api-key': key["api-key"]
     }
   });
 };
@@ -29,7 +30,7 @@ export const EliminarFichaje = (fichajeId) => {
   const url = `${url_base}/v1/fichajes/${fichajeId}`;
   return axios.delete(url, {
     headers: {
-      'api-key': 'Nz&V*M_9,bfjS5-<L:K'
+      'api-key': key["api-key"]
     }
   });
 };
@@ -40,7 +41,7 @@ export const CrearFichaje = (fichajeId) => {
   const url = `${url_base}/v1/fichajes`;
   return axios.post(url, fichajeId, {
     headers: {
-      'api-key': 'Nz&V*M_9,bfjS5-<L:K'
+      'api-key': key["api-key"]
     }
   });
 };
@@ -51,7 +52,7 @@ export const ActualizarFichaje = (fichaje) => {
   const url = `${url_base}/v1/fichajes`;
   return axios.put(url, fichaje, {
     headers: {
-      'api-key': 'Nz&V*M_9,bfjS5-<L:K'
+      'api-key': key["api-key"]
     }
   });
 };
@@ -62,7 +63,7 @@ export const LeerFichaje = (fichajeId) => {
   const url = `${url_base}/v1/fichajes/${fichajeId}`;
   return axios.get(url, {
     headers: {
-      'api-key': 'Nz&V*M_9,bfjS5-<L:K'
+      'api-key': key["api-key"]
     }
   });
 };
