@@ -9,5 +9,9 @@ export const LoginBasicoUsuario = (usuario, password) => {
         usuario,
         password,
     };
-    return axios.post(url, data);
+    return axios.post(url, data, {
+        headers: {
+            'api-key': 'gdYUQ4Muxhq*_Hk83ySml'
+        }
+    });
 };

@@ -5,5 +5,9 @@ export const leerVersion = () => {
     const ent = Entorno.getEnv()
     const url_base = ent.API_URL
     const url = `${url_base}/v1/version`
-    return axios.get(url)
+    return axios.get(url, {
+        headers: {
+            'api-key': 'gdYUQ4Muxhq*_Hk83ySml'
+        }
+    })
 }
