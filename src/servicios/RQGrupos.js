@@ -8,7 +8,7 @@ export const LeerGrupos = () => {
 
   return axios.get(url, {
     headers: {
-      'api-key': 'gdYUQ4Muxhq*_Hk83ySml'
+      'api-key': 'Nz&V*M_9,bfjS5-<L:K'
     }
   });
 };
@@ -18,7 +18,7 @@ export const CrearGrupo = (grupoId) => {
   const url = `${url_base}/v1/grupos_trabajadores`;
   return axios.post(url, grupoId, {
     headers: {
-      'api-key': 'gdYUQ4Muxhq*_Hk83ySml'
+      'api-key': 'Nz&V*M_9,bfjS5-<L:K'
     }
   });
 };
@@ -29,7 +29,7 @@ export const ActualizarGrupo = (grupo) => {
   const url = `${url_base}/v1/grupos_trabajadores`;
   return axios.put(url, grupo, {
     headers: {
-      'api-key': 'gdYUQ4Muxhq*_Hk83ySml'
+      'api-key': 'Nz&V*M_9,bfjS5-<L:K'
     }
   });
 };
@@ -40,7 +40,7 @@ export const LeerGrupo = (grupoId) => {
   const url = `${url_base}/v1/grupos_trabajadores/${grupoId}`;
   return axios.get(url, {
     headers: {
-      'api-key': 'gdYUQ4Muxhq*_Hk83ySml'
+      'api-key': 'Nz&V*M_9,bfjS5-<L:K'
     }
   });
 };
@@ -51,7 +51,7 @@ export const EliminarGrupo = (grupoId) => {
   const url = `${url_base}/v1/grupos_trabajadores/${grupoId}`;
   return axios.delete(url, {
     headers: {
-      'api-key': 'gdYUQ4Muxhq*_Hk83ySml'
+      'api-key': 'Nz&V*M_9,bfjS5-<L:K'
     }
   });
 };

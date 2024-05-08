@@ -8,7 +8,7 @@ export const LeerFichajes = () => {
 
   return axios.get(url, {
     headers: {
-      'api-key': 'gdYUQ4Muxhq*_Hk83ySml'
+      'api-key': 'Nz&V*M_9,bfjS5-<L:K'
     }
   });
 };
@@ -19,7 +19,7 @@ export const LeerFichajesTrabajador = (trabajadorId) => {
 
   return axios.get(url, {
     headers: {
-      'api-key': 'gdYUQ4Muxhq*_Hk83ySml'
+      'api-key': 'Nz&V*M_9,bfjS5-<L:K'
     }
   });
 };
@@ -29,7 +29,7 @@ export const EliminarFichaje = (fichajeId) => {
   const url = `${url_base}/v1/fichajes/${fichajeId}`;
   return axios.delete(url, {
     headers: {
-      'api-key': 'gdYUQ4Muxhq*_Hk83ySml'
+      'api-key': 'Nz&V*M_9,bfjS5-<L:K'
     }
   });
 };
@@ -40,7 +40,7 @@ export const CrearFichaje = (fichajeId) => {
   const url = `${url_base}/v1/fichajes`;
   return axios.post(url, fichajeId, {
     headers: {
-      'api-key': 'gdYUQ4Muxhq*_Hk83ySml'
+      'api-key': 'Nz&V*M_9,bfjS5-<L:K'
     }
   });
 };
@@ -51,7 +51,7 @@ export const ActualizarFichaje = (fichaje) => {
   const url = `${url_base}/v1/fichajes`;
   return axios.put(url, fichaje, {
     headers: {
-      'api-key': 'gdYUQ4Muxhq*_Hk83ySml'
+      'api-key': 'Nz&V*M_9,bfjS5-<L:K'
     }
   });
 };
@@ -62,7 +62,7 @@ export const LeerFichaje = (fichajeId) => {
   const url = `${url_base}/v1/fichajes/${fichajeId}`;
   return axios.get(url, {
     headers: {
-      'api-key': 'gdYUQ4Muxhq*_Hk83ySml'
+      'api-key': 'Nz&V*M_9,bfjS5-<L:K'
     }
   });
 };

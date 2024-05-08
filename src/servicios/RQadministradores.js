@@ -7,7 +7,7 @@ export const LeerUsuariosAdmin = () => {
     const url = `${url_base}/v1/administradores`;
     return axios.get(url, {
         headers: {
-            'api-key': 'gdYUQ4Muxhq*_Hk83ySml'
+            'api-key': 'Nz&V*M_9,bfjS5-<L:K'
         }
     });
 };
@@ -17,7 +17,7 @@ export const CrearUsuarioAdmin = (usuario) => {
     const url = `${url_base}/v1/administradores`;
     return axios.post(url, usuario, {
         headers: {
-            'api-key': 'gdYUQ4Muxhq*_Hk83ySml'
+            'api-key': 'Nz&V*M_9,bfjS5-<L:K'
         }
     });
 };
@@ -28,7 +28,7 @@ export const ActualizarUsuarioAdmin = (adminId) => {
     const url = `${url_base}/v1/administradores`;
     return axios.put(url, adminId, {
         headers: {
-            'api-key': 'gdYUQ4Muxhq*_Hk83ySml'
+            'api-key': 'Nz&V*M_9,bfjS5-<L:K'
         }
     });
 };
@@ -39,7 +39,7 @@ export const LeerUsuarioAdmin = (adminId) => {
     const url = `${url_base}/v1/administradores/${adminId}`;
     return axios.get(url, {
         headers: {
-            'api-key': 'gdYUQ4Muxhq*_Hk83ySml'
+            'api-key': 'Nz&V*M_9,bfjS5-<L:K'
         }
     });
 };
@@ -50,7 +50,7 @@ export const eliminarUsuarioAdmin = (adminId) => {
     const url = `${url_base}/v1/administradores/${adminId}`;
     return axios.delete(url, {
         headers: {
-            'api-key': 'gdYUQ4Muxhq*_Hk83ySml'
+            'api-key': 'Nz&V*M_9,bfjS5-<L:K'
         }
     });
 };

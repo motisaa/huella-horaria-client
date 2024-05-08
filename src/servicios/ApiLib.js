@@ -7,7 +7,7 @@ export const leerVersion = () => {
     const url = `${url_base}/v1/version`
     return axios.get(url, {
         headers: {
-            'api-key': 'gdYUQ4Muxhq*_Hk83ySml'
+            'api-key': 'Nz&V*M_9,bfjS5-<L:K'
         }
     })
 }

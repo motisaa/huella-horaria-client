@@ -8,7 +8,7 @@ export const LeerUsuariosTrabajadores = () => {
 
     return axios.get(url, {
         headers: {
-            'api-key': 'gdYUQ4Muxhq*_Hk83ySml'
+            'api-key': 'Nz&V*M_9,bfjS5-<L:K'
         }
     });
 };
@@ -18,7 +18,7 @@ export const CrearUsuarioTrabajador = (usuario) => {
     const url = `${url_base}/v1/trabajadores`;
     return axios.post(url, usuario, {
         headers: {
-            'api-key': 'gdYUQ4Muxhq*_Hk83ySml'
+            'api-key': 'Nz&V*M_9,bfjS5-<L:K'
         }
     });
 };
@@ -28,7 +28,7 @@ export const LeerUsuarioTrabajador = (trabajadorId) => {
     const url = `${url_base}/v1/trabajadores/${trabajadorId}`;
     return axios.get(url, {
         headers: {
-            'api-key': 'gdYUQ4Muxhq*_Hk83ySml'
+            'api-key': 'Nz&V*M_9,bfjS5-<L:K'
         }
     });
 };
@@ -38,7 +38,7 @@ export const LeerGrupoTrabajador = (trabajadorId) => {
     const url = `${url_base}/v1/trabajadores/${trabajadorId}/grupo`;
     return axios.get(url, {
         headers: {
-            'api-key': 'gdYUQ4Muxhq*_Hk83ySml'
+            'api-key': 'Nz&V*M_9,bfjS5-<L:K'
         }
     });
 };
@@ -48,7 +48,7 @@ export const ActualizarUsuarioTrabajador = (trabajadorId) => {
     const url = `${url_base}/v1/trabajadores`;
     return axios.put(url, trabajadorId, {
         headers: {
-            'api-key': 'gdYUQ4Muxhq*_Hk83ySml'
+            'api-key': 'Nz&V*M_9,bfjS5-<L:K'
         }
     });
 };
@@ -58,7 +58,7 @@ export const eliminarUsuarioTrabajador = (trabajadorId) => {
     const url = `${url_base}/v1/trabajadores/${trabajadorId}`;
     return axios.delete(url, {
         headers: {
-            'api-key': 'gdYUQ4Muxhq*_Hk83ySml'
+            'api-key': 'Nz&V*M_9,bfjS5-<L:K'
         }
     });
 };
