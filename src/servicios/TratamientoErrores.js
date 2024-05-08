@@ -5,8 +5,11 @@ export const MensajeError = (err) => {
   if (err.response && err.response.data) {
     if (typeof err.response.data === "string") {
       mens += ` (${err.response.data})`;
-    } else {
+    } else if (err.response.data.error) {
       mens += ` (${err.response.data.error})`;
+    }
+    else if (err.response.data.message) {
+      mens += ` (${err.response.data.message})`;
     }
   }
   return mens;
