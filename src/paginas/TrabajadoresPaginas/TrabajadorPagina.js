@@ -99,15 +99,8 @@ export const TrabajadorPagina = () => {
              confirmPassword, before creating and editing its value
              becomes undefined */
             formik.setFieldValue('confirmPassword',confirmPassword2)
-            // si el error está relacionado con una respuesta de solicitud HTTP.
-            if (error.response) {
             setHayError(true);
-            // mostramos la detalle de error al usuario
-            setMensajeError(error.response.data);
-            } else {
-            setHayError(true);
-            setMensajeError(error.message);
-            }
+            setMensajeError(MensajeError(error));
         }
     }
 

@@ -10,7 +10,8 @@ import { MensajeInformativo } from "../../componentes/MensajeInformativo/Mensaje
 import "./LoginPagina.css";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-
+import { MensajeError } from "../../servicios/TratamientoErrores"
+    
 const validationSchema = yup.object({
     usuario: yup.string("usuario").required("Requerido"),
     password: yup.string("password").required("Requerido"),
@@ -53,15 +54,8 @@ export const LoginForm = (props) => {
             const { data: user } = await LoginBasicoUsuario(usuario, password);
             return user;
         } catch (error) {
-            // si el error está relacionado con una respuesta de solicitud HTTP.
-            if (error.response) {
-                setHayError(true);
-                // mostramos la detalle de error al usuario
-                setMensajeError(error.response.data);
-                } else {
-                setHayError(true);
-                setMensajeError(error.message);
-                }
+            setHayError(true);
+            setMensajeError(MensajeError(error));
         }
     };
 
