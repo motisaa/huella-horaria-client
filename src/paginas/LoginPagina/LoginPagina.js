@@ -1,6 +1,6 @@
 import { Grid, Typography, useMediaQuery } from "@mui/material";
 import React, { useEffect, useState } from 'react';
-import { leerVersion } from '../../servicios/ApiLib';
+import { leerVersion } from '../../servicios/RQVersion';
 import { LoginForm } from './LoginForm';
 
 export const LoginPagina = () => {

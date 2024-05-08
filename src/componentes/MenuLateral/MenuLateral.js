@@ -16,7 +16,7 @@ import { Button, Grid, ListItemText } from "@mui/material";
 import ListItem from "@mui/material/ListItem";
 import PersonIcon from "@mui/icons-material/Person";
 import Drawer from "@mui/material/Drawer";
-import { leerVersion } from '../../servicios/ApiLib';
+import { leerVersion } from '../../servicios/RQVersion';
 import logo from '../../images/Huella.jpg';
 import Avatar from '@mui/material/Avatar';
 import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
