@@ -1,6 +1,5 @@
 import axios from 'axios'
 import Entorno from './Entorno'
-import key from "../apikey.json"
 
 export const leerVersion = () => {
     const ent = Entorno.getEnv()
