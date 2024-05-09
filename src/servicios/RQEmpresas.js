@@ -29,7 +29,7 @@ export const LeerEmpresa = (empresaId) => {
   return axios.get(url);
 };
 
-export const EliminarGrupo = (empresaId) => {
+export const EliminarEmpresa = (empresaId) => {
   const ent = Entorno.getEnv();
   const url_base = ent.API_URL;
   const url = `${url_base}/v1/empresas/${empresaId}`;
