@@ -41,13 +41,12 @@ export const WarnMsg = (props) => {
             aria-describedby="alert-dialog-description"
         >
             <DialogTitle id="alert-dialog-title">
-                {"De permiso al navegador cuando vaya a fichar "}
+                {"Acceso a la Ubicación Necesario para Fichar"}
             </DialogTitle>
             <DialogContent>
                 <DialogContentText id="alert-dialog-description">
-                    Para obtener las coordenadas geográficas y ver la ubicación
-                    actual en el mapa, es necesario habilitar el acceso a
-                    la ubicación en su navegador.
+                    Para poder fichar y ver la ubicación actual en el mapa,
+                    es obligatorio habilitar el acceso a la ubicación en su navegador.
                 </DialogContentText>
             </DialogContent>
             <FormControlLabel
