@@ -1,4 +1,4 @@
-import { Typography, IconButton, Grid, Paper } from "@mui/material";
+import { Typography, Grid, Paper } from "@mui/material";
 import React from "react";
 import { MenuLateral } from "../../componentes/MenuLateral/MenuLateral";
 import MenuIcon from '@mui/icons-material/Menu';

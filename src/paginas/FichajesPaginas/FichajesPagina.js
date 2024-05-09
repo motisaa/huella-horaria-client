@@ -8,9 +8,7 @@ import { LeerFichajes, EliminarFichaje, LeerFichajesTrabajador } from "../../ser
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
-import {
-    AppBar, Grid, IconButton, Toolbar, Tooltip, Typography,
-} from "@mui/material";
+import { AppBar, Grid, IconButton, Toolbar, Tooltip } from "@mui/material";
 import { MensajeConfirmacion } from "../../componentes/MensajeConfirmacion/MensajeConfirmacion";
 import { MensajeInformativo } from "../../componentes/MensajeInformativo/MensajeInformativo";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
@@ -71,7 +69,8 @@ export const FichajesPagina = () => {
                 }
                 return data;
             } catch (error) {
-                throw error
+                setMensajeError(MensajeError(error));
+                setHayError(true);
             }
         },
         {

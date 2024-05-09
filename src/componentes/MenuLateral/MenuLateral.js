@@ -69,6 +69,7 @@ export const MenuLateral = (props) => {
         if (session.usuario.tipo === 'ADMINISTRADOR') setverMenuAdmin(true)
         if (session.usuario.tipo === 'TRABAJADOR') setverMenuAdmin(false)
         consultarVersion();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (

@@ -1,11 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useState, useEffect } from "react";
-import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { MenuLateral } from "../../componentes/MenuLateral/MenuLateral";
 import { MensajeError } from "../../servicios/TratamientoErrores";
 import { LeerUsuarioTrabajador } from "../../servicios/RQTrabajadores";
-import { AppBar, Grid, IconButton, Toolbar, Typography } from "@mui/material";
+import { AppBar, Grid, Toolbar, Typography } from "@mui/material";
 import { GeneralCtx } from "../../contextos/GeneralContext";
 import Button from '@mui/material/Button';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';

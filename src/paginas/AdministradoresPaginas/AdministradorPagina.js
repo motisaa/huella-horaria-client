@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useFormik } from "formik";
 import { useMutation, useQuery } from "react-query";
@@ -8,7 +8,7 @@ import { MensajeError } from "../../servicios/TratamientoErrores";
 import { ErrorGeneral } from "../../componentes/ErrorGeneral/ErrorGeneral";
 import { MensajeInformativo } from "../../componentes/MensajeInformativo/MensajeInformativo";
 import { Button, TextField, Typography, Grid, InputAdornment, IconButton } from "@mui/material";
-import { ActualizarUsuarioAdmin, CrearUsuarioAdmin, LeerUsuarioAdmin, LeerUsuariosAdmin } from "../../servicios/RQAdministradores";
+import { ActualizarUsuarioAdmin, CrearUsuarioAdmin, LeerUsuarioAdmin } from "../../servicios/RQAdministradores";
 //import { LeerEmpresas } from "../../servicios/RQEmpresas";
 import { MenuLateral } from "../../componentes/MenuLateral/MenuLateral";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
