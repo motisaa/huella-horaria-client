@@ -191,7 +191,7 @@ export const FichajePagina = () => {
             setSelectedDate(localTime);
             console.log('Fecha sistema', serverDate, localTime)
         } catch (error) {
-            
+            console.error("Error: " + error);
         }
 
     }
