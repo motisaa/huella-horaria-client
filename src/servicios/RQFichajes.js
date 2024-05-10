@@ -68,13 +68,15 @@ export const LeerFichaje = (fichajeId) => {
   });
 };
 
-export const GetServerDate = () => {
+export const GetServerDate = async () => {
   const ent = Entorno.getEnv();
   const url_base = ent.API_URL;
   const url = `${url_base}/v1/fichajes/serverTime/date`;
-  return axios.get(url, {
+  let resultado = await axios.get(url, {
     headers: {
       'api-key': key["api-key"]
     }
   });
+  console.log(resultado)
+  return resultado.data.fecha
 };

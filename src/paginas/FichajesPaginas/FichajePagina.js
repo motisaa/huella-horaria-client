@@ -9,13 +9,13 @@ import { ErrorGeneral } from "../../componentes/ErrorGeneral/ErrorGeneral";
 import { MensajeInformativo } from "../../componentes/MensajeInformativo/MensajeInformativo";
 import { Button, TextField, Typography, Grid, Autocomplete } from "@mui/material";
 import { GeneralCtx } from "../../contextos/GeneralContext";
-import { ActualizarFichaje, CrearFichaje, LeerFichaje } from "../../servicios/RQFichajes";
+import { ActualizarFichaje, CrearFichaje, GetServerDate, LeerFichaje } from "../../servicios/RQFichajes";
 import { MenuLateral } from "../../componentes/MenuLateral/MenuLateral";
 import { LeerUsuariosTrabajadores } from "../../servicios/RQTrabajadores";
 import "moment/locale/es";
 import moment from "moment";
 import { DateTimePicker, LocalizationProvider } from "@mui/x-date-pickers";
-import { ConvertirAFechaEs} from "../../servicios/TratamientoFechas";
+import { ConvertirAFechaEs } from "../../servicios/TratamientoFechas";
 import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
 
 import Radio from '@mui/material/Radio';
@@ -26,6 +26,7 @@ import FormLabel from '@mui/material/FormLabel';
 import FormHelperText from '@mui/material/FormHelperText';
 import { Mapa } from "../../componentes/Mapa/Mapa";
 //import { MensajeAviso } from "../../componentes/MensajeAviso/MensajeAviso";
+import momentTZ from "moment-timezone"
 
 export const FichajePagina = () => {
     const params = useParams();
@@ -35,14 +36,13 @@ export const FichajePagina = () => {
     const [hayMensaje, setHayMensaje] = useState(false);
     const [mensaje, setMensaje] = useState("");
     const { getSession } = useContext(GeneralCtx);
-    const [selectedDate, setSelectedDate] = useState(new Date());
+    const [selectedDate, setSelectedDate] = useState('2001-01-01 22:00:00');
     const [isAdmin, setIsAdmin] = useState(false);
     const [latitud, setLatitud] = useState(0)
     const [longitud, setLongitud] = useState(0)
-   // const [noGeo, setNoGeo] = useState(false)
+    // const [noGeo, setNoGeo] = useState(false)
     const [tipoAnt, setTipoAnt] = useState('');
     const [accuracy, setAccuracy] = useState(0);
-
     const handleSubmit = async (values) => {
         //guardamos la fecha y hora en formato utc en la base de datos
         values.fechaHora = moment.utc().format();
@@ -184,12 +184,20 @@ export const FichajePagina = () => {
         }
     );
 
+    const AsignarFechaServidor = async () => {
+        let a = await GetServerDate()
+        let a2 = momentTZ(a).tz("Europe/Madrid")
+        setSelectedDate(a2)
+        console.log('Fecha sistema', a, a2)
+    }
+
 
     useEffect(() => {
         // let session = getSession()
         // if (session.usuario.tipo === 'TRABAJADOR') {
         //     formik.setValues('trabajadorId', session.usuario.trabajadorId)
         // }
+        AsignarFechaServidor()
         if (params.fichajeId === "0") {
             if ("geolocation" in navigator) {
                 navigator.geolocation.getCurrentPosition(
@@ -209,7 +217,7 @@ export const FichajePagina = () => {
                     function (error) {
                         console.error("Error getting geolocation: ", error.message);
                         setHayError(true);
-                       // setNoGeo(true)
+                        // setNoGeo(true)
                         setMensajeError("No se pudo encontrar la localización. " +
                             "Por favor, intente refrescar la página o habilite " +
                             "la ubicación en la configuración de su navegador");
@@ -226,7 +234,7 @@ export const FichajePagina = () => {
             } else {
                 console.log("Geolocation is not available in your browser.");
                 setHayError(true);
-              //  setNoGeo(true)
+                //  setNoGeo(true)
                 setMensajeError("No se pudo encontrar su ubicación. Por favor, actualice su navegador");
             }
         }
@@ -247,17 +255,17 @@ export const FichajePagina = () => {
     return (
         <>
             <MenuLateral>
-           {/* {((!latitud && !longitud) && !noGeo) ? <MensajeAviso/> : ''}  */}
+                {/* {((!latitud && !longitud) && !noGeo) ? <MensajeAviso/> : ''}  */}
                 <form onSubmit={formik.handleSubmit}>
                     <Grid container spacing={2}>
                         <Grid item xs={6} mt={3}>
                             <Typography variant="h6">Datos de Fichaje:</Typography>
                         </Grid>
-                       
-                            <Grid item xs={12} md={6} sx={{
-                                textAlign: "right",
-                                marginBottom: 2
-                            }} mt={4}>
+
+                        <Grid item xs={12} md={6} sx={{
+                            textAlign: "right",
+                            marginBottom: 2
+                        }} mt={4}>
                             <Button color="success"
                                 variant="contained" onClick={salirForm}>
                                 Salir
@@ -270,9 +278,9 @@ export const FichajePagina = () => {
                             >
                                 Aceptar
                             </Button>
-                            </Grid>
-                            
-                       
+                        </Grid>
+
+
                         <Grid item xs={3} md={3}>
                             <TextField
                                 fullWidth
@@ -308,7 +316,7 @@ export const FichajePagina = () => {
                                 id="trabajadorId"
                                 name="trabajadorId"
                                 // fixed: clear button(x) desaperece cuando se elige un trabajador
-                                disableClearable={formik.values.trabajadorId !== null} 
+                                disableClearable={formik.values.trabajadorId !== null}
                                 renderInput={(params) => (
                                     <TextField
                                         {...params}
@@ -433,7 +441,7 @@ export const FichajePagina = () => {
                             />
                         </Grid>
                         <Grid item xs={12}></Grid>
-                            <Grid item xs={12} sx={{ textAlign: "right" }}>
+                        <Grid item xs={12} sx={{ textAlign: "right" }}>
                             <Button color="success" variant="contained"
                                 onClick={salirForm}>
                                 Salir
@@ -446,9 +454,9 @@ export const FichajePagina = () => {
                             >
                                 Aceptar
                             </Button>
-                            </Grid>
-                          
-                        
+                        </Grid>
+
+
                     </Grid>
                 </form>
                 <Grid item xs={12}>
@@ -474,13 +482,13 @@ export const FichajePagina = () => {
                                  un fichaje, le sale acurracy 0. En este caso
                                  no lo mostramos */
                                 !accuracy ? ''
-                                :
-                                (accuracy >= 1000)
-                                ? 'Precisión: ' + (accuracy / 1000).toFixed(2) + ' km'
-                                : 'Precisión: ' + accuracy.toFixed(2) + ' m'}
-                        
+                                    :
+                                    (accuracy >= 1000)
+                                        ? 'Precisión: ' + (accuracy / 1000).toFixed(2) + ' km'
+                                        : 'Precisión: ' + accuracy.toFixed(2) + ' m'}
+
                         >
-                            
+
                         </Mapa>
                         :
                         ''
