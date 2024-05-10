@@ -67,3 +67,14 @@ export const LeerFichaje = (fichajeId) => {
     }
   });
 };
+
+export const GetServerDate = () => {
+  const ent = Entorno.getEnv();
+  const url_base = ent.API_URL;
+  const url = `${url_base}/v1/fichajes/serverTime/date`;
+  return axios.get(url, {
+    headers: {
+      'api-key': key["api-key"]
+    }
+  });
+};

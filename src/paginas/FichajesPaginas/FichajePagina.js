@@ -44,9 +44,9 @@ export const FichajePagina = () => {
     const [accuracy, setAccuracy] = useState(0);
 
     const handleSubmit = async (values) => {
-        // Formatear la fecha y hora
-        values.fechaHora = moment(selectedDate).format("YYYY-MM-DD HH:mm:ss");
-        if (!selectedDate) {
+        //guardamos la fecha y hora en formato utc en la base de datos
+        values.fechaHora = moment.utc().format();
+        if (!values.fechaHora) {
             setHayError(true);
             setMensajeError("Por favor, elija la fecha y hora");
             return;
