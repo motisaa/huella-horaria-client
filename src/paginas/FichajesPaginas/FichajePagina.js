@@ -45,8 +45,8 @@ export const FichajePagina = () => {
     const [accuracy, setAccuracy] = useState(0);
     const handleSubmit = async (values) => {
         //guardamos la fecha y hora en formato utc en la base de datos
-        values.fechaHora = moment.utc().format();
-        if (!values.fechaHora) {
+        values.fechaHora = moment(selectedDate).utc().format("YYYY-MM-DD HH:mm:ss");
+        if (!selectedDate) {
             setHayError(true);
             setMensajeError("Por favor, elija la fecha y hora");
             return;
@@ -185,10 +185,15 @@ export const FichajePagina = () => {
     );
 
     const AsignarFechaServidor = async () => {
-        let a = await GetServerDate()
-        let a2 = momentTZ(a).tz("Europe/Madrid")
-        setSelectedDate(a2)
-        console.log('Fecha sistema', a, a2)
+        try {
+            let serverDate = await GetServerDate()
+            let localTime = momentTZ(serverDate).tz("Europe/Madrid")
+            setSelectedDate(localTime);
+            console.log('Fecha sistema', serverDate, localTime)
+        } catch (error) {
+            
+        }
+
     }
 
 
