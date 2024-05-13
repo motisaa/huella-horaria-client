@@ -1,5 +1,4 @@
-//codigo de empresa
-
+//Usamos metodos de libreria moment time zone
 import moment from "moment-timezone";
 
 export const FormatoFechaEs = (fechaMysql) => {
