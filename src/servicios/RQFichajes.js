@@ -69,13 +69,20 @@ export const LeerFichaje = (fichajeId) => {
 };
 
 export const GetServerDate = async () => {
-  const url_base = "https://huellahoraria.ariface2.com/"
+  const ent = Entorno.getEnv();
+  const url_base = ent.API_URL;
   const url = `${url_base}/v1/fichajes/serverTime/date`;
-  let resultado = await axios.get(url, {
-    headers: {
-      'api-key': key["api-key"]
-    }
-  });
-  console.log(resultado)
-  return resultado.data.fecha
+  try {
+    let resultado = await axios.get(url, {
+      headers: {
+        'api-key': key["api-key"]
+      }
+    });
+    console.log(resultado)
+    return resultado.data.fechaUtc
+  } catch (error) {
+    console.log('Error fecha', error)
+    throw (error)
+  }
+
 };
