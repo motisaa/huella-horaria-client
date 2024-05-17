@@ -417,9 +417,17 @@ export const FichajePagina = () => {
                                 label="Latitud"
                                 value={formik.values.latitud}
                                 onChange={(event) => {
-                                    formik.setFieldValue('latitud', event.target.value)
-                                    setLatitud(event.target.value)
+                                    const value = event.target.value;
+                                    if (!isNaN(value)) {
+                                        formik.setFieldValue('latitud', value);
+                                        setLatitud(value);
+                                    } else {
+                                        // Manejo del error si el valor no es un número
+                                        setHayError(true);
+                                        setMensajeError("El valor de latitud debe ser un número. No debe contener caracteres o símbolos.");
+                                    }
                                 }}
+
                                 disabled={session.usuario.tipo === 'TRABAJADOR'}
                                 error={formik.touched.latitud
                                     && Boolean(formik.errors.latitud)}
@@ -435,9 +443,17 @@ export const FichajePagina = () => {
                                 label="Longitud"
                                 value={formik.values.longitud}
                                 onChange={(event) => {
-                                    formik.setFieldValue('longitud', event.target.value)
-                                    setLongitud(event.target.value)
+                                    const value = event.target.value;
+                                    if (!isNaN(value)) {
+                                        formik.setFieldValue('longitud', value);
+                                        setLongitud(value);
+                                    } else {
+                                        // Manejo del error si el valor no es un número
+                                        setHayError(true);
+                                        setMensajeError("El valor de longitud debe ser un número. No debe contener caracteres o símbolos");
+                                    }
                                 }}
+
                                 disabled={session.usuario.tipo === 'TRABAJADOR'}
                                 error={formik.touched.longitud
                                     && Boolean(formik.errors.longitud)}
