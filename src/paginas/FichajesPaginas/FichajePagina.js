@@ -198,15 +198,20 @@ export const FichajePagina = () => {
 
 
     useEffect(() => {
-        // let session = getSession()
-        // if (session.usuario.tipo === 'TRABAJADOR') {
-        //     formik.setValues('trabajadorId', session.usuario.trabajadorId)
-        // }
+        /* 
+        Asignamos la fecha del servidor, que está en UTC, pero la mostramos en la hora local de España
+         para que el usuario vea la fecha y la hora correctas al fichar.
+         Luego, en handle submit de formulario guardamos la fecha y hora en UTC.
+        */
         AsignarFechaServidor()
+
+        //Uso de geolocalización de navegador
+        //las funciones de geolocalization son de MDN: https://developer.mozilla.org/en-US/docs/Web/API/Geolocation/getCurrentPosition
         if (params.fichajeId === "0") {
             if ("geolocation" in navigator) {
                 navigator.geolocation.getCurrentPosition(
                     function (position) {
+                        // instance properties: https://developer.mozilla.org/en-US/docs/Web/API/GeolocationCoordinates
                         formik.setFieldValue('latitud', position.coords.latitude);
                         formik.setFieldValue('longitud', position.coords.longitude);
                         setLatitud(position.coords.latitude)
