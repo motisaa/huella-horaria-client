@@ -37,10 +37,7 @@ export const LoginForm = (props) => {
 
         // preguntar si es correcto o hay que poner otro parametro
         setSession(usuario);
-        // Mostramos mensaje de OK
-        setMensaje(`Login correcto: ${usuario.nombre}`);
-        setHayMensaje(true);
-        // Nos vamos a inicio
+        // Nos vamos a inicio si el usuario es admin
         if (usuario.tipo === 'ADMINISTRADOR') {
             navigate("/inicio");
         } else {
