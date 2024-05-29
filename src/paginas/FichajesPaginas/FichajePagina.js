@@ -27,7 +27,7 @@ import FormHelperText from '@mui/material/FormHelperText';
 import { Mapa } from "../../componentes/Mapa/Mapa";
 //import { MensajeAviso } from "../../componentes/MensajeAviso/MensajeAviso";
 import momentTZ from "moment-timezone"
-import SearchIcon from '@mui/icons-material/Search';
+import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 
 export const FichajePagina = () => {
     const params = useParams();
@@ -338,14 +338,14 @@ export const FichajePagina = () => {
                                     <TextField
                                         {...params}
                                         // Add search icon
-                                        // InputProps={{
-                                        //     ...params.InputProps,
-                                        //     startAdornment: (
-                                        //         <InputAdornment position="start">
-                                        //             <SearchIcon />
-                                        //         </InputAdornment>
-                                        //     )
-                                        // }}
+                                        InputProps={{
+                                            ...params.InputProps,
+                                            startAdornment: (
+                                                <InputAdornment position="start">
+                                                    <PersonSearchIcon />
+                                                </InputAdornment>
+                                            )
+                                        }}
                                         label="Elija un trabajador"
                                         error={
                                             formik.touched.trabajadorId &&
