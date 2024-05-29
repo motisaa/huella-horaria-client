@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { MensajeError } from "../../servicios/TratamientoErrores";
 import { ErrorGeneral } from "../../componentes/ErrorGeneral/ErrorGeneral";
 import { MensajeInformativo } from "../../componentes/MensajeInformativo/MensajeInformativo";
-import { Button, TextField, Typography, Grid, Autocomplete } from "@mui/material";
+import { Button, TextField, Typography, Grid, Autocomplete, InputAdornment } from "@mui/material";
 import { GeneralCtx } from "../../contextos/GeneralContext";
 import { ActualizarFichaje, CrearFichaje, GetServerDate, LeerFichaje } from "../../servicios/RQFichajes";
 import { MenuLateral } from "../../componentes/MenuLateral/MenuLateral";
@@ -27,6 +27,7 @@ import FormHelperText from '@mui/material/FormHelperText';
 import { Mapa } from "../../componentes/Mapa/Mapa";
 //import { MensajeAviso } from "../../componentes/MensajeAviso/MensajeAviso";
 import momentTZ from "moment-timezone"
+import SearchIcon from '@mui/icons-material/Search';
 
 export const FichajePagina = () => {
     const params = useParams();
@@ -342,6 +343,15 @@ export const FichajePagina = () => {
                                 renderInput={(params) => (
                                     <TextField
                                         {...params}
+                                        // Add search icon
+                                        // InputProps={{
+                                        //     ...params.InputProps,
+                                        //     startAdornment: (
+                                        //         <InputAdornment position="start">
+                                        //             <SearchIcon />
+                                        //         </InputAdornment>
+                                        //     )
+                                        // }}
                                         label="Elija un trabajador"
                                         error={
                                             formik.touched.trabajadorId &&
