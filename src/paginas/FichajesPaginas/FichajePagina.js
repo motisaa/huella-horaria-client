@@ -175,18 +175,12 @@ export const FichajePagina = () => {
         {
             onSuccess: (data) => {
                 // data.data es la respuesta de API y es Array de objetos
-                let opcionesTrabajadores = data.data;
-                // Sorting array of object: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort#sorting_array_of_objects
-                // Sort the opcionesTrabajadores by their name property
-                opcionesTrabajadores.sort((a, b) => {
-                    // ignore upper and lowercase
-                    //A negative value indicates that a should come before b.
-                    if (a.nombre.toUpperCase() < b.nombre.toUpperCase()) return -1;
-                    // A positive value indicates that a should come after b.
-                    if (a.nombre.toUpperCase() > b.nombre.toUpperCase()) return 1;
-                    // Zero indicates that a and b are considered equal
-                    return 0;
-                });
+                /* fix ChatGPT for this this error: 0 is read-only
+                This copy can be modified without affecting the original array, thus avoiding the "read-only property" error.
+                */
+               /* It is because sort() sorts the array in place and data.data is read-only we need to create a copy of it. */
+                let opcionesTrabajadores = [...data.data]; // Create a shallow copy of the array
+                opcionesTrabajadores.sort((a, b) => a.nombre.localeCompare(b.nombre));
                 setTrabajadores(opcionesTrabajadores);
             },
             onError: (error) => {
