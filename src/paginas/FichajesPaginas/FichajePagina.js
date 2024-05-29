@@ -173,7 +173,19 @@ export const FichajePagina = () => {
         },
         {
             onSuccess: (data) => {
+                // data.data es la respuesta de API y es Array de objetos
                 let opcionesTrabajadores = data.data;
+                // Sorting array of object: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort#sorting_array_of_objects
+                // Sort the opcionesTrabajadores by their name property
+                opcionesTrabajadores.sort((a, b) => {
+                    // ignore upper and lowercase
+                    //A negative value indicates that a should come before b.
+                    if (a.nombre.toUpperCase() < b.nombre.toUpperCase()) return -1;
+                    // A positive value indicates that a should come after b.
+                    if (a.nombre.toUpperCase() > b.nombre.toUpperCase()) return 1;
+                    // Zero indicates that a and b are considered equal
+                    return 0;
+                });
                 setTrabajadores(opcionesTrabajadores);
             },
             onError: (error) => {
