@@ -2,7 +2,7 @@ import * as yup from "yup";
 
 export const initialValues = () => {
   return {
-    grupoId: "",
+    grupoId: 0,
     nombre: "",
     // el valor es 2 porque es la única empresa que tenemos ahora
     // si hay más empresas el valor debe ser 0

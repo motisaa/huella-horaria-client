@@ -2,7 +2,7 @@ import * as yup from "yup";
 
 export const initialValues = () => {
   return {
-    adminId: "",
+    adminId: 0,
     email: "",
     nombre: "",
     apellido1: "",
