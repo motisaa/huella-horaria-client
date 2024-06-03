@@ -10,56 +10,56 @@ providing HR with the ability to monitor employee presence in the office.
 
 You can explore the corresponding [back-end repository here](https://github.com/motisaa/huella-horaria-server)
 
-## Huella Horaria - Guía de Configuración y Ejecución Local
+## Huella Horaria - Local Configuration and Execution Guide
 
-## 1: Instalación de Dependencias del Cliente
+This guide provides detailed instructions for setting up and running the
+Huella Horaria application on your local machine. It covers the installation
+of necessary dependencies for both the client and server, configuration of the
+database, setting up environment variables, and steps to run both the backend
+and frontend applications.
 
-1. Abrir una terminal en al directorio `huella-horaria-client`.
-2. Ejecutar el siguiente comando para instalar las dependencias:
+## 1: Client Dependencies Installation
 
-   ``` bash
-   npm i
-   ```
-
-## 2: Instalación de Dependencias del Servidor
-
-1. Abrir una terminal en al directorio `huella-horaria-server`.
-2. Ejecutar el siguiente comando para instalar las dependencias:
+1. Open a terminal in the `huella-horaria-client` directory.
+2. Run the following command to install the dependencies::
 
    ``` bash
    npm i
    ```
 
-## 3: Configuración de la Base de Datos
+## 2: Server Dependencies Installation
 
-1. En el directorio `huella-horaria-server/sql`, existe un archivo llamado
-`tablas.sql`.
-2. Este archivo contiene las instrucciones para crear la base de datos y
-las tablas necesarias en MySQL.
-3. Es necesario importar y ejecutar el script en la aplicación correspondiente
-de MySQL.
+1. Open a terminal in the `huella-horaria-server` directory.
+2. Run the following command to install the dependencies:
 
-## 4: Configuración de Variables de Entorno
+   ``` bash
+   npm i
+   ```
 
-1. En el archivo `.env` dentro de la carpeta `huella-horaria-server`, hay que
-especificar los datos de conexión de MySQL.
-2. Hay que escribir los valores correctos para las variables de entorno
-correspondientes.
+## 3: Database Configuration
 
-## 5: Ejecutar la aplicación backend en Node
+1. In the `huella-horaria-server/sql` directory, there is a file named `tablas.sql`.
+2. This file contains the instructions to create the database and the necessary tables in MySQL.
+3. You need to import and execute the script in the MySQL application.
 
-ejecturar el comando siguiente en el directorio `huella-horaria-server`
+## 4: Environment Variables Configuration
+
+1. In the `.env` file inside the `huella-horaria-server`, folder,
+specify the MySQL connection data.
+2. Enter the correct values for the corresponding environment variables.
+
+## 5: Run the Backend Application in Node
+
+Run the following command in the `huella-horaria-server` directory:
 
 ``` bash
    nodemon server.js 
    ```
 
-## 6: Ejecutar la aplicación frontend en React
+## 6: Run the Frontend Application in React
 
-ejecturar el comando siguiente en el directorio `huella-horaria-client`
+Run the following command in the `huella-horaria-client` directory:
 
 ``` bash
    npm start
    ```
-
-
